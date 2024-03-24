@@ -1,6 +1,6 @@
 <?php
 //calling the config file
-include_once("includes/config.php");
+include_once("../includes/config.php");
 // adding new users code begins here
 if (isset($_POST['add_user'])) {
 	$fname = htmlspecialchars($_POST['firstname']);
@@ -267,7 +267,7 @@ elseif (isset($_POST['add_employee'])) {
 	//grabbing the picture
 	$file = $_FILES['picture']['name'];
 	$file_loc = $_FILES['picture']['tmp_name'];
-	$folder = "employees/";
+	$folder = "../employees/";
 	$new_file_name = strtolower($file);
 	$final_file = str_replace(' ', '-', $new_file_name);
 
@@ -292,7 +292,7 @@ elseif (isset($_POST['add_employee'])) {
 	$lastInsert = $dbh->lastInsertId();
 	if ($lastInsert > 0) {
 		echo "<script>alert('Employee Has Been Added.');</script>";
-		echo "<script>window.location.href='employees.php';</script>";
+		echo "<script>window.location.href='/HR-SYS/employees.php';</script>";
 	} else {
 		echo "<script>alert('Something Went Wrong');</script>";
 	}
