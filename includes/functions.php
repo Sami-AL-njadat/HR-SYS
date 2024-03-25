@@ -62,10 +62,11 @@ elseif (isset($_POST['add_asset'])) {
 	$condition = htmlspecialchars($_POST['condition']);
 	$warrant = htmlspecialchars($_POST['warranty']);
 	$price = htmlspecialchars($_POST['value']);
-	$asset_user = htmlspecialchars($_POST['asset_user']);
-	$description = htmlspecialchars($_POST['description']);
+	$asset_user = htmlspecialchars($_POST['asset_user']); // Corrected variable name
+
+	$descriptiones = htmlspecialchars($_POST['descriptiones']);
 	$sql = "INSERT INTO `assets` ( `assetName`, `assetId`, `PurchaseDate`, `PurchaseFrom`, `Manufacturer`, `Model`, `Status`, `Supplier`, `AssetCondition`, `Warranty`, `Price`, `AssetUser`, `Description`)
-		 VALUES (:name, :id, :purchaseDate, :purchasefrom, :manufacturer, :model, :stats, :supplier, :condition, :warranty, :price, :user, :describe)";
+		 VALUES (:name, :id, :purchaseDate, :purchasefrom, :manufacturer, :model, :stats, :supplier, :condition, :warranty, :price, :asset_user, :descriptiones)";
 	$query = $dbh->prepare($sql);
 	$query->bindParam(':name', $asset, PDO::PARAM_STR);
 	$query->bindParam(':id', $asset_id, PDO::PARAM_STR);
@@ -78,8 +79,8 @@ elseif (isset($_POST['add_asset'])) {
 	$query->bindParam(':condition', $condition, PDO::PARAM_STR);
 	$query->bindParam(':warranty', $warrant, PDO::PARAM_STR);
 	$query->bindParam(':price', $price, PDO::PARAM_INT);
-	$query->bindParam(':user', $asset_user, PDO::PARAM_STR);
-	$query->bindParam(':describe', $description, PDO::PARAM_STR);
+	$query->bindParam(':asset_user', $asset_user, PDO::PARAM_STR);
+	$query->bindParam(':descriptiones', $descriptiones, PDO::PARAM_STR);
 	$query->execute();
 	$lastinserted = $dbh->lastInsertId();
 	if ($lastinserted > 0) {
@@ -94,6 +95,106 @@ elseif (isset($_POST['add_asset'])) {
 
 //editing assets begins here
 
+elseif (isset($_POST['edit_asset'])) {
+	// Retrieve form data
+
+	$asset_name = htmlspecialchars($_POST['asset_name']);
+	$purchase_date = htmlspecialchars($_POST['purchase_date']);
+	$purchase_from = htmlspecialchars($_POST['purchase_from']);
+	$manufacturer = htmlspecialchars($_POST['manufacturer']);
+	$model = htmlspecialchars($_POST['model']);
+	$status = htmlspecialchars($_POST['status']);
+	$supplier = htmlspecialchars($_POST['supplier']);
+	$condition = htmlspecialchars($_POST['condition']);
+	$warranty = htmlspecialchars($_POST['warranty']); // Corrected variable name
+	$value = htmlspecialchars($_POST['value']); // Corrected variable name
+	$asset_user = htmlspecialchars($_POST['asset_user']); // Corrected variable name
+	$descriptiones = htmlspecialchars($_POST['descriptiones']); // Corrected variable name
+	$rid = htmlspecialchars($_POST['id']);
+	$_SESSION['id'] = $rid;
+	// Update the asset in the database
+	$sql = "UPDATE assets SET ";
+	$params = array();
+
+	// Build the update query dynamically based on changed fields
+	if (!empty($asset_name)) {
+		$sql .= "assetName = :asset_name, ";
+		$params[':asset_name'] = $asset_name;
+	}
+	if (!empty($purchase_date)) {
+		$sql .= "PurchaseDate = :purchase_date, ";
+		$params[':purchase_date'] = $purchase_date;
+	}
+	if (!empty($purchase_from)) {
+		$sql .= "PurchaseFrom = :purchase_from, ";
+		$params[':purchase_from'] = $purchase_from;
+	}
+	if (!empty($manufacturer)) {
+		$sql .= "Manufacturer = :manufacturer, ";
+		$params[':manufacturer'] = $manufacturer;
+	}
+	if (!empty($model)) {
+		$sql .= "Model = :model, ";
+		$params[':model'] = $model;
+	}
+	if ($status > -1) {
+		$sql .= "Status = :status, ";
+		$params[':status'] = $status;
+	}
+	if (!empty($supplier)) {
+		$sql .= "Supplier = :supplier, ";
+		$params[':supplier'] = $supplier;
+	}
+	if (!empty($condition)) {
+		$sql .= "AssetCondition = :condition, ";
+		$params[':condition'] = $condition;
+	}
+
+	if (!empty($warranty)) {
+		$sql .= "Warranty = :warranty, ";
+		$params[':warranty'] = $warranty;
+	}
+
+	if (!empty($value)) {
+		$sql .= "Price = :value, ";
+		$params[':value'] = $value;
+	}
+
+	if (!empty($asset_user)) {
+		$sql .= "AssetUser = :asset_user, ";
+		$params[':asset_user'] = $asset_user;
+	}
+
+	if (!empty($descriptiones)) {
+		$sql .= "Description = :descriptiones, ";
+		$params[':descriptiones'] = $descriptiones;
+	}
+
+	// Remove the trailing comma and space
+	$sql = rtrim($sql, ", ");
+
+	$sql .= " WHERE id = :rid";
+
+	// Prepare and execute the query
+	$query = $dbh->prepare($sql);
+	$query->bindParam(':rid', $rid, PDO::PARAM_STR);
+
+	foreach ($params as $key => &$value) {
+		$query->bindParam($key, $value);
+	}
+
+	$query->execute();
+
+	// Check if the update was successful
+	$updated_rows = $query->rowCount();
+	if ($updated_rows > 0) {
+		echo "<script>alert('Asset has been updated successfully');</script>";
+	} else {
+		echo "<script>alert('Failed to update asset');</script>";
+	}
+
+	echo "<script>window.location.href ='assets.php'</script>";
+}
 
 
 //editing assets code ends here.
