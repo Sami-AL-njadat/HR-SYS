@@ -61,7 +61,7 @@ foreach ($_SESSION as $key => $value) {
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
-								<div class="cal-icon"><input id="joining_date" class="form-control datetimepicker" type="text"></div>
+								<div class=""><input id="joining_date" name="joining_date" class="form-control" type="date"></div>
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -73,10 +73,10 @@ foreach ($_SESSION as $key => $value) {
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label class="col-form-label">Departments</label>
-								<?php
-								$dsepartment_From_Seseion = $_SESSION['department_e'];
-								?>
-								<select class="select">
+								<!-- <?php
+										// $dsepartment_From_Seseion = $_SESSION['department_e'];
+										?> -->
+								<select class="form-control	" name="Department_e">
 									<?php
 
 
@@ -90,7 +90,7 @@ foreach ($_SESSION as $key => $value) {
 
 									?>
 
-											<option <?php echo ($row->Department == $_SESSION['department_e']) ? "selected" : ""; ?>><?php echo $row->Department ?></option>
+											<option><?php echo $row->Department ?></option>
 
 
 
@@ -114,7 +114,7 @@ foreach ($_SESSION as $key => $value) {
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Designation <span class="text-danger">*</span></label>
-								<select class="select">
+								<select class="form-control" name="designation">
 									<?php
 
 									$designation_e_From_Seseion = $_SESSION['designation_e'];
@@ -129,7 +129,7 @@ foreach ($_SESSION as $key => $value) {
 
 									?>
 
-											<option <?php echo ($row->Designation  == $_SESSION['designation_e']) ? "selected" : ""; ?>><?php echo $row->Designation  ?></option>
+											<option class="designation_e"><?php echo $row->Designation  ?></option>
 
 
 
@@ -140,7 +140,7 @@ foreach ($_SESSION as $key => $value) {
 							</div>
 						</div>
 					</div>
-					<div class="table-responsive m-t-15">
+					<!-- <div class="table-responsive m-t-15">
 						<table class="table table-striped custom-table">
 							<thead>
 								<tr>
@@ -284,7 +284,7 @@ foreach ($_SESSION as $key => $value) {
 								</tr>
 							</tbody>
 						</table>
-					</div>
+					</div> -->
 					<div class="submit-section">
 						<button class="btn btn-primary submit-btn">Save</button>
 					</div>

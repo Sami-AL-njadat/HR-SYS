@@ -146,7 +146,7 @@
 											<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
 											<div class="dropdown-menu dropdown-menu-right">
 												<a class="dropdown-item edit-employee" href="#" data-toggle="modal" data-target="#edit_employee" data-employeeid="<?php echo $row->Employee_Id; ?>" data-firstname="<?php echo htmlentities($row->FirstName); ?>" data-lastname="<?php echo htmlentities($row->LastName); ?>" data-designation="<?php echo htmlentities($row->Designation); ?>
-												" data-picture="<?php echo htmlentities($row->Picture); ?>" data-email="<?php echo htmlentities($row->Email); ?>" data-phone="<?php echo htmlentities($row->Phone); ?>" data-department="<?php echo htmlentities($row->Department); ?>" data-designation="<?php echo htmlentities($row->Designation); ?>" data-Joiningdate="<?php echo htmlentities($row->Joining_Date); ?>" data-Picture="<?php echo htmlentities($row->Picture); ?>" data-DateTime="<?php echo htmlentities($row->DateTime); ?>" data-username="<?php echo htmlentities($row->UserName); ?>" <i class="fa fa-pencil m-r-5"></i> Edit
+												" data-picture="<?php echo htmlentities($row->Picture); ?>" data-email="<?php echo htmlentities($row->Email); ?>" data-phone="<?php echo htmlentities($row->Phone); ?>" data-department="<?php echo htmlentities($row->Department); ?>" data-designation="<?php echo htmlentities($row->Designation); ?>" data-Picture="<?php echo htmlentities($row->Picture); ?>" data-DateTime="<?php echo htmlentities($row->DateTime); ?>" data-username="<?php echo htmlentities($row->UserName); ?>" data-joiningdate="<?php echo ($row->Joining_Date) ?>"><i class="fa fa-pencil m-r-5"></i> Edit
 
 												</a>
 
@@ -203,7 +203,8 @@
 					var Phone = $(this).data('phone');
 					var picture = $(this).data('picture');
 					var Department = $(this).data('department');
-					var Joining_Date = $(this).data('Joiningdate');
+					var Joining_Date = $(this).data('joiningdate');
+					console.log('Joining_Date', Joining_Date);
 
 
 					$('#edit_employee #employee_id').val(Employee_Id);
@@ -213,8 +214,21 @@
 					$('#edit_employee #email_em').val(Email);
 					$('#edit_employee #Phone_e').val(Phone);
 					$('#edit_employee #Department_e').val(Department);
-					$('#edit_employee #Joining_Date').val(Joining_Date);
+					// $('#edit_employee #Joining_Date').val(Joining_Date);
 					$('#edit_employee #username').val(UserName);
+					console.log($('.designation_e')[0].innerHTML, 'designation_e');
+					console.log(designation, 'designation');
+					$('.form-group select[name="Department_e"]').val(Department);
+					$(' input[name="joining_date"]').val(Joining_Date);
+					$('.designation_e').each(function() {
+
+						if ($(this).html().replace(/\s/g, '') == designation.replace(/\s/g, '')) {
+
+							$(this).prop('selected', true);
+						}
+					});
+
+
 
 					$.ajax({
 						url: 'http://localhost/HR-SYS/includes/modals/employee/savedatatosesion.php',
