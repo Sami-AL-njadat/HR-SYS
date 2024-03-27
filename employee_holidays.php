@@ -1,11 +1,10 @@
 ﻿<?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 session_start();
 error_reporting(0);
 include_once('includes/config.php');
 include_once("includes/functions.php");
+if ($_GET['id']) {
+}
 if (strlen($_SESSION['userlogin']) == 0) {
 	header('location:login.php');
 } elseif (isset($_GET['delid'])) {
@@ -16,23 +15,7 @@ if (strlen($_SESSION['userlogin']) == 0) {
 	$query->execute();
 	echo "<script>alert('Holiday deleted Successfully');</script>";
 	echo "<scirpt>window.location.href='holidays.php';</script>";
-} elseif (isset($_GET['holiday_date']) && isset($_GET['holiday_name']) && isset($_GET['holiday_id'])) {
-	$rid = intval($_GET['holiday_id']);
-	$holiday_name = htmlspecialchars($_GET['holiday_name']);
-	$holiday_date = htmlspecialchars($_GET['holiday_date']);
-
-	// Assuming $dbh is your PDO database connection
-	$sql = "UPDATE holidays SET Holiday_Date = :holiday_date, Holiday_Name = :holiday_name WHERE id = :rid";
-	$query = $dbh->prepare($sql);
-	$query->bindParam(':rid', $rid, PDO::PARAM_INT);
-	$query->bindParam(':holiday_date', $holiday_date, PDO::PARAM_STR);
-	$query->bindParam(':holiday_name', $holiday_name, PDO::PARAM_STR);
-	$query->execute();
-
-	echo "<script>alert('Employee Leave Has Been Updated');</script>";
-	echo "<script>window.location.href ='holidays.php'</script>";
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,7 +55,6 @@ if (strlen($_SESSION['userlogin']) == 0) {
 </head>
 
 <body>
-
 	<!-- Main Wrapper -->
 	<div class="main-wrapper">
 
@@ -131,25 +113,20 @@ if (strlen($_SESSION['userlogin']) == 0) {
 								?>
 										<tbody>
 											<tr class="holiday-upcoming">
-												<td class="holiday-id"><?php echo htmlentities($row->id); ?></td>
+												<td><?php echo $cnt; ?></td>
 												<td><?php echo htmlentities($row->Holiday_Name); ?></td>
 												<td><?php echo htmlentities($row->Holiday_Date); ?></td>
 												<td><?php echo htmlentities($row->Holiday_Date); ?></td>
 												<td class="text-right">
 													<div class="dropdown dropdown-action">
-														<a href="#" class="action-icon dropdown-toggle" data-id="<?php echo htmlentities($row->id); ?>" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+														<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
 														<div class="dropdown-menu dropdown-menu-right">
-															<a id="editButton" class="dropdown-item editButton" data-id="<?php echo htmlentities($row->id); ?>" href="#" data-toggle="modal" data-target="#edit_holiday">
-																<i class="fa fa-pencil m-r-5"></i> Edit
-															</a>
-															<a class="dropdown-item deleteButton" href="#" data-id="<?php echo htmlentities($row->id); ?>" data-toggle="modal" data-target="#delete_holiday">
-																<i class="fa fa-trash-o m-r-5"></i> Delete
-															</a>
+															<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_holiday"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+															<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_holiday"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
 														</div>
 													</div>
 												</td>
 											</tr>
-
 										</tbody>
 								<?php $cnt += 1;
 									}
@@ -185,59 +162,6 @@ if (strlen($_SESSION['userlogin']) == 0) {
 	<!-- Bootstrap Core JS -->
 	<script src="assets/js/popper.min.js"></script>
 	<script src="assets/js/bootstrap.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$('.deleteButton').each(function() {
-				$(this).on('click', function(e) {
-					var holidayId = $(this).data('id');
-
-
-					event.preventDefault();
-
-					$.ajax({
-
-						url: "/HR-SYS/holidays.php",
-
-						type: "POST",
-						data: {
-							id: holidayId
-						},
-						success: function(response) {
-							$("#holid").attr('href', 'holidays.php?delid=' + holidayId);
-
-						}
-					})
-				})
-			})
-			$('.editButton').each(function() {
-				$(this).on('click', function(event) {
-					event.preventDefault();
-
-					var holidayId = $(this).data('id');
-
-					// Perform AJAX request to fetch data
-					$.ajax({
-						url: '/HR-SYS/includes/modals/holidays/get_gata_to_edit_holiday.php',
-						type: 'POST',
-						data: {
-							id: holidayId
-						},
-						dataType: 'json',
-						success: function(response) {
-							// Populate the modal fields with the fetched data
-							$('#edit_holiday').find('input[name="holiday_name"]').val(response.Holiday_Name);
-							$('#edit_holiday').find('input[name="holiday_date"]').val(response.Holiday_Date);
-							$('#edit_holiday').find('input[name="holiday_id"]').val(response.id);
-						},
-						error: function(xhr, status, error) {
-							// Handle errors here
-							console.error('Request failed with status ' + xhr.status);
-						}
-					});
-				});
-			});
-		});
-	</script>
 
 	<!-- Slimscroll JS -->
 	<script src="assets/js/jquery.slimscroll.min.js"></script>

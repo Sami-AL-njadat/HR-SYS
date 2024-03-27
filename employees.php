@@ -109,12 +109,21 @@
 						</div>
 						<div class="col-sm-6 col-md-3">
 							<div class="form-group form-focus select-focus">
-								<select class="select floating">
-									<option>Select Designation</option>
-									<option>Web Developer</option>
-									<option>Web Designer</option>
-									<option>Android Developer</option>
-									<option>Ios Developer</option>
+								<select class="select floating select_designation">
+									<option value="">All Employee</option>
+									<?php
+									$sql = "SELECT * FROM designations";
+									$query = $dbh->prepare($sql);
+									$query->execute();
+									$results = $query->fetchAll(PDO::FETCH_OBJ);
+									if ($query->rowCount() > 0) {
+										foreach ($results as $row) {
+									?>
+											<option class="designation_e" value="<?php echo $row->Designation ?>"><?php echo $row->Designation ?></option>
+									<?php
+										}
+									}
+									?>
 								</select>
 								<label class="focus-label">Designation</label>
 							</div>
@@ -145,8 +154,9 @@
 										<div class="dropdown profile-action">
 											<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
 											<div class="dropdown-menu dropdown-menu-right">
+												<a href="/HR-SYS/employee_holidays.php?id=<?php echo $row->id ?>">Holidays</a>
 												<a class="dropdown-item edit-employee" href="#" data-toggle="modal" data-target="#edit_employee" data-employeeid="<?php echo $row->Employee_Id; ?>" data-firstname="<?php echo htmlentities($row->FirstName); ?>" data-lastname="<?php echo htmlentities($row->LastName); ?>" data-designation="<?php echo htmlentities($row->Designation); ?>
-												" data-picture="<?php echo htmlentities($row->Picture); ?>" data-email="<?php echo htmlentities($row->Email); ?>" data-phone="<?php echo htmlentities($row->Phone); ?>" data-department="<?php echo htmlentities($row->Department); ?>" data-designation="<?php echo htmlentities($row->Designation); ?>" data-Picture="<?php echo htmlentities($row->Picture); ?>" data-DateTime="<?php echo htmlentities($row->DateTime); ?>" data-username="<?php echo htmlentities($row->UserName); ?>" data-joiningdate="<?php echo ($row->Joining_Date) ?>"><i class="fa fa-pencil m-r-5"></i> Edit
+												" data-picture="<?php echo htmlentities($row->Picture); ?>" data-email="<?php echo htmlentities($row->Email); ?>" data-phone="<?php echo htmlentities($row->Phone); ?>" data-department="<?php echo htmlentities($row->Department); ?>" data-designation="<?php echo htmlentities($row->Designation); ?>" data-Picture="<?php echo htmlentities($row->Picture); ?>" data-DateTime="<?php echo htmlentities($row->DateTime); ?>" data-username="<?php echo htmlentities($row->UserName); ?>" data-joiningdate="<?php echo ($row->Joining_Date) ?>" data-id="<?php echo ($row->id); ?>"><i class="fa fa-pencil m-r-5"></i> Edit
 
 												</a>
 
@@ -190,10 +200,32 @@
 		<script src="assets/js/jquery-3.2.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+		<script>
+			window.onload = function() {
+				$('.select_designation').change(function() {
+					var designation_Name = $(this).val();
+					console.log(designation_Name, 'designation_Name');
+					$.ajax({
+						type: 'POST',
+						url: 'includes/partial/employeePartial.php',
+						data: {
+							designationName: designation_Name
+						},
+						success: function(response) {
+							$('.staff-grid-row').html(response);
+						}
+					});
+				});
+			};
+		</script>
 		<script>
 			$(document).ready(function() {
+
 				$('.edit-employee').click(function() {
 					var Employee_Id = $(this).data('employeeid');
+					var id = $(this).data('id');
+					console.log("id", id);
 					var firstName = $(this).data('firstname');
 					var lastName = $(this).data('lastname');
 					var designation = $(this).data('designation');
@@ -216,10 +248,10 @@
 					$('#edit_employee #Department_e').val(Department);
 					// $('#edit_employee #Joining_Date').val(Joining_Date);
 					$('#edit_employee #username').val(UserName);
-					console.log($('.designation_e')[0].innerHTML, 'designation_e');
-					console.log(designation, 'designation');
+
 					$('.form-group select[name="Department_e"]').val(Department);
 					$(' input[name="joining_date"]').val(Joining_Date);
+					$(' input[name="emp_id"]').val(id);
 					$('.designation_e').each(function() {
 
 						if ($(this).html().replace(/\s/g, '') == designation.replace(/\s/g, '')) {

@@ -18,38 +18,41 @@ foreach ($_SESSION as $key => $value) {
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="form-group">
+
 								<label class="col-form-label">First Name <span class="text-danger">*</span></label>
-								<input class="form-control" id="first_name" type="text">
+								<input class="form-control" id="first_name" name="first_name" type="text">
 							</div>
+							<input type="hidden" name="emp_id" id="id">
+
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label class="col-form-label">Last Name</label>
-								<input class="form-control" id="last_name" value="Doe" type="text">
+								<input class="form-control" id="last_name" name="last_name" type="text">
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label class="col-form-label">Username <span class="text-danger">*</span></label>
-								<input class="form-control" id="username" type="text">
+								<input class="form-control" id="username" name="username" type="text">
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label class="col-form-label">Email <span class="text-danger">*</span></label>
-								<input class="form-control" id="email_em" type="email">
+								<input class="form-control" id="email_em" name="email_em" type="email">
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label class="col-form-label">Password</label>
-								<input class="form-control" value="johndoe" type="password">
+								<input class="form-control" name="password" type="password">
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label class="col-form-label">Confirm Password</label>
-								<input class="form-control" value="johndoe" type="password">
+								<input class="form-control" name="confirmpassword" type="password">
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -67,7 +70,7 @@ foreach ($_SESSION as $key => $value) {
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label class="col-form-label">Phone </label>
-								<input class="form-control" id="Phone_e" type="text">
+								<input class="form-control" id="Phone_e" name="phone_e" type="text">
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -117,7 +120,7 @@ foreach ($_SESSION as $key => $value) {
 								<select class="form-control" name="designation">
 									<?php
 
-									$designation_e_From_Seseion = $_SESSION['designation_e'];
+
 
 									$sql = "SELECT * FROM designations";
 									$query = $dbh->prepare($sql);
@@ -286,7 +289,7 @@ foreach ($_SESSION as $key => $value) {
 						</table>
 					</div> -->
 					<div class="submit-section">
-						<button class="btn btn-primary submit-btn">Save</button>
+						<button class="btn btn-primary submit-btn" name="edit_employee">Save</button>
 					</div>
 				</form>
 			</div>

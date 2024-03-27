@@ -1,6 +1,7 @@
 <?php
 //calling the config file
-include_once("../includes/config.php");
+
+// include_once("../includes/config.php");
 // adding new users code begins here
 if (isset($_POST['add_user'])) {
 	$fname = htmlspecialchars($_POST['firstname']);
@@ -198,6 +199,116 @@ elseif (isset($_POST['edit_asset'])) {
 
 
 //editing assets code ends here.
+
+
+
+
+
+elseif (isset($_POST['edit_employee'])) {
+	// Retrieve form data
+
+	$first_name = htmlspecialchars($_POST['first_name']);
+	$last_name = htmlspecialchars($_POST['last_name']);
+	$username = htmlspecialchars($_POST['username']);
+	$email_em = htmlspecialchars($_POST['email_em']);
+	$password = htmlspecialchars($_POST['password']);
+	$confirmPassword = htmlspecialchars($_POST['confirmpassword']);
+	$joining_date = htmlspecialchars($_POST['joining_date']);
+	$Phone_e = htmlspecialchars($_POST['phone_e']);
+	$Department_e = htmlspecialchars($_POST['Department_e']);
+	$designation = htmlspecialchars($_POST['designation']);
+
+	$rid = ($_POST['emp_id']);
+	$_SESSION['id'] = $rid;
+	$sql = "UPDATE employees SET ";
+	$params = array();
+
+	if (!empty($first_name)) {
+		$sql .= "FirstName  = :first_name, ";
+		$params[':first_name'] = $first_name;
+	}
+
+
+	if (!empty($last_name)) {
+		$sql .= "LastName = :last_name, ";
+		$params[':last_name'] = $last_name;
+	}
+	if (!empty($username)) {
+		$sql .= "UserName = :username, ";
+		$params[':username'] = $username;
+	}
+	if (!empty($email_em)) {
+		$sql .= "Email = :email_em, ";
+		$params[':email_em'] = $email_em;
+	}
+	if (!empty($password)) {
+		$sql .= "Password = :password, ";
+		$params[':password'] = $password;
+	}
+	// if ($status > -1) {
+	// 	$sql .= "Status = :status, ";
+	// 	$params[':status'] = $status;
+	// }
+	if (!empty($Phone_e)) {
+		$sql .= "Phone = :Phone_e, ";
+		$params[':Phone_e'] = $Phone_e;
+	}
+	if (!empty($Department_e)) {
+		$sql .= "Department  = :Department_e, ";
+		$params[':Department_e'] = $Department_e;
+	}
+
+	if (!empty($warranty)) {
+		$sql .= "Designation  = :designation, ";
+		$params[':designation'] = $designation;
+	}
+
+	if (!empty($value)) {
+		$sql .= "Price = :value, ";
+		$params[':value'] = $value;
+	}
+
+	if (!empty($joining_date)) {
+		$sql .= "Joining_Date  = :joining_date, ";
+		$params[':joining_date'] = $joining_date;
+	}
+
+
+
+	// Remove the trailing comma and space
+	$sql = rtrim($sql, ", ");
+
+	$sql .= " WHERE id = :rid";
+
+	// Prepare and execute the query
+	$query = $dbh->prepare($sql);
+	$query->bindParam(':rid', $rid, PDO::PARAM_STR);
+
+	foreach ($params as $key => &$value) {
+		$query->bindParam($key, $value);
+	}
+
+	$query->execute();
+
+	// Check if the update was successful
+	$updated_rows = $query->rowCount();
+	if ($updated_rows > 0) {
+		echo "<script>alert('Employee has been updated successfully');</script>";
+	} else {
+		echo "<script>alert('Failed to update Employee');</script>";
+	}
+
+	echo "<script>window.location.href ='/	HR-SYS/employees.php'</script>";
+}
+
+
+//editing assets code ends here.
+
+
+
+
+
+
 
 
 //adding of goal types stats here
@@ -430,7 +541,7 @@ elseif (isset($_POST['add_leave'])) {
 	$end_date = htmlspecialchars($_POST['ends_on']);
 	$days_count = htmlspecialchars($_POST['days_count']);
 	$reason = htmlspecialchars($_POST['reason']);
-	$sql = "INSERT INTO `leaves` (`Employee`, `Starting_At`, `Ending_On`, `Days`, `Reason`, `Time_Added`)
+	$sql = "INSERT INTO `leaves` (`Employee`, `Starting_At`, `Ending_On`, `dayscount`, `Reason`, `Time_Added`)
 		 VALUES ( :employee, :start, :end, :days, :reason, current_timestamp())";
 	$query = $dbh->prepare($sql);
 	$query->bindParam(':employee', $employee, PDO::PARAM_STR);
