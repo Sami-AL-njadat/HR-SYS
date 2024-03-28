@@ -1,80 +1,81 @@
 <div id="edit_employee" class="modal custom-modal fade" role="dialog">
-	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">Edit Employee</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form action="includes/functions.php" enctype="multipart/form-data" method="POST">
-					<div class="row">
-						<div class="col-sm-6">
-							<div class="form-group">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Employee</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="includes/functions.php" enctype="multipart/form-data" method="POST">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
 
-								<label class="col-form-label">First Name <span class="text-danger">*</span></label>
-								<input class="form-control" id="first_name" name="first_name" type="text">
-							</div>
-							<input type="hidden" name="emp_id" id="id">
+                                <label class="col-form-label">First Name <span class="text-danger">*</span></label>
+                                <input class="form-control" id="first_name" name="first_name" type="text">
+                            </div>
+                            <input type="hidden" name="emp_id" id="id">
 
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label class="col-form-label">Last Name</label>
-								<input class="form-control" id="last_name" name="last_name" type="text">
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label class="col-form-label">Username <span class="text-danger">*</span></label>
-								<input class="form-control" id="username" name="username" type="text">
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label class="col-form-label">Email <span class="text-danger">*</span></label>
-								<input class="form-control" id="email_em" name="email_em" type="email">
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label class="col-form-label">Password</label>
-								<input class="form-control" name="password" type="password">
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label class="col-form-label">Confirm Password</label>
-								<input class="form-control" name="confirmpassword" type="password">
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
-								<input type="text" id="employee_id" readonly="" class="form-control floating">
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
-								<div class=""><input id="joining_date" name="joining_date" class="form-control" type="date"></div>
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label class="col-form-label">Phone </label>
-								<input class="form-control" id="Phone_e" name="phone_e" type="text">
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label class="col-form-label">Departments</label>
-								<!-- <?php
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Last Name</label>
+                                <input class="form-control" id="last_name" name="last_name" type="text">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Username <span class="text-danger">*</span></label>
+                                <input class="form-control" id="username" name="username" type="text">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Email <span class="text-danger">*</span></label>
+                                <input class="form-control" id="email_em" name="email_em" type="email">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Password</label>
+                                <input class="form-control" name="password" type="password">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Confirm Password</label>
+                                <input class="form-control" name="confirmpassword" type="password">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
+                                <input type="text" id="employee_id" readonly="" class="form-control floating">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
+                                <div class=""><input id="joining_date" name="joining_date" class="form-control"
+                                        type="date"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Phone </label>
+                                <input class="form-control" id="Phone_e" name="phone_e" type="text">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Departments</label>
+                                <!-- <?php
 										// $dsepartment_From_Seseion = $_SESSION['department_e'];
 										?> -->
-								<select class="form-control	" name="Department_e">
-									<?php
+                                <select class="form-control	" name="Department_e">
+                                    <?php
 
 
 									$sql = "SELECT * FROM departments";
@@ -87,17 +88,17 @@
 
 									?>
 
-											<option><?php echo $row->Department ?></option>
+                                    <option><?php echo $row->Department ?></option>
 
 
 
 
-									<?php }
+                                    <?php }
 									} ?>
-								</select>
-							</div>
-						</div>
-						<!-- <div class="col-md-6">
+                                </select>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-6">
 							<div class="form-group">
 								<label>Department <span class="text-danger">*</span></label>
 								<select class="select">
@@ -108,11 +109,11 @@
 								</select>
 							</div>
 						</div> -->
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Designation <span class="text-danger">*</span></label>
-								<select class="form-control" name="designation">
-									<?php
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Designation <span class="text-danger">*</span></label>
+                                <select class="form-control" name="designation">
+                                    <?php
 
 
 
@@ -126,167 +127,23 @@
 
 									?>
 
-											<option class="designation_e"><?php echo $row->Designation  ?></option>
+                                    <option class="designation_e"><?php echo $row->Designation  ?></option>
 
 
 
 
-									<?php }
+                                    <?php }
 									} ?>
-								</select>
-							</div>
-						</div>
-					</div>
-					<!-- <div class="table-responsive m-t-15">
-						<table class="table table-striped custom-table">
-							<thead>
-								<tr>
-									<th>Module Permission</th>
-									<th class="text-center">Read</th>
-									<th class="text-center">Write</th>
-									<th class="text-center">Create</th>
-									<th class="text-center">Delete</th>
-									<th class="text-center">Import</th>
-									<th class="text-center">Export</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>Holidays</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input type="checkbox">
-									</td>
-									<td class="text-center">
-										<input type="checkbox">
-									</td>
-									<td class="text-center">
-										<input type="checkbox">
-									</td>
-									<td class="text-center">
-										<input type="checkbox">
-									</td>
-									<td class="text-center">
-										<input type="checkbox">
-									</td>
-								</tr>
-								<tr>
-									<td>Leaves</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input type="checkbox">
-									</td>
-									<td class="text-center">
-										<input type="checkbox">
-									</td>
-									<td class="text-center">
-										<input type="checkbox">
-									</td>
-								</tr>
-								<tr>
-									<td>Clients</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input type="checkbox">
-									</td>
-									<td class="text-center">
-										<input type="checkbox">
-									</td>
-									<td class="text-center">
-										<input type="checkbox">
-									</td>
-								</tr>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
-								<tr>
-									<td>Tasks</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input type="checkbox">
-									</td>
-									<td class="text-center">
-										<input type="checkbox">
-									</td>
-								</tr>
-
-								<tr>
-									<td>Assets</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input type="checkbox">
-									</td>
-									<td class="text-center">
-										<input type="checkbox">
-									</td>
-								</tr>
-								<tr>
-									<td>Timing Sheets</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input checked="" type="checkbox">
-									</td>
-									<td class="text-center">
-										<input type="checkbox">
-									</td>
-									<td class="text-center">
-										<input type="checkbox">
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div> -->
-					<div class="submit-section">
-						<button class="btn btn-primary submit-btn" name="edit_employee">Save</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn" name="edit_employee">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

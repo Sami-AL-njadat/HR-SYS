@@ -11,7 +11,7 @@
 		$query = $dbh->prepare($sql);
 		$query->bindParam(':rid', $rid, PDO::PARAM_STR);
 		$query->execute();
-		// echo "<script>alert('Employee Has Been Deleted');</script>";
+		echo "<script>alert('Employee Has Been Deleted');</script>";
 		echo "<script>window.location.href ='employees.php'</script>";
 	}
 	?>
@@ -119,7 +119,8 @@
 									if ($query->rowCount() > 0) {
 										foreach ($results as $row) {
 									?>
-											<option class="designation_e" value="<?php echo $row->Designation ?>"><?php echo $row->Designation ?></option>
+											<option class="designation_e" value="<?php echo $row->Designation ?>">
+												<?php echo $row->Designation ?></option>
 									<?php
 										}
 									}
@@ -149,23 +150,23 @@
 								<div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
 									<div class="profile-widget">
 										<div class="profile-img">
-											<a href="profile.html" class="avatar"><img src="employees/<?php echo htmlentities($row->Picture); ?>" alt="picture"></a>
+											<a href="profile.html" class="avatar"><img style="width: 80px;height: 80px;" src="employees/<?php echo htmlentities($row->Picture); ?>" alt="picture"></a>
 										</div>
 										<div class="dropdown profile-action">
 											<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
 											<div class="dropdown-menu dropdown-menu-right">
-												<a href="/HR-SYS/employee_holidays.php?id=<?php echo $row->id ?>">Holidays</a>
 												<a class="dropdown-item edit-employee" href="#" data-toggle="modal" data-target="#edit_employee" data-employeeid="<?php echo $row->Employee_Id; ?>" data-firstname="<?php echo htmlentities($row->FirstName); ?>" data-lastname="<?php echo htmlentities($row->LastName); ?>" data-designation="<?php echo htmlentities($row->Designation); ?>
 												" data-picture="<?php echo htmlentities($row->Picture); ?>" data-email="<?php echo htmlentities($row->Email); ?>" data-phone="<?php echo htmlentities($row->Phone); ?>" data-department="<?php echo htmlentities($row->Department); ?>" data-designation="<?php echo htmlentities($row->Designation); ?>" data-Picture="<?php echo htmlentities($row->Picture); ?>" data-DateTime="<?php echo htmlentities($row->DateTime); ?>" data-username="<?php echo htmlentities($row->UserName); ?>" data-joiningdate="<?php echo ($row->Joining_Date) ?>" data-id="<?php echo ($row->id); ?>"><i class="fa fa-pencil m-r-5"></i> Edit
 
 												</a>
 
-												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_employee" onclick="setEmployeeIdToDelete(<?php echo $row->id; ?>)">Delete</a>
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_employee" onclick="setEmployeeIdToDelete(<?php echo $row->id; ?>)"><i class="fa fa-trash-o m-r-5"></i>Delete</a>
 
 
 											</div>
 										</div>
-										<h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="profile.html"><?php echo htmlentities($row->FirstName) . " " . htmlentities($row->LastName); ?></a></h4>
+										<h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="profile.html"><?php echo htmlentities($row->FirstName) . " " . htmlentities($row->LastName); ?></a>
+										</h4>
 										<div class="small text-muted"><?php echo htmlentities($row->Designation); ?></div>
 									</div>
 								</div>

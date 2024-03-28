@@ -54,8 +54,8 @@
                                     $departments = $query->fetchAll(PDO::FETCH_ASSOC);
                                     foreach ($departments as $department) {
                                     ?>
-                                        <option value="<?php echo htmlentities($department->id); ?>">
-                                            <?php echo htmlentities($department->Department); ?>
+                                        <option value="<?php echo htmlentities($department['id']); ?>">
+                                            <?php echo htmlentities($department['Department']); ?>
                                         </option>
                                     <?php } ?>
                                 </select>
@@ -88,7 +88,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Add Project Leader</label>
-                                <select required name="projectled" class="form-control">
+                                <select required name="projectled" class="select">
                                     <option>Select Project Leader</option>
                                     <?php
                                     $sql = "SELECT * FROM employees";
