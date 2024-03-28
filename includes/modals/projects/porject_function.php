@@ -87,21 +87,34 @@ if (isset($_POST['add_project'])) {
     $updatedTeamMembers = isset($_POST['teamMem']) ? $_POST['teamMem'] : array();
 
     try {
-        // Handle file upload
-        $filess = $_FILES['filess'];
-        $file_name = $filess['name'];
-        $file_tmp = $filess['tmp_name'];
-        $file_error = $filess['error'];
+        // Handle file upload if a new file is selected
+        if (!empty($_FILES['filess']['name'])) {
+            $filess = $_FILES['filess'];
+            $file_name = $filess['name'];
+            $file_tmp = $filess['tmp_name'];
+            $file_error = $filess['error'];
 
-        if ($file_error === 0) {
-            $file_destination = 'files/' . $file_name;
-            move_uploaded_file($file_tmp, $file_destination);
+            if ($file_error === 0) {
+                $file_destination = 'files/' . $file_name;
+                move_uploaded_file($file_tmp, $file_destination);
+            } else {
+                echo "<script>alert('File didn't upload.');</script>";
+            }
         } else {
-            echo "<script>alert('Error uploading file.');</script>";
+            // If no new file is selected, keep the existing file path in the database
+            $file_destination = null; // Or retrieve the existing file path from the database
         }
 
         // Update project details in the database
-        $sql = "UPDATE projects SET ProjectName = :projectName, ClientId = :clientId, Status = :status, ProjectLeaderId = :projectLeaderId, designation_id = :designationId, department_id = :departmentId, Priority = :priority, Price = :price, CompletionPercentage = :completionPercentage, Description = :description, StartDate = :startDate, EndDate = :endDate, Filees = :filess WHERE id = :projectId";
+        $sql = "UPDATE projects SET ProjectName = :projectName, ClientId = :clientId, Status = :status, ProjectLeaderId = :projectLeaderId, designation_id = :designationId, department_id = :departmentId, Priority = :priority, Price = :price, CompletionPercentage = :completionPercentage, Description = :description, StartDate = :startDate, EndDate = :endDate";
+
+        // Add condition to update file path only if a new file is selected
+        if (!empty($file_destination)) {
+            $sql .= ", Filees = :filess";
+        }
+
+        $sql .= " WHERE id = :projectId";
+
         $query = $dbh->prepare($sql);
         $query->bindParam(':projectId', $projectId, PDO::PARAM_INT);
         $query->bindParam(':projectName', $projectName, PDO::PARAM_STR);
@@ -116,7 +129,12 @@ if (isset($_POST['add_project'])) {
         $query->bindParam(':description', $description, PDO::PARAM_STR);
         $query->bindParam(':startDate', $startDate, PDO::PARAM_STR);
         $query->bindParam(':endDate', $endDate, PDO::PARAM_STR);
-        $query->bindParam(':filess', $file_destination, PDO::PARAM_STR);
+
+        // Bind file parameter only if a new file is selected
+        if (!empty($file_destination)) {
+            $query->bindParam(':filess', $file_destination, PDO::PARAM_STR);
+        }
+
         $query->execute();
 
         // Remove existing team members associated with the project

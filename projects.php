@@ -1,6 +1,6 @@
 ﻿<?php
 session_start();
-// error_reporting(0);
+error_reporting(0);
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
@@ -12,15 +12,23 @@ try {
 }
 include_once('includes/modals/projects/porject_function.php');
 
-if (strlen($_SESSION['userlogin']) == 0) {
+if (strlen($_SESSION['userlogin']) == 2) {
     header('location:login.php');
 } elseif (isset($_GET['delid'])) {
     $rid = intval($_GET['delid']);
-    $sql = "DELETE FROM projects WHERE id=:rid";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':rid', $rid, PDO::PARAM_STR);
-    $query->execute();
-    echo "<script>alert('Project has been deleted');</script>";
+    // Check if the project ID is valid
+    if ($rid > 0) {
+        $sql = "DELETE FROM projects WHERE id=:rid";
+        $query = $dbh->prepare($sql);
+        $query->bindParam(':rid', $rid, PDO::PARAM_INT);
+        if ($query->execute()) {
+            echo "<script>alert('Project has been deleted');</script>";
+        } else {
+            echo "<script>alert('Failed to delete project');</script>";
+        }
+    } else {
+        echo "<script>alert('Invalid project ID');</script>";
+    }
     echo "<script>window.location.href ='projects.php'</script>";
 }
 
@@ -33,7 +41,8 @@ if (strlen($_SESSION['userlogin']) == 0) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="Smarthr - Bootstrap Admin Template">
-    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="keywords"
+        content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
     <title>Projects - HRMS admin template</title>
@@ -62,11 +71,7 @@ if (strlen($_SESSION['userlogin']) == 0) {
     <!-- Main CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-			<script src="assets/js/html5shiv.min.js"></script>
-			<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
+
 </head>
 
 <body>
@@ -98,9 +103,11 @@ if (strlen($_SESSION['userlogin']) == 0) {
                             </ul>
                         </div>
                         <div class="col-auto float-right ml-auto">
-                            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_project"><i class="fa fa-plus"></i> Create Project</a>
+                            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_project"><i
+                                    class="fa fa-plus"></i> Create Project</a>
                             <div class="view-icons">
-                                <a href="projects.php" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                                <a href="projects.php" class="grid-view btn btn-link active"><i
+                                        class="fa fa-th"></i></a>
                                 <a href="project-list.php" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                             </div>
                         </div>
@@ -168,75 +175,90 @@ if (strlen($_SESSION['userlogin']) == 0) {
                             $open_tasks = 0; // Placeholder
                             $completed_tasks = 0; // Placeholder
                     ?>
-                            <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="dropdown dropdown-action profile-action">
-                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                            <div class="dropdown-menu dropdown-menu-right">
+                    <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="dropdown dropdown-action profile-action">
+                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
+                                        aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
 
 
-                                                <a class="dropdown-item edit-project-btn" href="#" data-toggle="modal" data-target="#edit_project" data-id="<?php echo $project["id"]; ?>"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                        <a class="dropdown-item edit-project-btn" href="#" data-toggle="modal"
+                                            data-target="#edit_project" data-id="<?php echo $project["id"]; ?>"><i
+                                                class="fa fa-pencil m-r-5"></i> Edit</a>
 
 
-                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                            </div>
-                                        </div>
-                                        <h4 class="project-title"><a href="project-view.php"><?php echo $project['ProjectName']; ?></a></h4>
-                                        <small class="block text-ellipsis m-b-15">
-                                            <span class="text-xs"><?php echo $open_tasks; ?></span> <span class="text-muted">open tasks, </span>
-                                            <span class="text-xs"><?php echo $completed_tasks; ?></span> <span class="text-muted">tasks completed</span>
-                                        </small>
-                                        <p class="text-muted"><?php echo $project["Description"]; ?></p>
-                                        <div class="pro-deadline m-b-15">
-                                            <div class="sub-title">
-                                                Deadline:
-                                            </div>
-                                            <div class="text-muted">
-                                                <?php echo $project['EndDate']; ?>
-                                            </div>
-                                        </div>
-                                        <div class="project-members m-b-15">
-                                            <div>Project Leader :</div>
-                                            <ul class="team-members">
-                                                <li>
-                                                    <a data-toggle="tooltip" title="<?php echo $projectLeader['FirstName'] . ' ' . $projectLeader['LastName']; ?>">
-                                                        <img alt="" src="employees/<?php echo $projectLeader['Picture']; ?>">
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="project-members m-b-15">
-                                            <div>Team :</div>
-                                            <ul class="team-members">
-                                                <?php foreach ($teamMembers as $teamMember) : ?>
-                                                    <li>
-                                                        <a href="#" data-toggle="tooltip" title="<?php echo $teamMember['FirstName'] . ' ' . $teamMember['LastName']; ?>">
-                                                            <img alt="" src="employees/<?php echo $teamMember['Picture']; ?>">
-                                                        </a>
-                                                    </li>
-                                                <?php endforeach; ?>
-                                                <?php if ($totalTeamMembers > 5) : ?>
-                                                    <li class="dropdown avatar-dropdown">
-                                                        <a href="#" class="all-users dropdown-toggle" data-toggle="dropdown" aria-expanded="false">+<?php echo ($totalTeamMembers - 5); ?></a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <div class="avatar-group">
-                                                                <!-- Display additional team members -->
-                                                            </div>
-                                                            <!-- Pagination if needed -->
-                                                        </div>
-                                                    </li>
-                                                <?php endif; ?>
-                                            </ul>
-                                        </div>
-                                        <p class="m-b-5">Progress <span class="text-success float-right"><?php echo $project['CompletionPercentage']; ?>%</span>
-                                        </p>
-                                        <div class="progress progress-xs mb-0">
-                                            <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="<?php echo $project['CompletionPercentage']; ?>%" style="width: <?php echo $project['CompletionPercentage']; ?>%"></div>
-                                        </div>
+
+                                        <a href="#" class="dropdown-item" data-toggle="modal"
+                                            data-target="#delete_project"
+                                            onclick="setProjToDelete(<?php echo $project['id']; ?>)"><i
+                                                class="fa fa-trash-o m-r-5"></i>Delete</a>
+
                                     </div>
                                 </div>
+                                <h4 class="project-title"><a
+                                        href="project-view.php?id=<?php echo $project['id']; ?>"><?php echo $project['ProjectName']; ?></a>
+                                </h4>
+
+                                <p class="text-muted"><?php echo $project["Description"]; ?></p>
+                                <div class="pro-deadline m-b-15">
+                                    <div class="sub-title">
+                                        Deadline:
+                                    </div>
+                                    <div class="text-muted">
+                                        <?php echo $project['EndDate']; ?>
+                                    </div>
+                                </div>
+                                <div class="project-members m-b-15">
+                                    <div>Project Leader :</div>
+                                    <ul class="team-members">
+                                        <li>
+                                            <a data-toggle="tooltip"
+                                                title="<?php echo $projectLeader['FirstName'] . ' ' . $projectLeader['LastName']; ?>">
+                                                <img alt="" src="employees/<?php echo $projectLeader['Picture']; ?>">
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="project-members m-b-15">
+                                    <div>Team :</div>
+                                    <ul class="team-members">
+                                        <?php foreach ($teamMembers as $teamMember) : ?>
+                                        <li>
+                                            <a href="#" data-toggle="tooltip"
+                                                title="<?php echo $teamMember['FirstName'] . ' ' . $teamMember['LastName']; ?>">
+                                                <img alt="" src="employees/<?php echo $teamMember['Picture']; ?>">
+                                            </a>
+                                        </li>
+                                        <?php endforeach; ?>
+                                        <?php if ($totalTeamMembers > 5) : ?>
+                                        <li class="dropdown avatar-dropdown">
+                                            <a href="#" class="all-users dropdown-toggle" data-toggle="dropdown"
+                                                aria-expanded="false">+<?php echo ($totalTeamMembers - 5); ?></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <div class="avatar-group">
+                                                    <!-- Display additional team members -->
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <?php endif; ?>
+                                    </ul>
+                                </div>
+                                <p class="m-b-5">Progress <span
+                                        class="text-success float-right"><?php echo $project['CompletionPercentage']; ?>%</span>
+                                </p>
+                                <div class="progress progress-xs mb-0">
+                                    <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip"
+                                        title="<?php echo $project['CompletionPercentage']; ?>%"
+                                        style="width: <?php echo $project['CompletionPercentage']; ?>%"></div>
+                                </div>
+                                <a href="project-view.php?id=<?php echo $project['id']; ?>"
+                                    class="btn btn-white btn-sm m-t-10">View Project</a>
                             </div>
+                        </div>
+
+                    </div>
                     <?php
                         }
                     } ?>
@@ -289,56 +311,50 @@ if (strlen($_SESSION['userlogin']) == 0) {
 
 
     <script>
-        $(document).ready(function() {
-            $('.edit-project-btn').click(function() {
-                var projectId = $(this).data('id');
-                $.ajax({
-                    url: 'http://localhost/HR-SYS/includes/modals/projects/get_project_data.php',
-                    type: 'POST',
-                    data: {
-                        id: projectId
-                    },
-                    success: function(response) {
-                        var data = JSON.parse(response);
-                        $('#edit_project input[name="projectName"]').val(data.ProjectName);
-                        $('#edit_project select[name="clientId"]').val(data.ClientId);
-                        $('#edit_project select[name="deparId"]').val(data.department_id);
-                        $('#edit_project select[name="desiId"]').val(data.designation_id);
-                        $('#edit_project select[name="projectled"]').val(data.ProjectLeaderId);
-                        $('#edit_project select[name="teamMem[]"]').val(data.TeamMembers);
-                        $('#edit_project input[name="price"]').val(data.Price);
-                        $('#edit_project select[name="status"]').val(data.Status);
-                        $('#edit_project select[name="priority"]').val(data.Priority);
-                        $('#edit_project input[name="percentage"]').val(data
-                            .CompletionPercentage);
-                        $('#edit_project input[name="start_date"]').val(data.StartDate);
-                        $('#edit_project input[name="end_date"]').val(data.EndDate);
-                        $('#edit_project textarea[name="description"]').val(data.Description);
-                        $('#filess').change(function() {
-                            var fileInput = $(this)[0]; // Get the file input element
-                            if (fileInput.files.length > 0) {
-                                var fileName = fileInput.files[0]
-                                    .name; // Get the file name
-                                $('#fileNameDisplay').text("Current File : " +
-                                    fileName);
-                            } else {
-                                $('#fileNameDisplay').text("No file selected");
-                            }
-                        });
-                        $('#edit_project input[name="id"]').val(projectId);
+    $(document).ready(function() {
+        $('.edit-project-btn').click(function() {
+            var projectId = $(this).data('id');
+            $.ajax({
+                url: 'http://localhost/HR-SYS/includes/modals/projects/get_project_data.php',
+                type: 'POST',
+                data: {
+                    id: projectId
+                },
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    $('#edit_project input[name="projectName"]').val(data.ProjectName);
+                    $('#edit_project select[name="clientId"]').val(data.ClientId);
+                    $('#edit_project select[name="deparId"]').val(data.department_id);
+                    $('#edit_project select[name="desiId"]').val(data.designation_id);
+                    $('#edit_project select[name="projectled"]').val(data.ProjectLeaderId);
+                    $('#edit_project select[name="teamMem[]"]').val(data.TeamMembers);
+                    $('#edit_project input[name="price"]').val(data.Price);
+                    $('#edit_project select[name="status"]').val(data.Status);
+                    $('#edit_project select[name="priority"]').val(data.Priority);
+                    $('#edit_project input[name="percentage"]').val(data
+                        .CompletionPercentage);
+                    $('#edit_project input[name="start_date"]').val(data.StartDate);
+                    $('#edit_project input[name="end_date"]').val(data.EndDate);
+                    $('#edit_project textarea[name="description"]').val(data.Description);
+                    $('#filess').change(function() {
+                        var fileInput = $(this)[0]; // Get the file input element
+                        if (fileInput.files.length > 0) {
+                            var fileName = fileInput.files[0]
+                                .name; // Get the file name
+                            $('#fileNameDisplay').text("Current File : " +
+                                fileName);
+                        } else {
+                            $('#fileNameDisplay').text("No file selected");
+                        }
+                    });
+                    $('#edit_project input[name="id"]').val(projectId);
 
 
-                        console.log(data, "all data ");
-                    }
-                });
+                    console.log(data, "all data ");
+                }
             });
         });
-
-        // function getFileName(filePath) {
-        //     var parts = filePath.split('/files');
-        //     var fileName = parts[parts.length - 1];
-        //     return fileName;
-        // }
+    });
     </script>
 
 </body>
