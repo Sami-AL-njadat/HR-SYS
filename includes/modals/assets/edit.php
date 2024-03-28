@@ -92,16 +92,19 @@
                              <div class="form-group">
                                  <label>Asset User</label>
                                  <select name="asset_user" class="form-control">
-                                     <option value="John Doe" <?php if ($asset_user == "John Doe") echo "selected"; ?>>
-                                         John Doe
-                                     </option>
-                                     <option value="Richard Miles" <?php if ($asset_user == "Richard Miles") echo "selected"; ?>>
-                                         Richard Miles
-                                     </option>
+                                     <?php
+                                        $sql = "SELECT * FROM employees";
+                                        $query = $dbh->prepare($sql);
+                                        $query->execute();
+                                        $users = $query->fetchAll(PDO::FETCH_ASSOC);
+                                        foreach ($users as $user) {
+                                            $selected = ($user['id'] == $asset_user) ? 'selected' : '';
+                                            echo '<option value="' . $user['id'] . '" ' . $selected . '>' . $user['FirstName'] . ' ' . $user['LastName'] . '</option>';
+                                        }
+                                        ?>
                                  </select>
-
-
                              </div>
+
 
 
 
@@ -115,7 +118,7 @@
                          <div class="col-md-6">
                              <div class="form-group">
                                  <label>Description</label>
-                                 <input name="descriptiones" class="form-control" rows="2"><?php echo isset($row->$descriptiones) ? htmlentities($row->$descriptiones) : ''; ?></input>
+                                 <textarea name="descriptiones" class="form-control" rows="2"><?php echo isset($row->$descriptiones) ? htmlentities($row->$descriptiones) : ''; ?></textarea>
                              </div>
                          </div>
 

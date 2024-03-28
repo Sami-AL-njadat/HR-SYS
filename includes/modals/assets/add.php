@@ -96,11 +96,19 @@ $id = substr(str_shuffle($set), 0, 6); ?>
                             <div class="form-group">
                                 <label>Asset User</label>
                                 <select name="asset_user" class="select">
-                                    <option>John Doe</option>
-                                    <option>Richard Miles</option>
+                                    <?php
+                                    $sql = "SELECT id, FirstName, LastName FROM employees";
+                                    $query = $dbh->query($sql);
+                                    $employees = $query->fetchAll(PDO::FETCH_ASSOC);
+
+                                    foreach ($employees as $employee) {
+                                        echo "<option value=\"{$employee['id']}\">{$employee['FirstName']} {$employee['LastName']}</option>";
+                                    }
+                                    ?>
                                 </select>
                             </div>
                         </div>
+
 
 
                         <div class="col-md-12">

@@ -134,7 +134,6 @@ if (strlen($_SESSION['userlogin']) == 0) {
 										<th>Contact Person</th>
 										<th>Email</th>
 										<th>Mobile</th>
-										<th>Status</th>
 										<th class="text-right">Action</th>
 									</tr>
 								</thead>
@@ -160,20 +159,18 @@ if (strlen($_SESSION['userlogin']) == 0) {
 												<td><?php echo htmlentities($row->Email); ?></td>
 												<td><?php echo htmlentities($row->Phone); ?></td>
 												<td>
-													<div class="dropdown action-label">
-														<a href="#" class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-success"></i> Active </a>
-														<div class="dropdown-menu">
-															<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a>
-															<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a>
-														</div>
-													</div>
+
 												</td>
 												<td class="text-right">
 													<div class="dropdown dropdown-action">
 														<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
 														<div class="dropdown-menu dropdown-menu-right">
-															<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-															<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+															<a class="dropdown-item edit-client-btn" href="#" data-toggle="modal" data-target="#edit_client" data-id="<?php echo $row->id; ?>"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+
+
+
+															<a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_client" onclick="setClientsToDelete
+                                            (<?php echo $row->id; ?>)"><i class="fa fa-trash-o m-r-5"></i>Delete</a>
 														</div>
 													</div>
 												</td>

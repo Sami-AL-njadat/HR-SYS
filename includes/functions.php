@@ -255,51 +255,167 @@ elseif (isset($_POST['add_goal'])) {
 //goal tracking code ends here
 
 //client adding code starts here
+// Check if the form is submitted
 elseif (isset($_POST['add_client'])) {
+	// Retrieve form data
+	// Sanitize user inputs
 	$firstname = htmlspecialchars($_POST['firstname']);
 	$lastname = htmlspecialchars($_POST['lastname']);
 	$username = htmlspecialchars($_POST['username']);
-	$email = htmlspecialchars($_POST['email']);
-	$password = htmlspecialchars($_POST['password']);
-	$confirm_password = htmlspecialchars($_POST['confirmpass']);
+	$email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL); // Sanitize email
 	$client_id = htmlspecialchars($_POST['clientid']);
-	$phone = htmlspecialchars($_POST['phone']);
+	$phone = preg_replace('/[^0-9]/', '', $_POST['phone']); // Extract only digits from phone number
 	$company = htmlspecialchars($_POST['company']);
 	$address = htmlspecialchars($_POST['address']);
-	//grabing user profile picture
-	$propic = $_FILES["propic"]["name"];
-	$extension = substr($propic, strlen($propic) - 4, strlen($propic));
+	// Grab user profile picture
+	$propic = $_FILES["propic"];
 
-	if ($password != $confirm_password) {
-		echo "<script>alert('Your passwords do not match');</script>";
-	} else {
-		$propic = md5($propic) . time() . $extension;
-		move_uploaded_file($_FILES["propic"]["tmp_name"], "clients/" . $propic);
-		$password = password_hash($password, PASSWORD_DEFAULT);
-		$sql = "INSERT INTO `clients` (`FirstName`, `LastName`, `UserName`, `Email`, `Password`, `ClientId`, `Phone`, `Company`, `Address`, `Status`, `Picture`) 
-					VALUES (:fname, :lname, :username, :email, :password, :id, :phone, :company, :address,'1',:pic)";
-		$query = $dbh->prepare($sql);
-		$query->bindParam(':fname', $firstname, PDO::PARAM_STR);
-		$query->bindParam(':lname', $lastname, PDO::PARAM_STR);
-		$query->bindParam(':username', $username, PDO::PARAM_STR);
-		$query->bindParam(':email', $email, PDO::PARAM_STR);
-		$query->bindParam(':password', $password, PDO::PARAM_STR);
-		$query->bindParam(':id', $client_id, PDO::PARAM_STR);
-		$query->bindParam(':phone', $phone, PDO::PARAM_STR);
-		$query->bindParam(':company', $company, PDO::PARAM_STR);
-		$query->bindParam(':address', $address, PDO::PARAM_STR);
-		$query->bindParam(':pic', $propic, PDO::PARAM_STR);
-		$query->execute();
-		$lastInsert = $dbh->lastInsertId();
-		if ($lastInsert > 0) {
-
-			echo "<script>alert('Client Has Been Added');</script>";
-			echo "<script>window.location.href='clients.php';</script>";
-		} else {
-			echo "<script>alert('Something went wrong.');</script>";
-		}
+	// Validate email format
+	if (!filter_var(
+		$email,
+		FILTER_VALIDATE_EMAIL
+	)) {
+		echo "<script>alert('Error: Invalid email format.');</script>";
+		echo "<script>window.location.href ='clients.php'</script>";
+		exit;
 	}
-} //adding client code ends here
+
+	// Validate phone number
+	if (
+		strlen($phone) !== 10 || !ctype_digit($phone)
+	) {
+		echo "<script>alert('Error: Phone number must be 10 digits long and contain only numbers.');</script>";
+		echo "<script>window.location.href ='clients.php'</script>";
+		exit;
+	}
+
+	// Check if the email already exists in the database
+	$sql_check_email = "SELECT COUNT(*) AS email_count FROM clients WHERE Email = :email";
+	$query_check_email = $dbh->prepare($sql_check_email);
+	$query_check_email->bindParam(':email', $email, PDO::PARAM_STR);
+	$query_check_email->execute();
+	$row = $query_check_email->fetch(PDO::FETCH_ASSOC);
+	if ($row['email_count'] > 0) {
+		echo "<script>alert('Error: Email already exists. Please use a different email.');</script>";
+		echo "<script>window.location.href ='clients.php'</script>";
+		exit;
+	}
+
+	// Check if a file is selected and validate file type
+	if ($propic['error'] === UPLOAD_ERR_OK) {
+		// Generate a unique filename
+		$extension = pathinfo($propic["name"], PATHINFO_EXTENSION);
+		$propic_filename = md5($propic["name"] . time()) . '.' . $extension;
+
+		// Move the uploaded file to the desired location
+		if (move_uploaded_file($propic["tmp_name"], "clients/" . $propic_filename)) {
+			// Prepare SQL statement
+			$sql = "INSERT INTO `clients` (`FirstName`, `LastName`, `UserName`, `Email`, `ClientId`, `Phone`, `Company`, `Address`, `Status`, `Picture`) 
+                    VALUES (:fname, :lname, :username, :email, :id, :phone, :company, :address, '1', :pic)";
+			$query = $dbh->prepare($sql);
+			// Bind parameters
+			$query->bindParam(':fname', $firstname, PDO::PARAM_STR);
+			$query->bindParam(':lname', $lastname, PDO::PARAM_STR);
+			$query->bindParam(':username', $username, PDO::PARAM_STR);
+			$query->bindParam(':email', $email, PDO::PARAM_STR);
+			$query->bindParam(':id', $client_id, PDO::PARAM_STR);
+			$query->bindParam(':phone', $phone, PDO::PARAM_STR);
+			$query->bindParam(':company', $company, PDO::PARAM_STR);
+			$query->bindParam(':address', $address, PDO::PARAM_STR);
+			$query->bindParam(':pic', $propic_filename, PDO::PARAM_STR);
+			// Execute query
+			if ($query->execute()) {
+				echo "<script>alert('Client has been added.');</script>";
+				echo "<script>window.location.href='clients.php';</script>";
+			} else {
+				echo "<script>alert('Error: Failed to add client.');</script>";
+			}
+		} else {
+			echo "<script>alert('Error: Failed to move uploaded file.');</script>";
+			echo "<script>window.location.href ='clients.php'</script>";
+		}
+	} else {
+		echo "<script>alert('Error: File upload error.');</script>";
+		echo "<script>window.location.href ='clients.php'</script>";
+	}
+}
+
+
+
+
+
+
+//adding client code ends here
+
+
+//editing client here start 
+
+elseif (isset($_POST['edit_client'])) {
+	// Retrieve form data
+	// Sanitize user inputs
+	$firstname = htmlspecialchars($_POST['firstname']);
+	$lastname = htmlspecialchars($_POST['lastname']);
+	$username = htmlspecialchars($_POST['username']);
+	$email = $_POST['email']; // No need to sanitize email
+	$phone = preg_replace('/[^0-9]/', '', $_POST['phone']); // Extract only digits from phone number
+	$company = htmlspecialchars($_POST['company']);
+
+	// Validate phone number
+	if (
+		strlen($phone) !== 10 || !ctype_digit($phone)
+	) {
+		echo "<script>alert('Error: Phone number must be 10 digits long and contain only numbers.');</script>";
+		echo "<script>window.location.href ='clients.php'</script>";
+		exit;
+	}
+
+	// Check if a file is selected
+	if (isset($_FILES['propic']) && $_FILES['propic']['error'] === UPLOAD_ERR_OK) {
+		// Grab user profile picture
+		$propic = $_FILES["propic"];
+		// Generate a unique filename
+		$extension = pathinfo($propic["name"], PATHINFO_EXTENSION);
+		$propic_filename = md5($propic["name"] . time()) . '.' . $extension;
+		// Move the uploaded file to the desired location
+		if (move_uploaded_file($propic["tmp_name"], "clients/" . $propic_filename)) {
+			// Prepare SQL statement for updating client details with image
+			$sql = "UPDATE `clients` SET `FirstName` = :fname, `LastName` = :lname, `UserName` = :username, `Email` = :email, `Phone` = :phone, `Company` = :company, `Picture` = :pic WHERE `id` = :id";
+			$query = $dbh->prepare($sql);
+			// Bind parameters
+			$query->bindParam(':pic', $propic_filename, PDO::PARAM_STR);
+		} else {
+			echo "<script>alert('Error: Failed to move uploaded file.');</script>";
+			echo "<script>window.location.href ='clients.php'</script>";
+			exit;
+		}
+	} else {
+		// Prepare SQL statement for updating client details without image
+		$sql = "UPDATE `clients` SET `FirstName` = :fname, `LastName` = :lname, `UserName` = :username, `Email` = :email, `Phone` = :phone, `Company` = :company WHERE `id` = :id";
+		$query = $dbh->prepare($sql);
+	}
+
+	// Bind parameters
+	$query->bindParam(':fname', $firstname, PDO::PARAM_STR);
+	$query->bindParam(':lname', $lastname, PDO::PARAM_STR);
+	$query->bindParam(':username', $username, PDO::PARAM_STR);
+	$query->bindParam(':email', $email, PDO::PARAM_STR);
+	$query->bindParam(':phone', $phone, PDO::PARAM_STR);
+	$query->bindParam(':company', $company, PDO::PARAM_STR);
+	$query->bindParam(':id', $_POST['id'], PDO::PARAM_INT); // Assuming the hidden input field for client_id is named 'id'
+	// Execute query
+	if ($query->execute()) {
+		echo "<script>alert('Client details have been updated.');</script>";
+		echo "<script>window.location.href='clients.php';</script>";
+	} else {
+		echo "<script>alert('Error: Failed to update client details.');</script>";
+	}
+}
+
+
+
+
+
+//editing client here stop 
 
 //adding departments code starts here
 elseif (isset($_POST['add_department'])) {
@@ -315,25 +431,88 @@ elseif (isset($_POST['add_department'])) {
 	} else {
 		echo "<script>alert('Something went wrong.');</script>";
 	}
-} //adding departments code ends here
+}
+
+//adding departments code ends here
+
+
+
+//editing departments code starts here
+elseif (isset($_POST['edit_department'])) {
+	$department = htmlspecialchars($_POST['department']);
+	$department_id = intval($_POST['id']);
+
+	$sql = "UPDATE departments SET Department = :name WHERE id = :id";
+	$query = $dbh->prepare($sql);
+	$query->bindParam(':name', $department, PDO::PARAM_STR);
+	$query->bindParam(':id', $department_id, PDO::PARAM_INT);
+	$query->execute();
+
+	$affected_rows = $query->rowCount();
+	if ($affected_rows > 0) {
+		echo "<script>alert('Department has been updated.');</script>";
+	} else {
+		echo "<script>alert('Failed to update department.');</script>";
+	}
+	echo "<script>window.location.href='departments.php';</script>";
+}
+
+
+
+//editing departments code ends here
+
+
+
+
 
 //adding desginations code starts from here
 elseif (isset($_POST['add_designation'])) {
 	$name = htmlspecialchars($_POST['designation']);
-	$department = htmlspecialchars($_POST['department']);
-	$sql = "INSERT INTO `designations` (`Designation`, `Department`) VALUES ( :designation, :department)";
+	$department_id = htmlspecialchars($_POST['department_id']);
+	$sql = "INSERT INTO `designations` (`Designation`, `Department`) VALUES (:designation, :department_id)";
 	$query = $dbh->prepare($sql);
 	$query->bindParam(':designation', $name, PDO::PARAM_STR);
-	$query->bindParam(':department', $department, pdo::PARAM_STR);
+	$query->bindParam(':department_id', $department_id, PDO::PARAM_INT); // Assuming department_id is an integer
 	$query->execute();
 	$lastInsert = $dbh->lastInsertId();
-	if ($lastInsert > 0) {
+	if (
+		$lastInsert > 0
+	) {
 		echo "<script>alert('Designation Has Been Added');</script>";
 		echo "<script>window.location.href='designations.php';</script>";
 	} else {
-		echo "<script>alert('Something Went wrong');</scrip>";
+		echo "<script>alert('Something Went wrong');</script>";
 	}
-} //adding designations code ends here
+}
+//adding designations code ends here
+
+
+//editing designations code starts here
+if (isset($_POST['edit_designation'])) {
+	$designation_id = htmlspecialchars($_POST['id']); // Get the designation ID from the hidden input
+	$name = htmlspecialchars($_POST['designation']);
+	$department_id = htmlspecialchars($_POST['department_id']);
+
+	// Update the designation in the database
+	$sql = "UPDATE `designations` SET `Designation` = :designation, `Department` = :department_id WHERE `id` = :designation_id";
+	$query = $dbh->prepare($sql);
+	$query->bindParam(':designation', $name, PDO::PARAM_STR);
+	$query->bindParam(':department_id', $department_id, PDO::PARAM_INT); // Assuming department_id is an integer
+	$query->bindParam(':designation_id', $designation_id, PDO::PARAM_INT); // Assuming designation_id is an integer
+	$query->execute();
+
+	// Check if the update was successful
+	$updated_rows = $query->rowCount();
+	if ($updated_rows > 0) {
+		echo "<script>alert('Designation has been updated successfully');</script>";
+		echo "<script>window.location.href='designations.php';</script>";
+	} else {
+		echo "<script>alert('Failed to update designation');</script>";
+	}
+}
+
+//editing designations code ends here
+
 
 //adding holidays starts here
 elseif (isset($_POST['add_holiday'])) {

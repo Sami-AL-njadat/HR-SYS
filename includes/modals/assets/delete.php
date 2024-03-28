@@ -12,10 +12,6 @@
 
                             <a href="#" class="btn btn-primary continue-btn" onclick="confirmDelete()">Delete</a>
 
-
-                            <!-- <a href="assets.php?delid=
-                            
-                            " type="submit" class="btn btn-primary continue-btn">Delete</a> -->
                         </div>
                         <div class="col-6">
                             <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
