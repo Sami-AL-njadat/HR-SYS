@@ -7,7 +7,6 @@ include_once("includes/config.php");
 if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
     header('location:index.php');
 } elseif (isset($_POST['username'])) {
-    echo "tttttttttttttttttttttttttttttttttttttttttt";
     $username = htmlspecialchars($_POST['username']);
     $password = htmlspecialchars($_POST['password']);
     $sql = "SELECT * from users where UserName=:username";
@@ -15,7 +14,6 @@ if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
     $query->bindParam(':username', $username, PDO::PARAM_STR);
     $query->execute();
     $results = $query->fetchAll(PDO::FETCH_OBJ);
-    print_r($results);
     if ($query->rowCount() > 0) {
         foreach ($results as $row) {
             $hashpass = $row->Password;

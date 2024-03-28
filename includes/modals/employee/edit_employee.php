@@ -1,9 +1,3 @@
-<?php
-session_start();
-foreach ($_SESSION as $key => $value) {
-	echo "$key: $value <br>";
-}
-?>
 <div id="edit_employee" class="modal custom-modal fade" role="dialog">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">

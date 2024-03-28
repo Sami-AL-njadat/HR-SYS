@@ -1,7 +1,7 @@
 <?php
 //calling the config file
 
-// include_once("../includes/config.php");
+include_once("../includes/config.php");
 // adding new users code begins here
 if (isset($_POST['add_user'])) {
 	$fname = htmlspecialchars($_POST['firstname']);
