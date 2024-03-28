@@ -1,4 +1,8 @@
 ﻿<?php
+
+$current_datetime = date('Y-m-d H:i:s');
+
+print_r($updated_datetime = date('Y-m-d H:i:s', strtotime($current_datetime . ' +2 hours')));
 session_start();
 // error_reporting(0);
 include_once('includes/config.php');

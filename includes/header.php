@@ -1,4 +1,12 @@
+<?php
+include('includes/config.php');
+?>
 <div class="header">
+    <style>
+        .modal-backdrop {
+            z-index: 2 !important;
+        }
+    </style>
     <!-- Logo -->
     <div class="header-left">
         <a href="index.php" class="logo">
@@ -62,7 +70,8 @@
                                     </span>
                                     <div class="media-body">
                                         <p class="noti-details"><span class="noti-title">John Doe</span> added new task
-                                            <span class="noti-title">Patient appointment booking</span></p>
+                                            <span class="noti-title">Patient appointment booking</span>
+                                        </p>
                                         <p class="noti-time"><span class="notification-time">4 mins ago</span></p>
                                     </div>
                                 </div>
@@ -90,10 +99,7 @@
                                         <img alt="" src="assets/img/profiles/avatar-06.jpg">
                                     </span>
                                     <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Misty Tison</span> added <span
-                                                class="noti-title">Domenic Houston</span> and <span
-                                                class="noti-title">Claire Mapes</span> to project <span
-                                                class="noti-title">Doctor available module</span></p>
+                                        <p class="noti-details"><span class="noti-title">Misty Tison</span> added <span class="noti-title">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span> to project <span class="noti-title">Doctor available module</span></p>
                                         <p class="noti-time"><span class="notification-time">8 mins ago</span></p>
                                     </div>
                                 </div>
@@ -248,34 +254,77 @@
         </li>
         <!-- /Message Notifications -->
 
-        <?php 
-		$sql = "SELECT * from users";
-		$query = $dbh -> prepare($sql);
-		$query->execute();
-		$result=$query->fetch(PDO::FETCH_OBJ);
-		$cnt=1;
-		?>
+        <?php
+        $sql = "SELECT * from users";
+        $query = $dbh->prepare($sql);
+        $query->execute();
+        $result = $query->fetch(PDO::FETCH_OBJ);
+        $cnt = 1;
+        ?>
 
         <li class="nav-item dropdown has-arrow main-drop">
             <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                <span class="user-img"><img src="./profiles/<?php echo htmlentities($result->Picture);?>"
-                        alt="User Picture">
+                <span class="user-img"><img src="./profiles/<?php echo htmlentities($result->Picture); ?>" alt="User Picture">
                     <span class="status online"></span></span>
-                <span><?php echo htmlentities(ucfirst($_SESSION['userlogin']));?></span>
+                <span><?php echo htmlentities(ucfirst($_SESSION['userlogin'])); ?></span>
             </a>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="profile.php">My Profile</a>
                 <a class="dropdown-item" href="settings.php">Settings</a>
-                <a class="dropdown-item" href="logout.php">Logout</a>
+                <!-- <a class="dropdown-item" href="logout.php">Logout</a> -->
+                <a class="dropdown-item  desprojectbutton" href="#" data-id="" data-toggle="modal" data-target="#logoutt"> Log out</a>
+
             </div>
         </li>
     </ul>
     <!-- /Header Menu -->
+    <div id="logoutt" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Description for your work </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="logout.php">
+                        <div class="form-group">
+                            <label>Prject Work on <span class="text-danger">*</span></label>
+                            <select class="form-control" require name="project">
+                                <option>Select Project</option>
+                                <?php
+                                $sql = "SELECT * FROM projects";
+                                $query = $dbh->prepare($sql);
+                                $query->execute();
+                                $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                if ($query->rowCount() > 0) {
+                                    foreach ($results as $row) {
+                                ?>
+                                        <option class="" value="<?php echo $row->id ?>"><?php echo $row->ProjectName ?></option>
+                                <?php
+                                    }
+                                }
+                                ?>
 
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Leave Reason <span class="text-danger">*</span></label>
+                            <textarea rows="6" columns="6" name="description" id="form-control reason">................</textarea>
+                        </div>
+                        <div class="submit-section">
+                            <button class="btn btn-primary submit-btn" name="logoutandsave">Log out</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Mobile Menu -->
     <div class="dropdown mobile-user-menu">
-        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i
-                class="fa fa-ellipsis-v"></i></a>
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
         <div class="dropdown-menu dropdown-menu-right">
             <a class="dropdown-item" href="profile.php">My Profile</a>
             <a class="dropdown-item" href="settings.php">Settings</a>
@@ -285,3 +334,11 @@
     <!-- /Mobile Menu -->
 
 </div>
+<script>
+    var modal = document.querySelector('.modal-backdrop');
+    var desprojectbutton = document.querySelector('.desprojectbutton');
+    desprojectbutton.addEventListener('click', function() {
+
+        modal.classList.remove(...modal.classList);
+    })
+</script>

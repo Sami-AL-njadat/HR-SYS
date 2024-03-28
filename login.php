@@ -1,29 +1,43 @@
 <?php
 session_start();
-error_reporting(0);
+// error_reporting(0);
 include_once("includes/config.php");
 
 
-if ($_SESSION['userlogin'] > 0) {
+if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
     header('location:index.php');
-} elseif (isset($_POST['login'])) {
-    $_SESSION['userlogin'] = $_POST['username'];
+} elseif (isset($_POST['username'])) {
+    echo "tttttttttttttttttttttttttttttttttttttttttt";
     $username = htmlspecialchars($_POST['username']);
     $password = htmlspecialchars($_POST['password']);
-    $sql = "SELECT UserName,Password from users where UserName=:username";
+    $sql = "SELECT * from users where UserName=:username";
     $query = $dbh->prepare($sql);
     $query->bindParam(':username', $username, PDO::PARAM_STR);
     $query->execute();
     $results = $query->fetchAll(PDO::FETCH_OBJ);
-
+    print_r($results);
     if ($query->rowCount() > 0) {
         foreach ($results as $row) {
             $hashpass = $row->Password;
-        } //verifying Password
+            $userid = $row->id;
+
+            $_SESSION['userlogin'] = $row->role;
+            $_SESSION['userid'] = $row->id;
+        }
         if (password_verify($password, $hashpass)) {
-            $_SESSION['userlogin'] = $_POST['username'];
+
+
+            $current_datetime1 = date('Y-m-d H:i:s');
+            $current_datetime = date('Y-m-d H:i:s', strtotime($current_datetime1 . ' +2 hours'));
+            $sql = "INSERT INTO timesheet (employeeId, start,login_date) VALUES (:userid, :current_datetime,:current_datetime)";
+            $query = $dbh->prepare($sql);
+            $query->bindParam(':userid', $userid, PDO::PARAM_STR);
+            $query->bindParam(':current_datetime', $current_datetime, PDO::PARAM_STR);
+            $query->execute();
+
             echo "<script>window.location.href= 'index.php'; </script>";
         } else {
+
             $wrongpassword = '
 				<div class="alert alert-danger alert-dismissible fade show" role="alert">
 				<strong>Oh Snapp!😕</strong> Alert <b class="alert-link">Password: </b>You entered wrong password.
@@ -43,6 +57,8 @@ if ($_SESSION['userlogin'] > 0) {
 				</button>
 			</div>';
     }
+} else {
+    print_r('no');
 }
 ?>
 <!DOCTYPE html>
@@ -97,7 +113,7 @@ if ($_SESSION['userlogin'] > 0) {
                                 <label>User Name</label>
                                 <input class="form-control" name="username" required type="text">
                             </div>
-                            <?php if ($wrongusername) {
+                            <?php if (isset($wrongusername)) {
                                 echo $wrongusername;
                             } ?>
                             <div class="form-group">
@@ -108,7 +124,7 @@ if ($_SESSION['userlogin'] > 0) {
                                 </div>
                                 <input class="form-control" name="password" required type="password">
                             </div>
-                            <?php if ($wrongpassword) {
+                            <?php if (isset($wrongpassword)) {
                                 echo $wrongpassword;
                             } ?>
 
