@@ -7,7 +7,7 @@ include_once("includes/config.php");
 if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
     header('location:index.php');
 } elseif (isset($_POST['username'])) {
-     $username = htmlspecialchars($_POST['username']);
+    $username = htmlspecialchars($_POST['username']);
     $password = htmlspecialchars($_POST['password']);
     $sql = "SELECT * from users where UserName=:username";
     $query = $dbh->prepare($sql);
@@ -67,8 +67,7 @@ if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="Smarthr - Bootstrap Admin Template">
-    <meta name="keywords"
-        content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
     <title>Login - HRMS admin</title>
@@ -138,9 +137,7 @@ if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
                             </div>
 
                             <div class="account-footer">
-                                <p>Having Trouble? report an issue on github <a
-                                        target="https://github.com/MusheAbdulHakim/Smarthr---hr-payroll-project-employee-management-System/issues"
-                                        href="https://github.com/MusheAbdulHakim/Smarthr---hr-payroll-project-employee-management-System/issues">Github
+                                <p>Having Trouble? report an issue on github <a target="https://github.com/MusheAbdulHakim/Smarthr---hr-payroll-project-employee-management-System/issues" href="https://github.com/MusheAbdulHakim/Smarthr---hr-payroll-project-employee-management-System/issues">Github
                                         issues</a></p>
                             </div>
                         </form>
