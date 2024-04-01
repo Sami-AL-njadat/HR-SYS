@@ -74,7 +74,6 @@ if (strlen($_SESSION['userlogin']) == 0) {
 					</div>
 				</div>
 				<!-- /Page Header -->
-
 				<div class="row">
 					<?php
 					$sql = "SELECT id from projects";
@@ -94,6 +93,8 @@ if (strlen($_SESSION['userlogin']) == 0) {
 							</div>
 						</div>
 					</div>
+					<?php
+					?>
 					<?php
 					$sql = "SELECT id from clients";
 					$query = $dbh->prepare($sql);

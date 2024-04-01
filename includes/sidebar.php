@@ -26,6 +26,13 @@
 						<li><a href="designations.php">Designations</a></li>
 						<li><a href="timesheet.php">Timesheet</a></li>
 						<li><a href="overtime.php">Overtime</a></li>
+						<?php
+						if ($_SESSION['userlogin'] == 1) {
+						?>
+							<li><a href="userRole.php">User Role</a></li>
+						<?php
+						}
+						?>
 					</ul>
 				</li>
 				<li>

@@ -4,11 +4,17 @@ session_start();
 include("includes/config.php");
 
 if (isset($_POST['logoutandsave'])) {
+    print_r($_POST);
+    print_r($_SESSION);
     $Projectid = $_POST['project'];
     $Description = $_POST['description'];
     $current_datetime = date('Y-m-d H:i:s');
     $end_datetime = date('Y-m-d H:i:s', strtotime($current_datetime . ' +2 hours'));
-    $userid = $_SESSION['userid'];
+    if ($_SESSION['userid']) {
+        $userid = $_SESSION['userid'];
+    } else {
+        $userid = $_SESSION['employeeid'];
+    }
 
     $sql = "UPDATE timesheet 
     SET end = :end_datetime, 

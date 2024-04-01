@@ -690,29 +690,7 @@ elseif (isset($_POST['add_employee'])) {
 } //ading employees code eds here
 
 //employee overtime code begins here
-elseif (isset($_POST['add_overtime'])) {
-	$employee = htmlspecialchars($_POST['employee']);
-	$ovtime_date = htmlspecialchars($_POST['ov_date']);
-	$overtime_hours = htmlspecialchars($_POST['ov_hours']);
-	$overtime_type = htmlspecialchars($_POST['ov_type']);
-	$description = htmlspecialchars($_POST['description']);
-	$sql = "INSERT INTO `overtime` ( `Employee`, `OverTime_Date`, `Hours`, `Type`, `Description`) 
-		VALUES ( :name, :date, :hours,:type, :description)";
-	$query = $dbh->prepare($sql);
-	$query->bindParam(':name', $employee, PDO::PARAM_STR);
-	$query->bindParam(':date', $ovtime_date, PDO::PARAM_STR);
-	$query->bindParam(':hours', $overtime_hours, PDO::PARAM_STR);
-	$query->bindParam(':type', $overtime_type, PDO::PARAM_STR);
-	$query->bindParam(':description', $description, PDO::PARAM_STR);
-	$query->execute();
-	$lastInsert = $dbh->lastInsertId();
-	if ($lastInsert > 0) {
-		echo "<script>alert('Employee Overtime Has Been Added');</script>";
-		echo "<script>window.location.href='overtime.php';</script>";
-	} else {
-		echo "<script>alert('Somthing Went Wrong');</script>";
-	}
-}
+
 //adding employees leave code starts here
 elseif (isset($_POST['add_leave'])) {
 	$employee = htmlspecialchars($_POST['employee']);

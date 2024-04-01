@@ -4,7 +4,7 @@ $current_datetime = date('Y-m-d H:i:s');
 
 print_r($updated_datetime = date('Y-m-d H:i:s', strtotime($current_datetime . ' +2 hours')));
 session_start();
-// error_reporting(0);
+error_reporting(0);
 include_once('includes/config.php');
 include_once("includes/functions.php");
 if (strlen($_SESSION['userlogin']) == 0) {
@@ -129,12 +129,23 @@ if (strlen($_SESSION['userlogin']) == 0) {
 										<th>To</th>
 										<th>No of Days</th>
 										<th>Reason</th>
-										<th class="text-right">Actions</th>
+										<th>DESCRIPTION</th>
+
+										<th>status</th>
+
+
 									</tr>
 								</thead>
 								<?php
-								$sql = "SELECT * FROM leaves";
-								$query = $dbh->prepare($sql);
+								if ($_SESSION['userlogin'] == 1) {
+									$sql = "SELECT * FROM leaves";
+									$query = $dbh->prepare($sql);
+								} else {
+									$userName =  $_SESSION['FirstName'] . " " . $_SESSION['LastName'];
+									$sql = "SELECT * FROM leaves WHERE Employee= :userName";
+									$query = $dbh->prepare($sql);
+									$query->bindParam(':userName', $userName, PDO::PARAM_STR);
+								}
 								$query->execute();
 								$results = $query->fetchAll(PDO::FETCH_OBJ);
 								$cnt = 1;
@@ -147,19 +158,53 @@ if (strlen($_SESSION['userlogin']) == 0) {
 												<td><?php echo htmlentities($row->Starting_At); ?></td>
 												<td><?php echo htmlentities($row->Ending_On); ?></td>
 												<td><?php echo htmlentities($row->dayscount); ?></td>
+												<td><?php echo htmlentities($row->dayscount); ?></td>
 												<td><?php echo htmlentities($row->Reason); ?></td>
+												<?php
+												if ($_SESSION['userlogin'] == 1) {
+												?>
+													<td>
+														<div class="dropdown action-label">
+															<a class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-id="<?php echo htmlentities($row->id); ?>" href="#" data-toggle="dropdown" aria-expanded="false">
+																<?php
+																if ($row->status == 0) {
 
-												<td class="text-right">
-													<div class="dropdown dropdown-action">
-														<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-														<div class="dropdown-menu dropdown-menu-right">
-															<a class="dropdown-item  editButton" href="#" data-id="<?php echo htmlentities($row->id); ?>" data-toggle="modal" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-															<!-- <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a> -->
-															<a class="dropdown-item deletmodel delete-leave" href="#" data-id="<?php echo htmlentities($row->id); ?>" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+																	echo '<i class="fa fa-dot-circle-o text-danger"></i> Inactive';
+																} else {
+																	echo '<i class="fa fa-dot-circle-o text-success"></i> Active';
+																}
+																?>
+															</a>
+															<div class="dropdown-menu">
+																<a class="dropdown-item" href="#" data-id="<?php echo htmlentities($row->id); ?>" onclick="changeStatus(this, 'Active')"><i class="fa fa-dot-circle-o text-success"></i> Active</a>
+																<a class="dropdown-item" href="#" data-id="<?php echo htmlentities($row->id); ?>" onclick="changeStatus(this, 'Inactive')"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a>
+															</div>
+														</div>
+													</td>
+												<?php
+												} else {
+												?>
+
+													<td>
+														<div class="dropdown action-label">
+															<a class="btn btn-white btn-sm btn-rounded " data-id="<?php echo htmlentities($row->id); ?>" href="#" data-toggle="dropdown" aria-expanded="false">
+																<?php
+																if ($row->status == 0) {
+
+																	echo '<i class="fa fa-dot-circle-o text-danger"></i> reject';
+																} elseif ($row->status == 2) {
+																	echo '<i class="fa fa-dot-circle-o text-warning"></i> pending';
+																} else {
+																	echo '<i class="fa fa-dot-circle-o text-success"></i> approved';
+																}
+																?>
+															</a>
 
 														</div>
-													</div>
-												</td>
+													</td>
+												<?php } ?>
+
+
 											</tr>
 
 										</tbody>
@@ -170,6 +215,7 @@ if (strlen($_SESSION['userlogin']) == 0) {
 						</div>
 					</div>
 				</div>
+
 			</div>
 			<!-- /Page Content -->
 
@@ -275,7 +321,29 @@ if (strlen($_SESSION['userlogin']) == 0) {
 
 	<!-- Custom JS -->
 	<script src="assets/js/app.js"></script>
+	<script>
+		function changeStatus(element, status) {
+			var dropdownToggle = $(element).closest('.dropdown').find('.dropdown-toggle');
+			var newText = status === 'Active' ? '<i class="fa fa-dot-circle-o text-success"></i> Active' : '<i class="fa fa-dot-circle-o text-danger"></i> Inactive';
+			dropdownToggle.html(newText);
+			var leaveid = $(element).data('id')
 
+			$.ajax({
+				url: '/HR-SYS/includes/modals/leave/changestatusofleave.php',
+				type: 'POST',
+				data: {
+					status: status,
+					id: leaveid
+				},
+				success: function(response) {
+					console.log('Status changed successfully:', response);
+				},
+				error: function(xhr, status, error) {
+					console.error('Error changing status:', error);
+				}
+			});
+		}
+	</script>
 </body>
 
 </html>

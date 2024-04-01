@@ -9,22 +9,45 @@
 			</div>
 			<div class="modal-body">
 				<form method="POST">
-					<div class="form-group">
-						<label>Employee Leaving <span class="text-danger">*</span></label>
-						<select name="employee" class="select">
-							<option>Select Employee</option>
-							<?php
-							$sql2 = "SELECT * from employees";
-							$query2 = $dbh->prepare($sql2);
-							$query2->execute();
-							$result2 = $query2->fetchAll(PDO::FETCH_OBJ);
-							foreach ($result2 as $row) {
-							?>
-								<option value="<?php echo htmlentities($row->FirstName) . " " . htmlentities($row->LastName); ?>">
-									<?php echo htmlentities($row->FirstName) . " " . htmlentities($row->LastName); ?></option>
-							<?php } ?>
+					<?php
+					if ($_SESSION['userlogin'] == 1) {
+					?>
+
+						<div class="form-group">
+
+							<label>Employee Leaving <span class="text-danger">*</span></label>
+
+							<select name="employee" class="select">
+								<option>Select Employee</option>
+								<?php
+								$sql2 = "SELECT * from employees";
+								$query2 = $dbh->prepare($sql2);
+								$query2->execute();
+								$result2 = $query2->fetchAll(PDO::FETCH_OBJ);
+								foreach ($result2 as $row) {
+								?>
+									<option value="<?php echo htmlentities($row->FirstName) . " " . htmlentities($row->LastName); ?>">
+										<?php echo htmlentities($row->FirstName) . " " . htmlentities($row->LastName); ?></option>
+								<?php } ?>
+							</select>
+						</div>
+					<?php
+					} else {
+
+						$userName =  $_SESSION['FirstName'] . " " . $_SESSION['LastName'];
+
+					?>
+						<select name="employee" class="	" style="display: none;">
+
+							<option style="display: none !impo;" selected value="<?php echo $userName
+																					?>"> <?php echo $userName ?></option>
 						</select>
-					</div>
+
+
+					<?php
+					}
+
+					?>
 					<div class="form-group">
 						<label>From <span class="text-danger">*</span></label>
 						<input name="starting_at" class="form-control" type="date">

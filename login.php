@@ -14,17 +14,28 @@ if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
     $query->bindParam(':username', $username, PDO::PARAM_STR);
     $query->execute();
     $results = $query->fetchAll(PDO::FETCH_OBJ);
-<<<<<<< HEAD
-=======
-    // print_r($results);
->>>>>>> 132c8be465979ebf7e9a992211c6a057d2036225
+    $admin = 1;
+    if ($query->rowCount() == 0) {
+        $admin = 0;
+        $sql = "SELECT * from employees where UserName=:username";
+        $query = $dbh->prepare($sql);
+        $query->bindParam(':username', $username, PDO::PARAM_STR);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_OBJ);
+    }
     if ($query->rowCount() > 0) {
         foreach ($results as $row) {
             $hashpass = $row->Password;
             $userid = $row->id;
+            if ($admin) {
 
-            $_SESSION['userlogin'] = $row->role;
-            $_SESSION['userid'] = $row->id;
+                $_SESSION['userlogin'] = $row->role;
+            } else {
+                $_SESSION['userlogin'] = $row->role;
+            }
+            $_SESSION['employeeid'] = $row->id;
+            $_SESSION['FirstName'] = $row->FirstName;
+            $_SESSION['LastName'] = $row->LastName;
         }
         if (password_verify($password, $hashpass)) {
 
@@ -70,8 +81,7 @@ if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="Smarthr - Bootstrap Admin Template">
-    <meta name="keywords"
-        content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
     <title>Login - HRMS admin</title>
@@ -141,9 +151,7 @@ if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
                             </div>
 
                             <div class="account-footer">
-                                <p>Having Trouble? report an issue on github <a
-                                        target="https://github.com/MusheAbdulHakim/Smarthr---hr-payroll-project-employee-management-System/issues"
-                                        href="https://github.com/MusheAbdulHakim/Smarthr---hr-payroll-project-employee-management-System/issues">Github
+                                <p>Having Trouble? report an issue on github <a target="https://github.com/MusheAbdulHakim/Smarthr---hr-payroll-project-employee-management-System/issues" href="https://github.com/MusheAbdulHakim/Smarthr---hr-payroll-project-employee-management-System/issues">Github
                                         issues</a></p>
                             </div>
                         </form>
