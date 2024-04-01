@@ -311,59 +311,6 @@ elseif (isset($_POST['edit_employee'])) {
 
 
 
-//adding of goal types stats here
-elseif (isset($_POST['add_goal_type'])) {
-	$type = htmlspecialchars($_POST['type']);
-	$description = htmlspecialchars($_POST['description']);
-	$status = htmlspecialchars($_POST['status']);
-	$sql = "INSERT INTO `goal_type` ( `Type`, `Description`, `Status`) 
-		VALUES (:type, :description, :status)";
-	$query = $dbh->prepare($sql);
-	$query->bindParam(':type', $type, PDO::PARAM_STR);
-	$query->bindParam(':description', $description, PDO::PARAM_STR);
-	$query->bindParam(':status', $status, PDO::PARAM_STR);
-	$query->execute();
-	$lastinserted = $dbh->lastInsertId();
-	if ($lastinserted > 0) {
-		echo "<script>alert('Goal Type Has Been Added');</script>";
-		echo "<script>window.location.href='goal-type.php';</script>";
-	} else {
-		echo "<script>alert('Something Went Wrong.Re-check goal type may already exist');</script>";
-	}
-}
-//goal type adding code ends here.
-
-//adding of goal tracking code starts here
-elseif (isset($_POST['add_goal'])) {
-	$type = htmlspecialchars($_POST['goal_type']);
-	$subject = htmlspecialchars($_POST['subject']);
-	$target = htmlspecialchars($_POST['target']);
-	$start = htmlspecialchars($_POST['start_date']);
-	$end = htmlspecialchars($_POST['end_date']);
-	$description = htmlspecialchars($_POST['description']);
-	$status = htmlspecialchars($_POST['status']);
-	$progress = htmlspecialchars($_POST['progress']);
-	$sql = "INSERT INTO `goals` ( `Type`, `Subject`, `Target`, `StartDate`, `EndDate`, `Description`, `Status`,`progress`) 
-		VALUES (:type,:subject,:target,:start,:end, :description, :status,:progress)";
-	$query = $dbh->prepare($sql);
-	$query->bindParam(':type', $type, PDO::PARAM_STR);
-	$query->bindParam(':subject', $subject, PDO::PARAM_STR);
-	$query->bindParam(':target', $target, PDO::PARAM_STR);
-	$query->bindParam(':start', $start, PDO::PARAM_STR);
-	$query->bindParam(':end', $end, PDO::PARAM_STR);
-	$query->bindParam(':description', $description, PDO::PARAM_STR);
-	$query->bindParam(':status', $status, PDO::PARAM_STR);
-	$query->bindParam(':progress', $progress, PDO::PARAM_STR);
-	$query->execute();
-	$lastinserted = $dbh->lastInsertId();
-	if ($lastinserted > 0) {
-		echo "<script>alert('Goal Has Been Added');</script>";
-		echo "<script>window.location.href='goal-tracking.php';</script>";
-	} else {
-		echo "<script>alert('Something Went Wrong.Re-check goal type may already exist');</script>";
-	}
-}
-//goal tracking code ends here
 
 //client adding code starts here
 // Check if the form is submitted

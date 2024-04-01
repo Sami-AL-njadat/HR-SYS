@@ -178,18 +178,18 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                                 <td><?php echo "$" . htmlentities($row->Price); ?></td>
                                                 <td class="text-center">
                                                     <div class="dropdown action-label">
-                                                        <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                                                        <a class="btn btn-white btn-sm btn-rounded " href="#" data-toggle="dropdown" aria-expanded="false">
                                                             <?php
                                                             $status = '';
                                                             switch ($row->Status) {
                                                                 case 0:
-                                                                    $status = 'Pending';
+                                                                    $status = 'New';
                                                                     break;
                                                                 case 1:
-                                                                    $status = 'Approved';
+                                                                    $status = 'Used';
                                                                     break;
                                                                 case 2:
-                                                                    $status = 'Deployed';
+                                                                    $status = 'Maintenance';
                                                                     break;
                                                                 case 3:
                                                                     $status = 'Damaged';

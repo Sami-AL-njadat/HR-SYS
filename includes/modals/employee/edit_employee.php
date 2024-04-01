@@ -1,9 +1,3 @@
-<?php
-session_start();
-foreach ($_SESSION as $key => $value) {
-	echo "$key: $value <br>";
-}
-?>
 <div id="edit_employee" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -64,8 +58,7 @@ foreach ($_SESSION as $key => $value) {
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
-                                <div class=""><input id="joining_date" name="joining_date" class="form-control"
-                                        type="date"></div>
+                                <div class=""><input id="joining_date" name="joining_date" class="form-control" type="date"></div>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -78,29 +71,29 @@ foreach ($_SESSION as $key => $value) {
                             <div class="form-group">
                                 <label class="col-form-label">Departments</label>
                                 <!-- <?php
-										// $dsepartment_From_Seseion = $_SESSION['department_e'];
-										?> -->
+                                        // $dsepartment_From_Seseion = $_SESSION['department_e'];
+                                        ?> -->
                                 <select class="form-control	" name="Department_e">
                                     <?php
 
 
-									$sql = "SELECT * FROM departments";
-									$query = $dbh->prepare($sql);
-									$query->execute();
-									$results = $query->fetchAll(PDO::FETCH_OBJ);
-									$cnt = 1;
-									if ($query->rowCount() > 0) {
-										foreach ($results as $row) {
+                                    $sql = "SELECT * FROM departments";
+                                    $query = $dbh->prepare($sql);
+                                    $query->execute();
+                                    $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                    $cnt = 1;
+                                    if ($query->rowCount() > 0) {
+                                        foreach ($results as $row) {
 
-									?>
+                                    ?>
 
-                                    <option><?php echo $row->Department ?></option>
+                                            <option><?php echo $row->Department ?></option>
 
 
 
 
                                     <?php }
-									} ?>
+                                    } ?>
                                 </select>
                             </div>
                         </div>
@@ -123,23 +116,23 @@ foreach ($_SESSION as $key => $value) {
 
 
 
-									$sql = "SELECT * FROM designations";
-									$query = $dbh->prepare($sql);
-									$query->execute();
-									$results = $query->fetchAll(PDO::FETCH_OBJ);
-									$cnt = 1;
-									if ($query->rowCount() > 0) {
-										foreach ($results as $row) {
+                                    $sql = "SELECT * FROM designations";
+                                    $query = $dbh->prepare($sql);
+                                    $query->execute();
+                                    $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                    $cnt = 1;
+                                    if ($query->rowCount() > 0) {
+                                        foreach ($results as $row) {
 
-									?>
+                                    ?>
 
-                                    <option class="designation_e"><?php echo $row->Designation  ?></option>
+                                            <option class="designation_e"><?php echo $row->Designation  ?></option>
 
 
 
 
                                     <?php }
-									} ?>
+                                    } ?>
                                 </select>
                             </div>
                         </div>

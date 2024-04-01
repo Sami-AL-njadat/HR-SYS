@@ -3,7 +3,7 @@ session_start();
 error_reporting(0);
 include('includes/config.php');
 if (strlen($_SESSION['userlogin']) == 0) {
-	header('location:login.php');
+    header('location:login.php');
 }
 ?>
 <!DOCTYPE html>
@@ -144,30 +144,30 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                 </thead>
                                 <tbody>
                                     <?php
-									$sql = "SELECT * FROM projects";
-									$query = $dbh->prepare($sql);
-									$query->execute();
-									$projects = $query->fetchAll(PDO::FETCH_ASSOC);
+                                    $sql = "SELECT * FROM projects";
+                                    $query = $dbh->prepare($sql);
+                                    $query->execute();
+                                    $projects = $query->fetchAll(PDO::FETCH_ASSOC);
 
-									if ($query->rowCount() > 0) {
-										foreach ($projects as $row) {
-											// Fetch project leader's information
-											$projectLeaderId = $row['ProjectLeaderId'];
-											$sqlLeader = "SELECT * FROM employees WHERE id = :leaderId";
-											$queryLeader = $dbh->prepare($sqlLeader);
-											$queryLeader->bindParam(':leaderId', $projectLeaderId, PDO::PARAM_INT);
-											$queryLeader->execute();
-											$projectLeader = $queryLeader->fetch(PDO::FETCH_ASSOC);
+                                    if ($query->rowCount() > 0) {
+                                        foreach ($projects as $row) {
+                                            // Fetch project leader's information
+                                            $projectLeaderId = $row['ProjectLeaderId'];
+                                            $sqlLeader = "SELECT * FROM employees WHERE id = :leaderId";
+                                            $queryLeader = $dbh->prepare($sqlLeader);
+                                            $queryLeader->bindParam(':leaderId', $projectLeaderId, PDO::PARAM_INT);
+                                            $queryLeader->execute();
+                                            $projectLeader = $queryLeader->fetch(PDO::FETCH_ASSOC);
 
-											// Fetch team members' information
-											$projectId = $row['id'];
-											$sqlTeam = "SELECT * FROM teams JOIN employees ON teams.EmployeeId = employees.id WHERE teams.ProjectId = :projectId";
-											$queryTeam = $dbh->prepare($sqlTeam);
-											$queryTeam->bindParam(':projectId', $projectId, PDO::PARAM_INT);
-											$queryTeam->execute();
-											$teamMembers = $queryTeam->fetchAll(PDO::FETCH_ASSOC);
-											$totalTeamMembers = count($teamMembers);
-									?>
+                                            // Fetch team members' information
+                                            $projectId = $row['id'];
+                                            $sqlTeam = "SELECT * FROM teams JOIN employees ON teams.EmployeeId = employees.id WHERE teams.ProjectId = :projectId";
+                                            $queryTeam = $dbh->prepare($sqlTeam);
+                                            $queryTeam->bindParam(':projectId', $projectId, PDO::PARAM_INT);
+                                            $queryTeam->execute();
+                                            $teamMembers = $queryTeam->fetchAll(PDO::FETCH_ASSOC);
+                                            $totalTeamMembers = count($teamMembers);
+                                    ?>
                                     <tr>
                                         <td>
                                             <a href="project-view.php"><?php echo $row['ProjectName']; ?></a>
@@ -214,7 +214,7 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                         <td>
                                             <div class="dropdown action-label">
                                                 <!-- Priority dropdown -->
-                                                <a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                                                <a href="" class="btn btn-white btn-sm btn-rounded "
                                                     data-toggle="dropdown" aria-expanded="false"><i
                                                         class="fa fa-dot-circle-o text-danger"></i> High </a>
                                                 <div class="dropdown-menu">
@@ -231,7 +231,7 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                         <td>
                                             <div class="dropdown action-label">
                                                 <!-- Status dropdown -->
-                                                <a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                                                <a href="" class="btn btn-white btn-sm btn-rounded "
                                                     data-toggle="dropdown" aria-expanded="false"><i
                                                         class="fa fa-dot-circle-o text-success"></i> Active </a>
                                                 <div class="dropdown-menu">
@@ -258,8 +258,8 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                         </td>
                                     </tr>
                                     <?php
-										}
-									} ?>
+                                        }
+                                    } ?>
                                 </tbody>
                             </table>
                         </div>

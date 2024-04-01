@@ -7,8 +7,7 @@ include_once("includes/config.php");
 if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
     header('location:index.php');
 } elseif (isset($_POST['username'])) {
-    echo "tttttttttttttttttttttttttttttttttttttttttt";
-    $username = htmlspecialchars($_POST['username']);
+     $username = htmlspecialchars($_POST['username']);
     $password = htmlspecialchars($_POST['password']);
     $sql = "SELECT * from users where UserName=:username";
     $query = $dbh->prepare($sql);
