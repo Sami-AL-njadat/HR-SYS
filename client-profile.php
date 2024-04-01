@@ -160,347 +160,118 @@ if (strlen($_SESSION['userlogin']) == 0) {
                             <ul class="nav nav-tabs nav-tabs-bottom">
                                 <li class="nav-item col-sm-3"><a class="nav-link active" data-toggle="tab"
                                         href="#myprojects">Projects</a></li>
-                                <li class="nav-item col-sm-3"><a class="nav-link" data-toggle="tab"
-                                        href="#tasks">Tasks</a></li>
+                                <!-- <li class="nav-item col-sm-3"><a class="nav-link" data-toggle="tab" href="#tasks">Tasks</a></li> -->
                             </ul>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="tab-content profile-tab-content">
+                    <?php
+                    if (isset($_GET['id'])) {
+                        $clientId = intval($_GET['id']);
+                        $sql = "SELECT * FROM projects WHERE ClientId = :id";
+                        $query = $dbh->prepare($sql);
+                        $query->bindParam(':id', $clientId, PDO::PARAM_INT);
+                        $query->execute();
+                        $projects = $query->fetchAll(PDO::FETCH_ASSOC);
 
-                            <!-- Projects Tab -->
-                            <div id="myprojects" class="tab-pane fade show active">
-                                <div class="row">
-                                    <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="dropdown profile-action">
-                                                    <a href="#" class="action-icon dropdown-toggle"
-                                                        data-toggle="dropdown" aria-expanded="false"><i
-                                                            class="material-icons">more_vert</i></a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#" data-toggle="modal"
-                                                            data-target="#edit_project"><i
-                                                                class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                        <a class="dropdown-item" href="#" data-toggle="modal"
-                                                            data-target="#delete_project"><i
-                                                                class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                                    </div>
-                                                </div>
-                                                <h4 class="project-title"><a href="project-view.php">Office
-                                                        Management</a></h4>
-                                                <small class="block text-ellipsis m-b-15">
-                                                    <span class="text-xs">1</span> <span class="text-muted">open tasks,
-                                                    </span>
-                                                    <span class="text-xs">9</span> <span class="text-muted">tasks
-                                                        completed</span>
-                                                </small>
-                                                <p class="text-muted">Lorem Ipsum is simply dummy text of the printing
-                                                    and
-                                                    typesetting industry. When an unknown printer took a galley of type
-                                                    and
-                                                    scrambled it...
-                                                </p>
-                                                <div class="pro-deadline m-b-15">
-                                                    <div class="sub-title">
-                                                        Deadline:
-                                                    </div>
-                                                    <div class="text-muted">
-                                                        17 Apr 2019
-                                                    </div>
-                                                </div>
-                                                <div class="project-members m-b-15">
-                                                    <div>Project Leader :</div>
-                                                    <ul class="team-members">
-                                                        <li>
-                                                            <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img
-                                                                    alt="" src="assets/img/profiles/avatar-16.jpg"></a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="project-members m-b-15">
-                                                    <div>Team :</div>
-                                                    <ul class="team-members">
-                                                        <li>
-                                                            <a href="#" data-toggle="tooltip" title="John Doe"><img
-                                                                    alt="" src="assets/img/profiles/avatar-02.jpg"></a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" data-toggle="tooltip" title="Richard Miles"><img
-                                                                    alt="" src="assets/img/profiles/avatar-09.jpg"></a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" data-toggle="tooltip" title="John Smith"><img
-                                                                    alt="" src="assets/img/profiles/avatar-10.jpg"></a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" data-toggle="tooltip" title="Mike Litorus"><img
-                                                                    alt="" src="assets/img/profiles/avatar-05.jpg"></a>
-                                                        </li>
-                                                        <li class="dropdown avatar-dropdown">
-                                                            <a href="#" class="all-users dropdown-toggle"
-                                                                data-toggle="dropdown" aria-expanded="false">+15</a>
-                                                            <div class="dropdown-menu dropdown-menu-right">
-                                                                <div class="avatar-group">
-                                                                    <a class="avatar avatar-xs" href="#">
-                                                                        <img alt=""
-                                                                            src="assets/img/profiles/avatar-02.jpg">
-                                                                    </a>
-                                                                    <a class="avatar avatar-xs" href="#">
-                                                                        <img alt=""
-                                                                            src="assets/img/profiles/avatar-09.jpg">
-                                                                    </a>
-                                                                    <a class="avatar avatar-xs" href="#">
-                                                                        <img alt=""
-                                                                            src="assets/img/profiles/avatar-10.jpg">
-                                                                    </a>
-                                                                    <a class="avatar avatar-xs" href="#">
-                                                                        <img alt=""
-                                                                            src="assets/img/profiles/avatar-05.jpg">
-                                                                    </a>
-                                                                    <a class="avatar avatar-xs" href="#">
-                                                                        <img alt=""
-                                                                            src="assets/img/profiles/avatar-11.jpg">
-                                                                    </a>
-                                                                    <a class="avatar avatar-xs" href="#">
-                                                                        <img alt=""
-                                                                            src="assets/img/profiles/avatar-12.jpg">
-                                                                    </a>
-                                                                    <a class="avatar avatar-xs" href="#">
-                                                                        <img alt=""
-                                                                            src="assets/img/profiles/avatar-13.jpg">
-                                                                    </a>
-                                                                    <a class="avatar avatar-xs" href="#">
-                                                                        <img alt=""
-                                                                            src="assets/img/profiles/avatar-01.jpg">
-                                                                    </a>
-                                                                    <a class="avatar avatar-xs" href="#">
-                                                                        <img alt=""
-                                                                            src="assets/img/profiles/avatar-16.jpg">
-                                                                    </a>
-                                                                </div>
-                                                                <div class="avatar-pagination">
-                                                                    <ul class="pagination">
-                                                                        <li class="page-item">
-                                                                            <a class="page-link" href="#"
-                                                                                aria-label="Previous">
-                                                                                <span aria-hidden="true">«</span>
-                                                                                <span class="sr-only">Previous</span>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li class="page-item"><a class="page-link"
-                                                                                href="#">1</a></li>
-                                                                        <li class="page-item"><a class="page-link"
-                                                                                href="#">2</a></li>
-                                                                        <li class="page-item">
-                                                                            <a class="page-link" href="#"
-                                                                                aria-label="Next">
-                                                                                <span aria-hidden="true">»</span>
-                                                                                <span class="sr-only">Next</span>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <p class="m-b-5">Progress <span
-                                                        class="text-success float-right">40%</span></p>
-                                                <div class="progress progress-xs mb-0">
-                                                    <div class="progress-bar bg-success" role="progressbar"
-                                                        data-toggle="tooltip" title="40%" style="width: 40%"></div>
-                                                </div>
-                                            </div>
-                                        </div>
+                        if ($query->rowCount() > 0) {
+                            foreach ($projects as $project) {
+                                // Fetch project leader's information
+                                $projectLeaderId = $project['ProjectLeaderId'];
+                                $sqlLeader = "SELECT * FROM employees WHERE id = :leaderId";
+                                $queryLeader = $dbh->prepare($sqlLeader);
+                                $queryLeader->bindParam(':leaderId', $projectLeaderId, PDO::PARAM_INT);
+                                $queryLeader->execute();
+                                $projectLeader = $queryLeader->fetch(PDO::FETCH_ASSOC);
+
+                                // Fetch team members' information
+                                $projectId = $project['id'];
+                                $sqlTeam = "SELECT * FROM teams JOIN employees ON teams.EmployeeId = employees.id WHERE teams.ProjectId = :projectId";
+                                $queryTeam = $dbh->prepare($sqlTeam);
+                                $queryTeam->bindParam(':projectId', $projectId, PDO::PARAM_INT);
+                                $queryTeam->execute();
+                                $teamMembers = $queryTeam->fetchAll(PDO::FETCH_ASSOC);
+                                $totalTeamMembers = count($teamMembers);
+                    ?>
+                    <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h4 class="project-title"><a
+                                        href="project-view.php?id=<?php echo $project['id']; ?>"><?php echo $project['ProjectName']; ?></a>
+                                </h4>
+
+                                <p class="text-muted"><?php echo $project["Description"]; ?></p>
+                                <div class="pro-deadline m-b-15">
+                                    <div class="sub-title">
+                                        Deadline:
                                     </div>
-
-
+                                    <div class="text-muted">
+                                        <?php echo $project['EndDate']; ?>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- /Projects Tab -->
-
-                            <!-- Task Tab -->
-                            <!-- <div id="tasks" class="tab-pane fade">
-                                <div class="project-task">
-                                    <ul class="nav nav-tabs nav-tabs-top nav-justified mb-0">
-                                        <li class="nav-item"><a class="nav-link active" href="#all_tasks" data-toggle="tab" aria-expanded="true">All Tasks</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#pending_tasks" data-toggle="tab" aria-expanded="false">Pending Tasks</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#completed_tasks" data-toggle="tab" aria-expanded="false">Completed Tasks</a></li>
-                                    </ul> -->
-                            <!-- <div class="tab-content"> -->
-                            <!-- <div class="tab-pane show active" id="all_tasks">
-                                            <div class="task-wrapper">
-                                                <div class="task-list-container">
-                                                    <div class="task-list-body">
-                                                        <ul id="task-list">
-                                                            <li class="task">
-                                                                <div class="task-container">
-                                                                    <span class="task-action-btn task-check">
-                                                                        <span class="action-circle large complete-btn"
-                                                                            title="Mark Complete">
-                                                                            <i class="material-icons">check</i>
-                                                                        </span>
-                                                                    </span>
-                                                                    <span class="task-label"
-                                                                        contenteditable="true">Patient appointment
-                                                                        booking</span>
-                                                                    <span class="task-action-btn task-btn-right">
-                                                                        <span class="action-circle large"
-                                                                            title="Assign">
-                                                                            <i class="material-icons">person_add</i>
-                                                                        </span>
-                                                                        <span class="action-circle large delete-btn"
-                                                                            title="Delete Task">
-                                                                            <i class="material-icons">delete</i>
-                                                                        </span>
-                                                                    </span>
-                                                                </div>
-                                                            </li>
-                                                            <li class="task">
-                                                                <div class="task-container">
-                                                                    <span class="task-action-btn task-check">
-                                                                        <span class="action-circle large complete-btn"
-                                                                            title="Mark Complete">
-                                                                            <i class="material-icons">check</i>
-                                                                        </span>
-                                                                    </span>
-                                                                    <span class="task-label"
-                                                                        contenteditable="true">Appointment booking with
-                                                                        payment gateway</span>
-                                                                    <span class="task-action-btn task-btn-right">
-                                                                        <span class="action-circle large"
-                                                                            title="Assign">
-                                                                            <i class="material-icons">person_add</i>
-                                                                        </span>
-                                                                        <span class="action-circle large delete-btn"
-                                                                            title="Delete Task">
-                                                                            <i class="material-icons">delete</i>
-                                                                        </span>
-                                                                    </span>
-                                                                </div>
-                                                            </li>
-                                                            <li class="completed task">
-                                                                <div class="task-container">
-                                                                    <span class="task-action-btn task-check">
-                                                                        <span class="action-circle large complete-btn"
-                                                                            title="Mark Complete">
-                                                                            <i class="material-icons">check</i>
-                                                                        </span>
-                                                                    </span>
-                                                                    <span class="task-label">Doctor available
-                                                                        module</span>
-                                                                    <span class="task-action-btn task-btn-right">
-                                                                        <span class="action-circle large"
-                                                                            title="Assign">
-                                                                            <i class="material-icons">person_add</i>
-                                                                        </span>
-                                                                        <span class="action-circle large delete-btn"
-                                                                            title="Delete Task">
-                                                                            <i class="material-icons">delete</i>
-                                                                        </span>
-                                                                    </span>
-                                                                </div>
-                                                            </li>
-                                                            <li class="task">
-                                                                <div class="task-container">
-                                                                    <span class="task-action-btn task-check">
-                                                                        <span class="action-circle large complete-btn"
-                                                                            title="Mark Complete">
-                                                                            <i class="material-icons">check</i>
-                                                                        </span>
-                                                                    </span>
-                                                                    <span class="task-label"
-                                                                        contenteditable="true">Patient and Doctor video
-                                                                        conferencing</span>
-                                                                    <span class="task-action-btn task-btn-right">
-                                                                        <span class="action-circle large"
-                                                                            title="Assign">
-                                                                            <i class="material-icons">person_add</i>
-                                                                        </span>
-                                                                        <span class="action-circle large delete-btn"
-                                                                            title="Delete Task">
-                                                                            <i class="material-icons">delete</i>
-                                                                        </span>
-                                                                    </span>
-                                                                </div>
-                                                            </li>
-                                                            <li class="task">
-                                                                <div class="task-container">
-                                                                    <span class="task-action-btn task-check">
-                                                                        <span class="action-circle large complete-btn"
-                                                                            title="Mark Complete">
-                                                                            <i class="material-icons">check</i>
-                                                                        </span>
-                                                                    </span>
-                                                                    <span class="task-label"
-                                                                        contenteditable="true">Private chat
-                                                                        module</span>
-                                                                    <span class="task-action-btn task-btn-right">
-                                                                        <span class="action-circle large"
-                                                                            title="Assign">
-                                                                            <i class="material-icons">person_add</i>
-                                                                        </span>
-                                                                        <span class="action-circle large delete-btn"
-                                                                            title="Delete Task">
-                                                                            <i class="material-icons">delete</i>
-                                                                        </span>
-                                                                    </span>
-                                                                </div>
-                                                            </li>
-                                                            <li class="task">
-                                                                <div class="task-container">
-                                                                    <span class="task-action-btn task-check">
-                                                                        <span class="action-circle large complete-btn"
-                                                                            title="Mark Complete">
-                                                                            <i class="material-icons">check</i>
-                                                                        </span>
-                                                                    </span>
-                                                                    <span class="task-label"
-                                                                        contenteditable="true">Patient Profile
-                                                                        add</span>
-                                                                    <span class="task-action-btn task-btn-right">
-                                                                        <span class="action-circle large"
-                                                                            title="Assign">
-                                                                            <i class="material-icons">person_add</i>
-                                                                        </span>
-                                                                        <span class="action-circle large delete-btn"
-                                                                            title="Delete Task">
-                                                                            <i class="material-icons">delete</i>
-                                                                        </span>
-                                                                    </span>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="task-list-footer">
-                                                        <div class="new-task-wrapper">
-                                                            <textarea id="new-task"
-                                                                placeholder="Enter new task here. . ."></textarea>
-                                                            <span class="error-message hidden">You need to enter a task
-                                                                first</span>
-                                                            <span class="add-new-task-btn btn" id="add-task">Add
-                                                                Task</span>
-                                                            <span class="btn" id="close-task-panel">Close</span>
-                                                        </div>
-                                                    </div>
+                                <div class="project-members m-b-15">
+                                    <div>Project Leader :</div>
+                                    <ul class="team-members">
+                                        <li>
+                                            <a data-toggle="tooltip"
+                                                title="<?php echo $projectLeader['FirstName'] . ' ' . $projectLeader['LastName']; ?>">
+                                                <img alt="" src="employees/<?php echo $projectLeader['Picture']; ?>">
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="project-members m-b-15">
+                                    <div>Team :</div>
+                                    <ul class="team-members">
+                                        <?php foreach ($teamMembers as $teamMember) : ?>
+                                        <li>
+                                            <a href="#" data-toggle="tooltip"
+                                                title="<?php echo $teamMember['FirstName'] . ' ' . $teamMember['LastName']; ?>">
+                                                <img alt="" src="employees/<?php echo $teamMember['Picture']; ?>">
+                                            </a>
+                                        </li>
+                                        <?php endforeach; ?>
+                                        <?php if ($totalTeamMembers > 5) : ?>
+                                        <li class="dropdown avatar-dropdown">
+                                            <a href="#" class="all-users dropdown-toggle" data-toggle="dropdown"
+                                                aria-expanded="false">+<?php echo ($totalTeamMembers - 5); ?></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <div class="avatar-group">
+                                                    <!-- Display additional team members -->
                                                 </div>
                                             </div>
-                                        </div> -->
-                            <!-- <div class="tab-pane" id="pending_tasks"></div>
-                                        <div class="tab-pane" id="completed_tasks"></div> -->
-                            <!-- </div> -->
-                            <!-- </div> -->
-                            <!-- </div> -->
-                            <!-- /Task Tab -->
-
+                                        </li>
+                                        <?php endif; ?>
+                                    </ul>
+                                </div>
+                                <p class="m-b-5">Progress <span
+                                        class="text-success float-right"><?php echo $project['CompletionPercentage']; ?>%</span>
+                                </p>
+                                <div class="progress progress-xs mb-0">
+                                    <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip"
+                                        title="<?php echo $project['CompletionPercentage']; ?>%"
+                                        style="width: <?php echo $project['CompletionPercentage']; ?>%"></div>
+                                </div>
+                                <a href="project-view.php?id=<?php echo $project['id']; ?>"
+                                    class="btn btn-white btn-sm m-t-10">View Project</a>
+                            </div>
                         </div>
                     </div>
+                    <?php
+                            }
+                        } else {
+                            // Display a message when there are no projects for the client
+                            echo '<h2 class="col-md-12"><p>No projects yet for this client.</p></h2>';
+                        }
+                    }  ?>
                 </div>
+
             </div>
+
+
             <!-- /Page Content -->
 
         </div>

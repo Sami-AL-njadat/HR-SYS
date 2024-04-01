@@ -141,8 +141,9 @@ if (strlen($_SESSION['userlogin']) == 0) {
                         <div class="profile-widget">
                             <div class="profile-img">
                                 <!-- Display the profile image -->
-                                <a href="client-profile.php" class="avatar"><img style="width: 80px;height: 80px;"
-                                        src="<?php echo $profile_image_path; ?>" alt="Profile Picture"></a>
+                                <a href="client-profile.php?id=<?php echo $row->id; ?>" class="avatar"><img
+                                        style="width: 80px;height: 80px;" src="<?php echo $profile_image_path; ?>"
+                                        alt="Profile Picture"></a>
                             </div>
                             <div class="dropdown profile-action">
                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
@@ -163,9 +164,10 @@ if (strlen($_SESSION['userlogin']) == 0) {
 
                             </div>
                             <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a
-                                    href="client-profile.php"><?php echo htmlentities($row->Company); ?></a></h4>
+                                    href="client-profile.php?id=<?php echo $row->id; ?>"><?php echo htmlentities($row->Company); ?></a>
+                            </h4>
                             <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a
-                                    href="client-profile.php"><?php echo htmlentities(($row->FirstName) . ' ' . ($row->LastName)); ?></a>
+                                    href="client-profile.php?id=<?php echo $row->id; ?>"><?php echo htmlentities(($row->FirstName) . ' ' . ($row->LastName)); ?></a>
                             </h5>
                             <div class="small text-muted"><?php echo htmlentities($row->Phone); ?></div>
                             <a href="client-profile.php?id=<?php echo $row->id; ?>"

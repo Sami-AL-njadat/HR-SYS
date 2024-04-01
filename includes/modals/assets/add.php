@@ -21,7 +21,8 @@ $id = substr(str_shuffle($set), 0, 6); ?>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Asset Id</label>
-                                <input readonly name="asset_id" value="<?php echo '#AST-' . $id; ?>" class="form-control" type="text">
+                                <input readonly name="asset_id" value="<?php echo '#AST-' . $id; ?>"
+                                    class="form-control" type="text">
                             </div>
                         </div>
                     </div>
@@ -58,9 +59,9 @@ $id = substr(str_shuffle($set), 0, 6); ?>
                             <div class="form-group">
                                 <label>Status</label>
                                 <select name="status" class="select">
-                                    <option value="0">Pending</option>
-                                    <option value="1">Approved</option>
-                                    <option value="2">Deployed</option>
+                                    <option value="0">New</option>
+                                    <option value="1">Used</option>
+                                    <option value="2">Maintenance</option>
                                     <option value="3">Damaged</option>
                                 </select>
 

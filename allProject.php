@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 session_start();
 error_reporting(0);
 define('DB_HOST', 'localhost');
@@ -95,53 +95,15 @@ if (strlen($_SESSION['userlogin']) == 2) {
                 <div class="page-header">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h3 class="page-title">Projects</h3>
+                            <h3 class="page-title">All Projects</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="allProject.php">Dashboard</a></li>
                                 <li class="breadcrumb-item active">Projects</li>
                             </ul>
                         </div>
-                        <div class="col-auto float-right ml-auto">
-                            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_project"><i class="fa fa-plus"></i> Create Project</a>
-                            <div class="view-icons">
-                                <a href="projects.php" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                                <a href="project-list.php" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
-                <!-- /Page Header -->
-
-                <!-- Search Filter -->
-                <!-- <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <input type="text" class="form-control floating">
-                            <label class="focus-label">Project Name</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <input type="text" class="form-control floating">
-                            <label class="focus-label">Employee Name</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus select-focus">
-                            <select class="select floating">
-                                <option>Select Roll</option>
-                                <option>Web Developer</option>
-                                <option>Web Designer</option>
-                                <option>Android Developer</option>
-                                <option>Ios Developer</option>
-                            </select>
-                            <label class="focus-label">Designation</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <a href="#" class="btn btn-success btn-block"> Search </a>
-                    </div>
-                </div> -->
 
                 <div class="row">
                     <?php
@@ -175,19 +137,7 @@ if (strlen($_SESSION['userlogin']) == 2) {
                             <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="dropdown dropdown-action profile-action">
-                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                            <div class="dropdown-menu dropdown-menu-right">
 
-
-                                                <a class="dropdown-item edit-project-btn" href="#" data-toggle="modal" data-target="#edit_project" data-id="<?php echo $project["id"]; ?>"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-
-
-
-                                                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_project" onclick="setProjToDelete(<?php echo $project['id']; ?>)"><i class="fa fa-trash-o m-r-5"></i>Delete</a>
-
-                                            </div>
-                                        </div>
                                         <h4 class="project-title"><a href="project-view.php?id=<?php echo $project['id']; ?>"><?php echo $project['ProjectName']; ?></a>
                                         </h4>
 

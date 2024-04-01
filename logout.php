@@ -33,6 +33,6 @@ if (isset($_POST['logoutandsave'])) {
 
     session_destroy();
 
-    header("location: login.php");
+    header("Location: login.php");
     exit();
 }

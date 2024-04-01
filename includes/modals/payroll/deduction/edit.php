@@ -1,71 +1,70 @@
+<?php
+$sql = "SELECT a.*, s.employee_id, e.FirstName, e.LastName
+        FROM deductions a
+        INNER JOIN salary s ON a.salary_id = s.id
+        INNER JOIN employees e ON s.employee_id = e.id
+        WHERE a.id = :id";
+$query = $dbh->prepare($sql);
+$query->bindParam(':id', $deductionsIdId, PDO::PARAM_INT);
+$query->execute();
+$deductionsIdData = $query->fetch(PDO::FETCH_ASSOC);
+?>
+
 <div id="edit_deduction" class="modal custom-modal fade" role="dialog">
-					<div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title">Edit Deduction</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<form>
-									<div class="form-group">
-										<label>Name <span class="text-danger">*</span></label>
-										<input class="form-control" type="text">
-									</div>
-									<div class="form-group">
-										<label class="d-block">Unit calculation</label>
-										<div class="status-toggle">
-											<input type="checkbox" id="edit_unit_calculation_deduction" class="check">
-											<label for="edit_unit_calculation_deduction" class="checktoggle">checkbox</label>
-										</div>
-									</div>
-									<div class="form-group">
-										<label>Unit Amount</label>
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text">$</span>
-											</div>
-											<input type="text" class="form-control">
-											<div class="input-group-append">
-												<span class="input-group-text">.00</span>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="d-block">Assignee</label>
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" name="edit_deduction_assignee" id="edit_deduction_no_emp" value="option1" checked="">
-											<label class="form-check-label" for="edit_deduction_no_emp">
-											No assignee
-											</label>
-										</div>
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" name="edit_deduction_assignee" id="edit_deduction_all_emp" value="option2">
-											<label class="form-check-label" for="edit_deduction_all_emp">
-											All employees
-											</label>
-										</div>
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" name="edit_deduction_assignee" id="edit_deduction_single_emp" value="option3">
-											<label class="form-check-label" for="edit_deduction_single_emp">
-											Select Employee
-											</label>
-										</div>
-										<div class="form-group">
-											<select class="select">
-												<option>-</option>
-												<option>Select All</option>
-												<option>John Doe</option>
-												<option>Richard Miles</option>
-											</select>
-										</div>
-									</div>
-									<div class="submit-section">
-										<button class="btn btn-primary submit-btn">Save</button>
-									</div>
-								</form>
-							</div>
-						</div>
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Edit Deduction</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form method="post">
+					<div class="form-group">
+						<label>Employee <span class="text-danger">*</span></label>
+						<select required name="employee" class="select">
+							<option value="" <?php if (!isset($deductionsIdData['employee_id']) || empty($deductionsIdData['employee_id'])) echo 'selected'; ?>>
+								Select Employee</option>
+							<?php
+							$sql = "SELECT id, FirstName, LastName FROM employees";
+							$query = $dbh->prepare($sql);
+							$query->execute();
+							$employees = $query->fetchAll(PDO::FETCH_ASSOC);
+							foreach ($employees as $employee) {
+								// Check if the employee ID matches the selected employee ID
+								$selected = ($employee['id'] == $deductionsIdData['employee_id']) ? 'selected' : '';
+								echo '<option value="' . $employee['id'] . '" ' . $selected . '>' . $employee['FirstName'] . ' ' . $employee['LastName'] . '</option>';
+							}
+							?>
+						</select>
 					</div>
-				</div>
+					<div class="form-group">
+						<label>Deduction Name <span class="text-danger">*</span></label>
+						<input value="" name="deduction_name" class="form-control" type="text">
+					</div>
+
+					<div class="form-group">
+						<label>Value of deduction <span class="text-danger">*</span></label>
+						<input value="" name="deduction_value" class="form-control" type="text">
+					</div>
+
+					<div class="form-group">
+						<label>Reason of deduction</label>
+						<textarea value="" name="deduction_reason" class="form-control"></textarea>
+					</div>
+
+					<div class="form-group">
+						<label>Date <span class="text-danger">*</span></label>
+						<input value="" name="month_year" class="form-control" type="date">
+					</div>
+					<input type="hidden" name="id" value="">
+
+					<div class="submit-section">
+						<button type="submit" name="edit_deduction" class="btn btn-primary submit-btn">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
