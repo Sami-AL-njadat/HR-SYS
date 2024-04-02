@@ -11,7 +11,7 @@ try {
 }
 
 if (isset($_POST['id'])) {
-    $deductionsId = intval($_POST['id']);
+    $deductionsIdId = intval($_POST['id']);
 
     $sql = "SELECT a.*, s.employee_id, e.FirstName, e.LastName
             FROM deductions a
@@ -19,12 +19,12 @@ if (isset($_POST['id'])) {
             INNER JOIN employees e ON s.employee_id = e.id
             WHERE a.id = :id";
     $query = $dbh->prepare($sql);
-    $query->bindParam(':id', $deductionsId, PDO::PARAM_INT);
+    $query->bindParam(':id', $deductionsIdId, PDO::PARAM_INT);
     $query->execute();
-    $deductionsData = $query->fetch(PDO::FETCH_ASSOC);
+    $deductionsIdData = $query->fetch(PDO::FETCH_ASSOC);
 
-    if ($deductionsData) {
-        echo json_encode($deductionsData);
+    if ($deductionsIdData) {
+        echo json_encode($deductionsIdData);
     } else {
         echo json_encode(array());
     }

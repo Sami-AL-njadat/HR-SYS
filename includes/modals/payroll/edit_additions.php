@@ -22,22 +22,9 @@ $additionData = $query->fetch(PDO::FETCH_ASSOC);
                 <form method="post">
                     <div class="form-group">
                         <label>Employee <span class="text-danger">*</span></label>
-                        <select required name="employee" class="select">
+                        <select readonly name="employee" class="select">
                             <option value="" <?php if (!isset($additionData['employee_id']) || empty($additionData['employee_id'])) echo 'selected'; ?>>
-                                Select Employee</option>
-                            <?php
-                            $sql = "SELECT   *
-                            FROM salary
-                            JOIN employees ON salary.employee_id = employees.id; ";
-                            $query = $dbh->prepare($sql);
-                            $query->execute();
-                            $employees = $query->fetchAll(PDO::FETCH_ASSOC);
-                            foreach ($employees as $employee) {
-                                // Check if the employee ID matches the selected employee ID
-                                $selected = ($employee['id'] == $additionData['employee_id']) ? 'selected' : '';
-                                echo '<option value="' . $employee['id'] . '" ' . $selected . '>' . $employee['FirstName'] . ' ' . $employee['LastName'] . '</option>';
-                            }
-                            ?>
+                            </option>
                         </select>
 
 

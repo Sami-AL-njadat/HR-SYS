@@ -22,7 +22,8 @@ if (strlen($_SESSION['userlogin']) == 0) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="Smarthr - Bootstrap Admin Template">
-    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="keywords"
+        content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
     <title>Assets - HRMS admin template</title>
@@ -57,7 +58,9 @@ if (strlen($_SESSION['userlogin']) == 0) {
 			<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
@@ -90,56 +93,13 @@ if (strlen($_SESSION['userlogin']) == 0) {
                             </ul>
                         </div>
                         <div class="col-auto float-right ml-auto">
-                            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_asset"><i class="fa fa-plus"></i> Add Asset</a>
+                            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_asset"><i
+                                    class="fa fa-plus"></i> Add Asset</a>
                         </div>
                     </div>
                 </div>
                 <!-- /Page Header -->
-
-                <!-- Search Filter -->
-                <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <input type="text" class="form-control floating">
-                            <label class="focus-label">Employee Name</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus select-focus">
-                            <select class="select floating">
-                                <option value=""> -- Select -- </option>
-                                <!-- <option value="0"> Pending </option>
-                                <option value="1"> Approved </option>
-                                <option value="2"> Returned </option> -->
-                            </select>
-                            <label class="focus-label">Status</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-4">
-                        <div class="row">
-                            <div class="col-md-6 col-sm-6">
-                                <div class="form-group form-focus">
-                                    <div class="cal-icon">
-                                        <input class="form-control floating datetimepicker" type="text">
-                                    </div>
-                                    <label class="focus-label">From</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                                <div class="form-group form-focus">
-                                    <div class="cal-icon">
-                                        <input class="form-control floating datetimepicker" type="text">
-                                    </div>
-                                    <label class="focus-label">To</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-2">
-                        <a href="#" class="btn btn-success btn-block"> Search </a>
-                    </div>
-                </div>
-                <!-- /Search Filter -->
+                <!-- #region -->
 
                 <div class="row">
                     <div class="col-md-12">
@@ -166,20 +126,21 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                 if ($query->rowCount() > 0) {
                                     foreach ($results as $row) {
                                 ?>
-                                        <tbody>
-                                            <tr>
-                                                <td><?php echo htmlentities($row->FirstName . ' ' . $row->LastName); ?></td>
-                                                <td>
-                                                    <strong><?php echo htmlentities($row->assetName); ?></strong>
-                                                </td>
-                                                <td><?php echo htmlentities($row->assetId); ?></td>
-                                                <td><?php echo htmlentities($row->PurchaseDate); ?></td>
-                                                <td><?php echo htmlentities($row->Warranty); ?></td>
-                                                <td><?php echo "$" . htmlentities($row->Price); ?></td>
-                                                <td class="text-center">
-                                                    <div class="dropdown action-label">
-                                                        <a class="btn btn-white btn-sm btn-rounded " href="#" data-toggle="dropdown" aria-expanded="false">
-                                                            <?php
+                                <tbody>
+                                    <tr>
+                                        <td><?php echo htmlentities($row->FirstName . ' ' . $row->LastName); ?></td>
+                                        <td>
+                                            <strong><?php echo htmlentities($row->assetName); ?></strong>
+                                        </td>
+                                        <td><?php echo htmlentities($row->assetId); ?></td>
+                                        <td><?php echo htmlentities($row->PurchaseDate); ?></td>
+                                        <td><?php echo htmlentities($row->Warranty); ?></td>
+                                        <td><?php echo "$" . htmlentities($row->Price); ?></td>
+                                        <td class="text-center">
+                                            <div class="dropdown action-label">
+                                                <a class="btn btn-white btn-sm btn-rounded " href="#"
+                                                    data-toggle="dropdown" aria-expanded="false">
+                                                    <?php
                                                             $status = '';
                                                             switch ($row->Status) {
                                                                 case 0:
@@ -212,30 +173,34 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                                             }
                                                             echo '"></i> ' . $status;
                                                             ?>
-                                                        </a>
+                                                </a>
 
-                                                    </div>
-                                                </td>
+                                            </div>
+                                        </td>
 
-                                                <td class="text-right">
-                                                    <div class="dropdown dropdown-action">
-                                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item edit-asset-btn" href="#" data-toggle="modal" data-target="#edit_asset" data-id="<?php echo $row->id; ?>"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
+                                                    aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item edit-asset-btn" href="#" data-toggle="modal"
+                                                        data-target="#edit_asset" data-id="<?php echo $row->id; ?>"><i
+                                                            class="fa fa-pencil m-r-5"></i> Edit</a>
 
 
 
-                                                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_asset" onclick="setAssetToDelete
+                                                    <a href="#" class="dropdown-item" data-toggle="modal"
+                                                        data-target="#delete_asset" onclick="setAssetToDelete
                                             (<?php echo $row->id; ?>)"><i class="fa fa-trash-o m-r-5"></i>Delete</a>
 
-                                                        </div>
+                                                </div>
 
 
 
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
                                 <?php $cnt += 1;
                                     }
                                 } ?>
@@ -290,42 +255,42 @@ if (strlen($_SESSION['userlogin']) == 0) {
     <script src="assets/js/app.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $('.edit-asset-btn').click(function() {
-                var assetId = $(this).data('id');
-                $.ajax({
-                    url: 'http://localhost/HR-SYS/includes/modals/assets/get_asset_data.php',
-                    type: 'POST',
-                    data: {
-                        id: assetId
-                    },
-                    success: function(response) {
-                        var data = JSON.parse(response);
+    $(document).ready(function() {
+        $('.edit-asset-btn').click(function() {
+            var assetId = $(this).data('id');
+            $.ajax({
+                url: 'http://localhost/HR-SYS/includes/modals/assets/get_asset_data.php',
+                type: 'POST',
+                data: {
+                    id: assetId
+                },
+                success: function(response) {
+                    var data = JSON.parse(response);
 
-                        $('#edit_asset input[name="asset_name"]').val(data.assetName);
-                        $('#edit_asset input[name="purchase_from"]').val(data.PurchaseFrom);
-                        $('#edit_asset input[name="purchase_date"]').val(data.PurchaseDate);
-                        console.log(data.PurchaseDate, "sss");
+                    $('#edit_asset input[name="asset_name"]').val(data.assetName);
+                    $('#edit_asset input[name="purchase_from"]').val(data.PurchaseFrom);
+                    $('#edit_asset input[name="purchase_date"]').val(data.PurchaseDate);
+                    console.log(data.PurchaseDate, "sss");
 
 
-                        $('#edit_asset input[name="manufacturer"]').val(data.Manufacturer);
-                        $('#edit_asset input[name="model"]').val(data.Model);
-                        $('#edit_asset input[name="supplier"]').val(data.Supplier);
-                        $('#edit_asset select[name="status"]').val(data.Status);
-                        $('#edit_asset input[name="condition"]').val(data.AssetCondition);
-                        $('#edit_asset input[name="warranty"]').val(data.Warranty);
-                        $('#edit_asset input[name="value"]').val(data.Price);
-                        $('#edit_asset select[name="asset_user"]').val(data.AssetUser);
-                        $('#edit_asset textarea[name="descriptiones"]').val(data.Description);
+                    $('#edit_asset input[name="manufacturer"]').val(data.Manufacturer);
+                    $('#edit_asset input[name="model"]').val(data.Model);
+                    $('#edit_asset input[name="supplier"]').val(data.Supplier);
+                    $('#edit_asset select[name="status"]').val(data.Status);
+                    $('#edit_asset input[name="condition"]').val(data.AssetCondition);
+                    $('#edit_asset input[name="warranty"]').val(data.Warranty);
+                    $('#edit_asset input[name="value"]').val(data.Price);
+                    $('#edit_asset select[name="asset_user"]').val(data.AssetUser);
+                    $('#edit_asset textarea[name="descriptiones"]').val(data.Description);
 
-                        $('#edit_asset input[name="id"]').val(assetId);
+                    $('#edit_asset input[name="id"]').val(assetId);
 
-                        console.log(data, "all data ");
+                    console.log(data, "all data ");
 
-                    }
-                });
+                }
             });
         });
+    });
     </script>
 
 </body>
