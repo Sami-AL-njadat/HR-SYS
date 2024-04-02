@@ -23,20 +23,21 @@ $additionData = $query->fetch(PDO::FETCH_ASSOC);
                     <div class="form-group">
                         <label>Employee <span class="text-danger">*</span></label>
                         <select required name="employee" class="select">
-                            <option value=""
-                                <?php if (!isset($additionData['employee_id']) || empty($additionData['employee_id'])) echo 'selected'; ?>>
+                            <option value="" <?php if (!isset($additionData['employee_id']) || empty($additionData['employee_id'])) echo 'selected'; ?>>
                                 Select Employee</option>
                             <?php
-							$sql = "SELECT id, FirstName, LastName FROM employees";
-							$query = $dbh->prepare($sql);
-							$query->execute();
-							$employees = $query->fetchAll(PDO::FETCH_ASSOC);
-							foreach ($employees as $employee) {
-								// Check if the employee ID matches the selected employee ID
-								$selected = ($employee['id'] == $additionData['employee_id']) ? 'selected' : '';
-								echo '<option value="' . $employee['id'] . '" ' . $selected . '>' . $employee['FirstName'] . ' ' . $employee['LastName'] . '</option>';
-							}
-							?>
+                            $sql = "SELECT   *
+                            FROM salary
+                            JOIN employees ON salary.employee_id = employees.id; ";
+                            $query = $dbh->prepare($sql);
+                            $query->execute();
+                            $employees = $query->fetchAll(PDO::FETCH_ASSOC);
+                            foreach ($employees as $employee) {
+                                // Check if the employee ID matches the selected employee ID
+                                $selected = ($employee['id'] == $additionData['employee_id']) ? 'selected' : '';
+                                echo '<option value="' . $employee['id'] . '" ' . $selected . '>' . $employee['FirstName'] . ' ' . $employee['LastName'] . '</option>';
+                            }
+                            ?>
                         </select>
 
 
@@ -62,7 +63,9 @@ $additionData = $query->fetch(PDO::FETCH_ASSOC);
                         <label>Date <span class="text-danger">*</span></label>
                         <input value="" name="month_year" class="form-control" type="date">
                     </div>
+                    `
                     <input type="hidden" name="id" value="">
+                    <input type="hidden" name="salaryid" value="">
 
                     <div class="submit-section">
                         <button type="submit" name="edit_addition" class="btn btn-primary submit-btn">Submit</button>

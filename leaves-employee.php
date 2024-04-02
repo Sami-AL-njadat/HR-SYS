@@ -103,7 +103,7 @@ if (strlen($_SESSION['userlogin']) == 0) {
                             <h3 class="page-title">Leaves</h3>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Leaves</li>
+                                <li class="breadcrumb-item Approved">Leaves</li>
                             </ul>
                         </div>
                         <div class="col-auto float-right ml-auto">
@@ -126,7 +126,6 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                         <th>To</th>
                                         <th>No of Days</th>
                                         <th>Reason</th>
-                                        <th>DESCRIPTION</th>
 
                                         <th>status</th>
 
@@ -155,7 +154,7 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                                 <td><?php echo htmlentities($row->Starting_At); ?></td>
                                                 <td><?php echo htmlentities($row->Ending_On); ?></td>
                                                 <td><?php echo htmlentities($row->dayscount); ?></td>
-                                                <td><?php echo htmlentities($row->dayscount); ?></td>
+
                                                 <td><?php echo htmlentities($row->Reason); ?></td>
                                                 <?php
                                                 if ($_SESSION['userlogin'] == 1) {
@@ -165,16 +164,18 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                                             <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-id="<?php echo htmlentities($row->id); ?>" href="#" data-toggle="dropdown" aria-expanded="false">
                                                                 <?php
                                                                 if ($row->status == 0) {
-
-                                                                    echo '<i class="fa fa-dot-circle-o text-danger"></i> Inactive';
+                                                                    echo '<i class="fa fa-dot-circle-o text-warning"></i> Pending';
+                                                                } elseif ($row->status == 1) {
+                                                                    echo '<i class="fa fa-dot-circle-o text-success"></i> Approved';
                                                                 } else {
-                                                                    echo '<i class="fa fa-dot-circle-o text-success"></i> Active';
+                                                                    echo '<i class="fa fa-dot-circle-o text-danger"></i> Reject';
                                                                 }
                                                                 ?>
                                                             </a>
                                                             <div class="dropdown-menu">
-                                                                <a class="dropdown-item" href="#" data-id="<?php echo htmlentities($row->id); ?>" onclick="changeStatus(this, 'Active')"><i class="fa fa-dot-circle-o text-success"></i> Active</a>
-                                                                <a class="dropdown-item" href="#" data-id="<?php echo htmlentities($row->id); ?>" onclick="changeStatus(this, 'Inactive')"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a>
+                                                                <a class="dropdown-item" href="#" data-id="<?php echo htmlentities($row->id); ?>" onclick="changeStatus(this, 'Approved')"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
+                                                                <a class="dropdown-item" href="#" data-id="<?php echo htmlentities($row->id); ?>" onclick="changeStatus(this, 'Pending')"><i class="fa fa-dot-circle-o text-warning"></i> Pending</a>
+                                                                <a class="dropdown-item" href="#" data-id="<?php echo htmlentities($row->id); ?>" onclick="changeStatus(this, 'Reject')"><i class="fa fa-dot-circle-o text-danger"></i> Reject</a>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -186,13 +187,13 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                                         <div class="dropdown action-label">
                                                             <a class="btn btn-white btn-sm btn-rounded " data-id="<?php echo htmlentities($row->id); ?>" href="#" data-toggle="dropdown" aria-expanded="false">
                                                                 <?php
-                                                                if ($row->status == 0) {
+                                                                if ($row->status == 2) {
 
-                                                                    echo '<i class="fa fa-dot-circle-o text-danger"></i> reject';
-                                                                } elseif ($row->status == 2) {
-                                                                    echo '<i class="fa fa-dot-circle-o text-warning"></i> pending';
+                                                                    echo '<i class="fa fa-dot-circle-o text-danger"></i> Reject';
+                                                                } elseif ($row->status == 0) {
+                                                                    echo '<i class="fa fa-dot-circle-o text-warning"></i> Pending';
                                                                 } else {
-                                                                    echo '<i class="fa fa-dot-circle-o text-success"></i> approved';
+                                                                    echo '<i class="fa fa-dot-circle-o text-success"></i> Approved';
                                                                 }
                                                                 ?>
                                                             </a>
@@ -321,7 +322,15 @@ if (strlen($_SESSION['userlogin']) == 0) {
     <script>
         function changeStatus(element, status) {
             var dropdownToggle = $(element).closest('.dropdown').find('.dropdown-toggle');
-            var newText = status === 'Active' ? '<i class="fa fa-dot-circle-o text-success"></i> Active' : '<i class="fa fa-dot-circle-o text-danger"></i> Inactive';
+            if (status === 'Approved') {
+                var newText = '<i class="fa fa-dot-circle-o text-success"></i> Approve';
+            } else if (status === 'Reject') {
+                var newText = '<i class="fa fa-dot-circle-o text-danger"></i> Reject';
+            } else if (status === 'Pending') {
+                var newText = '<i class= "fa fa-dot-circle-o text-warning"></i> Pending';
+
+            }
+            // var newText = status === 'Approved' ? '<i class="fa fa-dot-circle-o text-success"></i> Approved' : '<i class="fa fa-dot-circle-o text-danger"></i> Reject';
             dropdownToggle.html(newText);
             var leaveid = $(element).data('id')
 

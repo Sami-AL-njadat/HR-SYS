@@ -1,6 +1,6 @@
 <?php
 session_start();
-// error_reporting(0);
+error_reporting(0);
 include_once("includes/config.php");
 
 
@@ -16,7 +16,7 @@ if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
     $results = $query->fetchAll(PDO::FETCH_OBJ);
     $admin = 1;
     if ($query->rowCount() == 0) {
-        $admin = 0;
+
         $sql = "SELECT * from employees where UserName=:username";
         $query = $dbh->prepare($sql);
         $query->bindParam(':username', $username, PDO::PARAM_STR);
@@ -27,28 +27,33 @@ if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
         foreach ($results as $row) {
             $hashpass = $row->Password;
             $userid = $row->id;
-            if ($admin) {
 
-                $_SESSION['userlogin'] = $row->role;
+            $_SESSION['userlogin'] = $row->role;
+            if ($_SESSION['userlogin'] == 1) {
+                $admin = 1;
             } else {
-                $_SESSION['userlogin'] = $row->role;
+                $admin = 0;
             }
             $_SESSION['employeeid'] = $row->id;
+            $_SESSION['admin'] = $admin;
             $_SESSION['FirstName'] = $row->FirstName;
             $_SESSION['LastName'] = $row->LastName;
         }
+        $userid  = $_SESSION['employeeid'];
         if (password_verify($password, $hashpass)) {
 
+            if ($admin == 0) {
 
-            $current_datetime1 = date('Y-m-d H:i:s');
-            $current_datetime = date('Y-m-d H:i:s', strtotime($current_datetime1 . ' +2 hours'));
-            $sql = "INSERT INTO timesheet (employeeId, start,login_date) VALUES (:userid, :current_datetime,:current_datetime)";
-            $query = $dbh->prepare($sql);
-            $query->bindParam(':userid', $userid, PDO::PARAM_STR);
-            $query->bindParam(':current_datetime', $current_datetime, PDO::PARAM_STR);
-            $query->execute();
 
-            echo "<script>window.location.href= 'index.php'; </script>";
+                $current_datetime1 = date('Y-m-d H:i:s');
+                $current_datetime = date('Y-m-d H:i:s', strtotime($current_datetime1 . ' +2 hours'));
+                $sql = "INSERT INTO timesheet (employeeId, start,login_date) VALUES (:userid, :current_datetime,:current_datetime)";
+                $query = $dbh->prepare($sql);
+                $query->bindParam(':userid', $userid, PDO::PARAM_STR);
+                $query->bindParam(':current_datetime', $current_datetime, PDO::PARAM_STR);
+                $query->execute();
+            }
+            header('location:index.php');
         } else {
 
             $wrongpassword = '
@@ -70,8 +75,6 @@ if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
 				</button>
 			</div>';
     }
-} else {
-    // print_r('no');
 }
 ?>
 <!DOCTYPE html>

@@ -100,9 +100,18 @@ if (strlen($_SESSION['userlogin']) == 0) {
 								<li class="breadcrumb-item active">Holidays</li>
 							</ul>
 						</div>
-						<div class="col-auto float-right ml-auto">
-							<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_holiday"><i class="fa fa-plus"></i> Add Holiday</a>
-						</div>
+						<?php
+
+						if (($_SESSION['userlogin']) == 1) {
+
+						?>
+							<div class="col-auto float-right ml-auto">
+								<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_holiday"><i class="fa fa-plus"></i> Add Holiday</a>
+							</div>
+
+						<?php
+						} ?>
+
 					</div>
 				</div>
 				<!-- /Page Header -->
@@ -117,37 +126,55 @@ if (strlen($_SESSION['userlogin']) == 0) {
 										<th>Title </th>
 										<th>Holiday Date</th>
 										<th>Day</th>
-										<th class="text-right">Action</th>
+										<?php
+
+										if (($_SESSION['userlogin']) == 1) {
+
+										?>
+											<th class="text-right">Actions</th>
+
+										<?php
+										} ?>
 									</tr>
 								</thead>
 								<?php
+
 								$sql = "SELECT * FROM holidays";
 								$query = $dbh->prepare($sql);
 								$query->execute();
 								$results = $query->fetchAll(PDO::FETCH_OBJ);
 								$cnt = 1;
 								if ($query->rowCount() > 0) {
-									foreach ($results as $row) {
+									foreach ($results as $index => $row) {
 								?>
 										<tbody>
 											<tr class="holiday-upcoming">
-												<td class="holiday-id"><?php echo htmlentities($row->id); ?></td>
+												<td class="holiday-id"><?php echo htmlentities($row->$index + 1); ?></td>
 												<td><?php echo htmlentities($row->Holiday_Name); ?></td>
 												<td><?php echo htmlentities($row->Holiday_Date); ?></td>
 												<td><?php echo htmlentities($row->Holiday_Date); ?></td>
-												<td class="text-right">
-													<div class="dropdown dropdown-action">
-														<a href="#" class="action-icon dropdown-toggle" data-id="<?php echo htmlentities($row->id); ?>" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-														<div class="dropdown-menu dropdown-menu-right">
-															<a id="editButton" class="dropdown-item editButton" data-id="<?php echo htmlentities($row->id); ?>" href="#" data-toggle="modal" data-target="#edit_holiday">
-																<i class="fa fa-pencil m-r-5"></i> Edit
-															</a>
-															<a class="dropdown-item deleteButton" href="#" data-id="<?php echo htmlentities($row->id); ?>" data-toggle="modal" data-target="#delete_holiday">
-																<i class="fa fa-trash-o m-r-5"></i> Delete
-															</a>
+												<?php
+
+												if (($_SESSION['userlogin']) == 1) {
+
+												?>
+
+													<td class="text-right">
+														<div class="dropdown dropdown-action">
+															<a href="#" class="action-icon dropdown-toggle" data-id="<?php echo htmlentities($row->id); ?>" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+															<div class="dropdown-menu dropdown-menu-right">
+																<a id="editButton" class="dropdown-item editButton" data-id="<?php echo htmlentities($row->id); ?>" href="#" data-toggle="modal" data-target="#edit_holiday">
+																	<i class="fa fa-pencil m-r-5"></i> Edit
+																</a>
+																<a class="dropdown-item deleteButton" href="#" data-id="<?php echo htmlentities($row->id); ?>" data-toggle="modal" data-target="#delete_holiday">
+																	<i class="fa fa-trash-o m-r-5"></i> Delete
+																</a>
+															</div>
 														</div>
-													</div>
-												</td>
+													</td>
+												<?php
+												} ?>
+
 											</tr>
 
 										</tbody>

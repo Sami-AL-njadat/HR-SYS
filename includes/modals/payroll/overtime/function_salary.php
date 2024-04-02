@@ -1,4 +1,7 @@
 <?php
+
+
+
 if (isset($_POST['add_salary'])) {
     $basic_salary = $_POST['basic_salary'];
     $tax_rate = $_POST['tax_rate'];
@@ -287,6 +290,7 @@ elseif (isset($_POST['edit_overtime'])) {
     $addition_value = $_POST['addition_value'];
     $addition_reason = $_POST['addition_reason'];
     $month_year = $_POST['month_year'];
+    $salary_id = $_POST['salaryid'];
 
     // Update addition in the database
     $sql = "UPDATE additionals 
@@ -311,6 +315,7 @@ elseif (isset($_POST['edit_overtime'])) {
     $stmt->bindParam(':employee_id', $employee_id);
     $stmt->bindParam(':addition_id', $addition_id);
     $stmt->execute();
+    updateNetSalary($dbh, $salary_id);
 
     // Redirect to the page after updating
     header("Location: payroll-items.php");

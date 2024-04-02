@@ -73,7 +73,7 @@
                                 <!-- <?php
                                         // $dsepartment_From_Seseion = $_SESSION['department_e'];
                                         ?> -->
-                                <select class="form-control	" name="Department_e">
+                                <select class=" select	" name="Department_e">
                                     <?php
 
 
@@ -111,7 +111,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Designation <span class="text-danger">*</span></label>
-                                <select class="form-control" name="designation">
+                                <select class="select" name="designation">
                                     <?php
 
 
