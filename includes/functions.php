@@ -258,10 +258,11 @@ elseif (isset($_POST['edit_employee'])) {
 		$params[':Department_e'] = $Department_e;
 	}
 
-	if (!empty($warranty)) {
+	if (!empty($designation)) {
 		$sql .= "Designation  = :designation, ";
 		$params[':designation'] = $designation;
 	}
+
 
 	if (!empty($value)) {
 		$sql .= "Price = :value, ";

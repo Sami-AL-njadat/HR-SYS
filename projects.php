@@ -11,8 +11,7 @@ try {
     exit("Error: " . $e->getMessage());
 }
 include_once('includes/modals/projects/porject_function.php');
-
-if (strlen($_SESSION['userlogin']) == 2) {
+if (strlen($_SESSION['userlogin']) == 0) {
     header('location:login.php');
 } elseif (isset($_GET['delid'])) {
     $rid = intval($_GET['delid']);

@@ -4,14 +4,14 @@ error_reporting(0);
 include_once('includes/config.php');
 include_once("includes/functions.php");
 if (strlen($_SESSION['userlogin']) == 0) {
-	header('location:login.php');
+    header('location:login.php');
 } elseif (isset($_GET['delid'])) {
-	$rid = intval($_GET['delid']);
-	$sql = "DELETE from Clients where id=:rid";
-	$query = $dbh->prepare($sql);
-	$query->bindParam(':rid', $rid, PDO::PARAM_STR);
-	$query->execute();
-	echo "<script>alert('Client deleted Successfully');</script>";
+    $rid = intval($_GET['delid']);
+    $sql = "DELETE from Clients where id=:rid";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':rid', $rid, PDO::PARAM_STR);
+    $query->execute();
+    echo "<script>alert('Client deleted Successfully');</script>";
 }
 ?>
 <!DOCTYPE html>
@@ -109,18 +109,18 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                         <th>Contact Person</th>
                                         <th>Email</th>
                                         <th>Mobile</th>
-                                        <th class="text-right">Action</th>
+                                        <th class="">Action</th>
                                     </tr>
                                 </thead>
                                 <?php
-								$sql = "SELECT * FROM clients";
-								$query = $dbh->prepare($sql);
-								$query->execute();
-								$results = $query->fetchAll(PDO::FETCH_OBJ);
-								$cnt = 1;
-								if ($query->rowCount() > 0) {
-									foreach ($results as $row) {
-								?>
+                                $sql = "SELECT * FROM clients";
+                                $query = $dbh->prepare($sql);
+                                $query->execute();
+                                $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                $cnt = 1;
+                                if ($query->rowCount() > 0) {
+                                    foreach ($results as $row) {
+                                ?>
                                 <tbody>
                                     <tr>
                                         <td>
@@ -136,14 +136,12 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                         <td><?php echo htmlentities(($row->FirstName) . ' ' . ($row->LastName)); ?></td>
                                         <td><?php echo htmlentities($row->Email); ?></td>
                                         <td><?php echo htmlentities($row->Phone); ?></td>
-                                        <td>
 
-                                        </td>
                                         <td class="text-right">
                                             <div class="dropdown dropdown-action">
                                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
                                                     aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                                <div class="dropdown-menu dropdown-menu-right text-right ">
+                                                <div class="dropdown-menu dropdown-menu-right  ">
                                                     <a class="dropdown-item edit-client-btn" href="#"
                                                         data-toggle="modal" data-target="#edit_client"
                                                         data-id="<?php echo $row->id; ?>"><i
@@ -160,9 +158,9 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                     </tr>
                                 </tbody>
                                 <?php
-										$cnt += 1;
-									}
-								} ?>
+                                        $cnt += 1;
+                                    }
+                                } ?>
                             </table>
                         </div>
                     </div>

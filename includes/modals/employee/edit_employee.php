@@ -58,7 +58,8 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
-                                <div class=""><input id="joining_date" name="joining_date" class="form-control" type="date"></div>
+                                <div class=""><input id="joining_date" name="joining_date" class="form-control"
+                                        type="date"></div>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -73,7 +74,7 @@
                                 <!-- <?php
                                         // $dsepartment_From_Seseion = $_SESSION['department_e'];
                                         ?> -->
-                                <select class="form-control	" name="Department_e">
+                                <select class="select" name="Department_e">
                                     <?php
 
 
@@ -87,7 +88,7 @@
 
                                     ?>
 
-                                            <option><?php echo $row->Department ?></option>
+                                    <option><?php echo $row->Department ?></option>
 
 
 
@@ -111,7 +112,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Designation <span class="text-danger">*</span></label>
-                                <select class="form-control" name="designation">
+                                <select class="select" name="designation">
                                     <?php
 
 
@@ -126,7 +127,7 @@
 
                                     ?>
 
-                                            <option class="designation_e"><?php echo $row->Designation  ?></option>
+                                    <option class="designation_e"><?php echo $row->Designation  ?></option>
 
 
 
