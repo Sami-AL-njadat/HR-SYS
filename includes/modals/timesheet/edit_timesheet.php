@@ -13,7 +13,7 @@
 					<div class="row">
 						<div class="form-group col-sm-6">
 							<label>Project <span class="text-danger">*</span></label>
-							<select class="form-control" name="projectid">
+							<select class="select" name="projectid">
 								<?php
 								$sql = "SELECT * FROM projects";
 								$query = $dbh->prepare($sql);

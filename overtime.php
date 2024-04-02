@@ -166,12 +166,28 @@ AND MONTH(OverTime_Date) = $current_month";
 										<th class="text-center">OT Hours</th>
 										<th>OT Type</th>
 										<th>Description</th>
-										<th class="text-right">Actions</th>
+										<?php
+
+										if (($_SESSION['userlogin']) == 1) {
+
+										?>
+											<th class="text-right">Actions</th>
+
+										<?php
+										} ?>
 									</tr>
 								</thead>
 								<?php
-								$sql = "SELECT * FROM overtime";
-								$query = $dbh->prepare($sql);
+								if ($_SESSION['userlogin'] == 1) {
+									$sql = "SELECT * FROM overtime";
+									$query = $dbh->prepare($sql);
+								} else {
+									$employeeName = $_SESSION['FirstName'] . " " . $_SESSION['LastName'];
+									$sql = "SELECT * FROM overtime WHERE Employee =:employeeName";
+									$query = $dbh->prepare($sql);
+									$query->bindParam(':employeeName', $employeeName, PDO::PARAM_STR);
+								}
+
 								$query->execute();
 								$results = $query->fetchAll(PDO::FETCH_OBJ);
 								$cnt = 1;

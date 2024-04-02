@@ -4,6 +4,15 @@ error_reporting(0);
 include('includes/config.php');
 
 ?>
+<style>
+    .avatar>img {
+        height: 100% !important;
+    }
+
+    #require {
+        color: red;
+    }
+</style>
 <div class="header">
     <style>
         .modal-backdrop {
@@ -67,8 +76,17 @@ include('includes/config.php');
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="profile.php">My Profile</a>
                 <a class="dropdown-item" href="settings.php">Settings</a>
-                <!-- <a class="dropdown-item" href="logout.php">Logout</a> -->
-                <a class="dropdown-item  desprojectbutton" href="#" data-id="" data-toggle="modal" data-target="#logoutt"> Log out</a>
+                <?php
+
+                if ($_SESSION['userlogin'] == 2) {
+
+                ?>
+                    <a class="dropdown-item  desprojectbutton" href="#" data-id="" data-toggle="modal" data-target="#logoutt"> Log out</a>
+                <?php
+                } else {
+
+                    echo '<a class="dropdown-item" href="logout.php">Logout</a> ';
+                } ?>
 
             </div>
         </li>
@@ -84,11 +102,11 @@ include('includes/config.php');
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="logout.php">
+                    <form method="POST" id="logoutform" action="logout.php">
                         <div class="form-group">
-                            <label>Prject Work on <span class="text-danger">*</span></label>
-                            <select class="form-control" require name="project">
-                                <option>Select Project</option>
+                            <label>Project Work on <span class="text-danger">*</span></label>
+                            <select class="form-control" require name="project" id="project">
+                                <option value="">Select Project</option>
                                 <?php
                                 $sql = "SELECT * FROM projects";
                                 $query = $dbh->prepare($sql);
@@ -104,14 +122,26 @@ include('includes/config.php');
                                 ?>
 
                             </select>
-                        </div>
+                            <p id="require"></p>
 
+                        </div>
+                        <script>
+                            document.getElementById("logoutform").addEventListener("submit", function(event) {
+                                var projectSelect = document.getElementById("project");
+                                if (projectSelect.value === "") {
+                                    var require = document.getElementById("require");
+                                    require.innerHTML = `Project Work on is require `;
+                                    event.preventDefault();
+
+                                }
+                            });
+                        </script>
                         <div class="form-group">
-                            <label>Leave Reason <span class="text-danger">*</span></label>
-                            <textarea rows="6" columns="6" name="description" id="form-control reason">................</textarea>
+                            <label>Description <span class="text-danger">*</span></label>
+                            <textarea rows="6" columns="6" name="description" id="form-control reason"></textarea>
                         </div>
                         <div class="submit-section">
-                            <button class="btn btn-primary submit-btn" name="logoutandsave">Log out</button>
+                            <button class="btn btn-primary submit-btn" type="submit" name="logoutandsave">Log out</button>
                         </div>
                     </form>
                 </div>

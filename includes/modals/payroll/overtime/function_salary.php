@@ -316,6 +316,7 @@ elseif (isset($_POST['edit_addition'])) {
     $stmt->bindParam(':employee_id', $employee_id);
     $stmt->bindParam(':addition_id', $addition_id);
     $stmt->execute();
+    updateNetSalary($dbh, $salary_id);
 
     // Redirect to the page after updating
     if ($stmt->execute()) {

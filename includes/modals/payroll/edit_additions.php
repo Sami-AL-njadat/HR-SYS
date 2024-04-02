@@ -50,6 +50,7 @@ $additionData = $query->fetch(PDO::FETCH_ASSOC);
                         <label>Date <span class="text-danger">*</span></label>
                         <input value="" name="month_year" class="form-control" type="date">
                     </div>
+                    `
                     <input type="hidden" name="id" value="">
                     <input type="hidden" name="salaryid" value="">
 
