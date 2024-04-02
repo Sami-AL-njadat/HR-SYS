@@ -2,7 +2,7 @@
 session_start();
 error_reporting(0);
 include('includes/config.php');
-include_once('includes/modals/payroll/overtime/function_salary.php');
+
 
 if (strlen($_SESSION['userlogin']) == 0) {
     header('location:login.php');
@@ -97,7 +97,7 @@ function updateNetSalary($dbh, $salary_id)
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $total_additional = $row['total_additional'];
 
-    // Fetch total deductions
+    // Fetch total deductions for the employee from the deductions table
     $sql = "SELECT SUM(deduction_value) AS total_deduction 
             FROM deductions 
             WHERE salary_id = :salary_id";
@@ -120,6 +120,8 @@ function updateNetSalary($dbh, $salary_id)
     $stmt->execute();
 }
 
+include_once('includes/modals/payroll/overtime/function_salary.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -129,8 +131,7 @@ function updateNetSalary($dbh, $salary_id)
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="Smarthr - Bootstrap Admin Template">
-    <meta name="keywords"
-        content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
     <title>Payroll Items - HRMS admin template</title>
@@ -171,7 +172,10 @@ function updateNetSalary($dbh, $salary_id)
     <div class="main-wrapper">
 
         <!-- Header -->
-        <?php include_once("includes/header.php"); ?>
+        <?php include_once("includes/header.php");
+
+
+        ?>
         <!-- /Header -->
 
         <!-- Sidebar -->
@@ -217,7 +221,6 @@ function updateNetSalary($dbh, $salary_id)
                         </div>
                     </div>
                 </div>
-                <!-- /Page Tab -->
 
                 <!-- Tab Content -->
                 <div class="tab-content">
@@ -226,8 +229,7 @@ function updateNetSalary($dbh, $salary_id)
                     <div class="tab-pane show" id="tab_additions">
                         <!-- Add Addition Button -->
                         <div class="text-right mb-4 clearfix">
-                            <button class="btn btn-primary add-btn" type="button" data-toggle="modal"
-                                data-target="#add_addition"><i class="fa fa-plus"></i> Add Addition</button>
+                            <button class="btn btn-primary add-btn" type="button" data-toggle="modal" data-target="#add_addition"><i class="fa fa-plus"></i> Add Addition</button>
                         </div>
                         <!-- /Add Addition Button -->
 
@@ -299,8 +301,7 @@ function updateNetSalary($dbh, $salary_id)
 
                         <!-- Add Overtime Button -->
                         <div class="text-right mb-4 clearfix">
-                            <button class="btn btn-primary add-btn" type="button" data-toggle="modal"
-                                data-target="#add_salary"><i class="fa fa-plus"></i> Salary</button>
+                            <button class="btn btn-primary add-btn" type="button" data-toggle="modal" data-target="#add_salary"><i class="fa fa-plus"></i> Salary</button>
                         </div>
                         <!-- /Add Overtime Button -->
 
@@ -370,8 +371,7 @@ function updateNetSalary($dbh, $salary_id)
 
                         <!-- Add Deductions Button -->
                         <div class="text-right mb-4 clearfix">
-                            <button class="btn btn-primary add-btn" type="button" data-toggle="modal"
-                                data-target="#add_deduction"><i class="fa fa-plus"></i> Add Deduction</button>
+                            <button class="btn btn-primary add-btn" type="button" data-toggle="modal" data-target="#add_deduction"><i class="fa fa-plus"></i> Add Deduction</button>
                         </div>
                         <!-- /Add Deductions Button -->
 
@@ -512,99 +512,109 @@ function updateNetSalary($dbh, $salary_id)
     <script src="assets/js/app.js"></script>
 
     <script>
-    $(document).ready(function() {
-        $('.edit-overtime-btn').click(function() {
-            var salaryId = $(this).data('id');
-            $.ajax({
-                url: 'http://localhost/HR-SYS/includes/modals/payroll/overtime/get_salary_data.php',
-                type: 'POST',
-                data: {
-                    id: salaryId
-                },
-                success: function(response) {
-                    var data = JSON.parse(response);
-                    $('#edit_overtime input[name="id"]').val(data.id);
-                    $('#edit_overtime input[name="basic_salary"]').val(data.basic_salary);
-                    $('#edit_overtime input[name="tax_rate"]').val(data.tax);
-                    $('#edit_overtime input[name="month_year"]').val(data.month_year);
+        $(document).ready(function() {
+            $('.edit-overtime-btn').click(function() {
+                var salaryId = $(this).data('id');
+                $.ajax({
+                    url: 'http://localhost/HR-SYS/includes/modals/payroll/overtime/get_salary_data.php',
+                    type: 'POST',
+                    data: {
+                        id: salaryId
+                    },
+                    success: function(response) {
+                        var data = JSON.parse(response);
+                        $('#edit_overtime input[name="id"]').val(data.id);
+                        $('#edit_overtime input[name="basic_salary"]').val(data.basic_salary);
+                        $('#edit_overtime input[name="tax_rate"]').val(data.tax);
+                        $('#edit_overtime input[name="month_year"]').val(data.month_year);
 
-                    // Populate the select dropdown with the employee associated with the salary
-                    $('#edit_overtime select[name="employee"]').val(data.employee_id);
-                    console.log("ss", data);
+                        $('#edit_overtime select[name="employee"]').val(data.employee_id);
+                        $('#edit_overtime input[name="salaryid"]').val(data.salary_id);
 
-                }
+                        console.log("ss", data);
+                        console.log("ss", data.salary_id);
+
+                    }
+                });
             });
         });
-    });
     </script>
 
 
 
     <script>
-    $(document).ready(function() {
-        $('.edit-addition-btn').click(function() {
-            var slsId = $(this).data('id');
-            $.ajax({
-                url: 'http://localhost/HR-SYS/includes/modals/payroll/get_sls_data.php',
-                type: 'POST',
-                data: {
-                    id: slsId
-                },
-                success: function(response) {
-                    var data = JSON.parse(response);
-                    $('#edit_addition select[name="employee"]').append('<option value="' +
-                        data.employee_id + '" selected>' + data.FirstName + ' ' + data
-                        .LastName + '</option>');
-                    console.log(data.FirstName);
-                    console.log("Data:", data);
-                    console.log("FirstName:", data.FirstName);
-                    console.log("LastName:", data.LastName);
-                    console.log("Employee ID:", data.employee_id);
+        $(document).ready(function() {
+            $('.edit-addition-btn').click(function() {
+                var slsId = $(this).data('id');
+                $.ajax({
+                    url: 'http://localhost/HR-SYS/includes/modals/payroll/get_sls_data.php',
+                    type: 'POST',
+                    data: {
+                        id: slsId
+                    },
+                    success: function(response) {
+                        var data = JSON.parse(response);
+                        $('#edit_addition select[name="employee"]').append('<option value="' +
+                            data.employee_id + '" selected>' + data.FirstName + ' ' + data
+                            .LastName + '</option>');
+                        console.log(data.FirstName);
+                        console.log("Data:", data);
+                        console.log("FirstName:", data.FirstName);
+                        console.log("LastName:", data.LastName);
+                        console.log("Employee ID:", data.employee_id);
+                        console.log("Employee ID:", data.salaryId);
 
-                    $('#edit_addition input[name="addition_name"]').val(data.addition_name);
-                    $('#edit_addition input[name="addition_value"]').val(data
-                        .addition_value);
-                    $('#edit_addition textarea[name="addition_reason"]').val(data.reason);
-                    $('#edit_addition input[name="month_year"]').val(data.month_year);
-                    $('#edit_addition input[name="id"]').val(data.id);
-                }
+                        $('#edit_addition input[name="addition_name"]').val(data.addition_name);
+                        $('#edit_addition input[name="addition_value"]').val(data
+                            .addition_value);
+                        $('#edit_addition textarea[name="addition_reason"]').val(data.reason);
+                        $('#edit_addition input[name="month_year"]').val(data.month_year);
+                        $('#edit_addition input[name="id"]').val(data.id);
+                        $('#edit_addition input[name="salaryid"]').val(data.salary_id);
+                    }
+                });
             });
         });
-    });
     </script>
 
     <script>
-    $(document).ready(function() {
-        $('.edit-deduction-btn').click(function() {
-            var sldId = $(this).data('id');
-            $.ajax({
-                url: 'http://localhost/HR-SYS/includes/modals/payroll/deduction/get_slsd_data.php',
-                type: 'POST',
-                data: {
-                    id: sldId
-                },
-                success: function(response) {
-                    var data = JSON.parse(response);
-                    $('#edit_deduction select[name="employee"]').append('<option value="' +
-                        data.employee_id + '" selected>' + data.FirstName + ' ' + data
-                        .LastName + '</option>');
-                    console.log(data.FirstName);
-                    console.log("Data:", data);
-                    console.log("FirstName:", data.FirstName);
-                    console.log("LastName:", data.LastName);
-                    console.log("Employee ID:", data.employee_id);
+        $(document).ready(function() {
+            $('.edit-deduction-btn').click(function() {
+                var sldIds = $(this).data('id');
+                $.ajax({
+                    url: 'http://localhost/HR-SYS/includes/modals/payroll/deduction/get_slsd_data.php',
+                    type: 'POST',
+                    data: {
+                        id: sldIds
 
-                    $('#edit_deduction input[name="deduction_name"]').val(data
-                        .deduction_name);
-                    $('#edit_deduction input[name="deduction_value"]').val(data
-                        .deduction_value);
-                    $('#edit_deduction textarea[name="deduction_reason"]').val(data.reason);
-                    $('#edit_deduction input[name="month_year"]').val(data.month_year);
-                    $('#edit_deduction input[name="id"]').val(data.id);
-                }
+                    },
+                    success: function(response) {
+                        var data = JSON.parse(response);
+                        $('#edit_deduction select[name="employee"]').append('<option value="' +
+                            data.employee_id + '" selected>' + data.FirstName + ' ' + data
+                            .LastName + '</option>');
+                        console.log(data.FirstName);
+                        console.log("Data:", data);
+                        console.log("FirstName:", data.FirstName);
+                        console.log("LastName:", data.LastName);
+                        console.log("Employee ID:", data.salaryId);
+
+                        $('#edit_deduction input[name="deduction_name"]').val(data
+                            .deduction_name);
+                        $('#edit_deduction input[name="deduction_value"]').val(data
+                            .deduction_value);
+                        $('#edit_deduction textarea[name="deduction_reason"]').val(data.reason);
+                        $('#edit_deduction input[name="month_year"]').val(data.month_year);
+                        $('#edit_deduction input[name="id"]').val(data.id);
+                        $('#edit_deduction input[name="salaryid"]').val(data.salary_id);
+
+                        console.log("Employee ID:", data.salary_id);
+
+
+                    }
+                });
             });
         });
-    });
     </script>
 
 </body>

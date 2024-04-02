@@ -105,43 +105,13 @@ if (strlen($_SESSION['userlogin']) == 2) {
                             <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_project"><i class="fa fa-plus"></i> Create Project</a>
                             <div class="view-icons">
                                 <a href="projects.php" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                                <a href="project-list.php" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- /Page Header -->
 
-                <!-- Search Filter -->
-                <!-- <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <input type="text" class="form-control floating">
-                            <label class="focus-label">Project Name</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <input type="text" class="form-control floating">
-                            <label class="focus-label">Employee Name</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus select-focus">
-                            <select class="select floating">
-                                <option>Select Roll</option>
-                                <option>Web Developer</option>
-                                <option>Web Designer</option>
-                                <option>Android Developer</option>
-                                <option>Ios Developer</option>
-                            </select>
-                            <label class="focus-label">Designation</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <a href="#" class="btn btn-success btn-block"> Search </a>
-                    </div>
-                </div> -->
+
 
                 <div class="row">
                     <?php
@@ -205,7 +175,7 @@ if (strlen($_SESSION['userlogin']) == 2) {
                                             <ul class="team-members">
                                                 <li>
                                                     <a data-toggle="tooltip" title="<?php echo $projectLeader['FirstName'] . ' ' . $projectLeader['LastName']; ?>">
-                                                        <img alt="" src="employees/<?php echo $projectLeader['Picture']; ?>">
+                                                        <img style="height: 100%;" alt="" src="employees/<?php echo $projectLeader['Picture']; ?>">
                                                     </a>
                                                 </li>
                                             </ul>
@@ -216,7 +186,7 @@ if (strlen($_SESSION['userlogin']) == 2) {
                                                 <?php foreach ($teamMembers as $teamMember) : ?>
                                                     <li>
                                                         <a href="#" data-toggle="tooltip" title="<?php echo $teamMember['FirstName'] . ' ' . $teamMember['LastName']; ?>">
-                                                            <img alt="" src="employees/<?php echo $teamMember['Picture']; ?>">
+                                                            <img style="height: 100%;" alt="" src="employees/<?php echo $teamMember['Picture']; ?>">
                                                         </a>
                                                     </li>
                                                 <?php endforeach; ?>

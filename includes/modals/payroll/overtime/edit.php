@@ -41,7 +41,8 @@
 
                      <div class="form-group">
                          <label>Tax Rate (0% to 20%) <span class="text-danger">*</span></label>
-                         <input value="" required name="tax_rate" class="form-control" type="number" min="0" max="20" step="0.01">
+                         <input value="" required name="tax_rate" class="form-control" type="number" min="0" max="20"
+                             step="0.01">
                      </div>
                      <div class="form-group">
                          <label>Date <span class="text-danger">*</span></label>
@@ -51,18 +52,19 @@
 
                      <input type="hidden" name="id" value="">
 
+                     <input type="hidden" name="salaryid" value="">
 
 
                      <div class="submit-section">
                          <button type="submit" name="edit_overtime" class="btn btn-primary submit-btn">Submit</button>
                      </div>
                      <script>
-                         document.getElementById('select_all').addEventListener('change', function() {
-                             var checkboxes = document.getElementsByName('employee[]');
-                             for (var i = 0; i < checkboxes.length; i++) {
-                                 checkboxes[i].checked = this.checked;
-                             }
-                         });
+                     document.getElementById('select_all').addEventListener('change', function() {
+                         var checkboxes = document.getElementsByName('employee[]');
+                         for (var i = 0; i < checkboxes.length; i++) {
+                             checkboxes[i].checked = this.checked;
+                         }
+                     });
                      </script>
                  </form>
              </div>
