@@ -28,9 +28,9 @@
                                     $result2 = $query2->fetchAll(PDO::FETCH_OBJ);
                                     foreach ($result2 as $row) {
                                     ?>
-                                        <option value="<?php echo htmlentities($row->id); ?>">
-                                            <?php echo htmlentities($row->FirstName) . " " . htmlentities($row->LastName); ?>
-                                        </option>
+                                    <option value="<?php echo htmlentities($row->id); ?>">
+                                        <?php echo htmlentities($row->FirstName) . " " . htmlentities($row->LastName); ?>
+                                    </option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -54,9 +54,9 @@
                                     $departments = $query->fetchAll(PDO::FETCH_ASSOC);
                                     foreach ($departments as $department) {
                                     ?>
-                                        <option value="<?php echo htmlentities($department['id']); ?>">
-                                            <?php echo htmlentities($department['Department']); ?>
-                                        </option>
+                                    <option value="<?php echo htmlentities($department['id']); ?>">
+                                        <?php echo htmlentities($department['Department']); ?>
+                                    </option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -74,9 +74,9 @@
                                     $designations = $query->fetchAll(PDO::FETCH_ASSOC);
                                     foreach ($designations as $designation) {
                                     ?>
-                                        <option value="<?php echo htmlentities($designation['id']); ?>">
-                                            <?php echo htmlentities($designation['Designation']); ?>
-                                        </option>
+                                    <option value="<?php echo htmlentities($designation['id']); ?>">
+                                        <?php echo htmlentities($designation['Designation']); ?>
+                                    </option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -91,15 +91,15 @@
                                 <select required name="projectled" class="select">
                                     <option>Select Project Leader</option>
                                     <?php
-                                    $sql = "SELECT * FROM employees";
+                                    $sql = "SELECT * FROM employees WHERE role != 1";
                                     $query = $dbh->prepare($sql);
                                     $query->execute();
                                     $result = $query->fetchAll(PDO::FETCH_OBJ);
                                     foreach ($result as $row) {
                                     ?>
-                                        <option value="<?php echo htmlentities($row->id); ?>">
-                                            <?php echo htmlentities($row->FirstName) . " " . htmlentities($row->LastName); ?>
-                                        </option>
+                                    <option value="<?php echo htmlentities($row->id); ?>">
+                                        <?php echo htmlentities($row->FirstName) . " " . htmlentities($row->LastName); ?>
+                                    </option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -110,15 +110,16 @@
                                 <label>Add Team Members</label>
                                 <select required name="teamMem[]" class="select" multiple>
                                     <?php
-                                    $sql2 = "SELECT * FROM employees";
+                                    $sql2 = "SELECT * FROM employees WHERE role != 1";
+
                                     $query2 = $dbh->prepare($sql2);
                                     $query2->execute();
                                     $result2 = $query2->fetchAll(PDO::FETCH_OBJ);
                                     foreach ($result2 as $row2) {
                                     ?>
-                                        <option value="<?php echo htmlentities($row2->id); ?>">
-                                            <?php echo htmlentities($row2->FirstName) . " " . htmlentities($row2->LastName); ?>
-                                        </option>
+                                    <option value="<?php echo htmlentities($row2->id); ?>">
+                                        <?php echo htmlentities($row2->FirstName) . " " . htmlentities($row2->LastName); ?>
+                                    </option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -159,7 +160,8 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Completion Percentage</label>
-                                <input required class="form-control" type="number" name="percentage" min="0" max="100" step="1">
+                                <input required class="form-control" type="number" name="percentage" min="0" max="100"
+                                    step="1">
                             </div>
                         </div>
                     </div>
@@ -185,7 +187,8 @@
 
                     <div class="form-group">
                         <label>Description</label>
-                        <textarea rows="3" name="description" class="form-control" placeholder="Enter your message here"></textarea>
+                        <textarea required rows="3" name="description" class="form-control"
+                            placeholder="Enter your message here"></textarea>
                     </div>
 
 

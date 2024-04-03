@@ -38,6 +38,7 @@ if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
             $_SESSION['admin'] = $admin;
             $_SESSION['FirstName'] = $row->FirstName;
             $_SESSION['LastName'] = $row->LastName;
+            $_SESSION['Picture'] = $row->Picture;
         }
         $userid  = $_SESSION['employeeid'];
         if (password_verify($password, $hashpass)) {
@@ -84,8 +85,10 @@ if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="Smarthr - Bootstrap Admin Template">
-    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
-    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="keywords"
+        content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="keywords"
+        content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
     <title>Login - HRMS admin</title>
@@ -148,17 +151,10 @@ if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
                             <div class="form-group text-center">
                                 <button class="btn btn-primary account-btn" name="login" type="submit">Login</button>
                                 <div class="col-auto pt-2">
-                                    <a class="text-muted float-right" href="forgot-password.php">
-                                        Forgot password?
-                                    </a>
-                                </div>
-                            </div>
 
-                            <div class="account-footer">
-                                <p>Having Trouble? report an issue on github <a target="https://github.com/MusheAbdulHakim/Smarthr---hr-payroll-project-employee-management-System/issues" href="https://github.com/MusheAbdulHakim/Smarthr---hr-payroll-project-employee-management-System/issues">Github
-                                        <p>Having Trouble? report an issue on github <a target="https://github.com/MusheAbdulHakim/Smarthr---hr-payroll-project-employee-management-System/issues" href="https://github.com/MusheAbdulHakim/Smarthr---hr-payroll-project-employee-management-System/issues">Github
-                                                issues</a></p>
-                            </div>
+                                </div>
+
+
                         </form>
                         <!-- /Account Form -->
 

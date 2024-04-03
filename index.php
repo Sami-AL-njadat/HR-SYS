@@ -67,7 +67,9 @@ if (strlen($_SESSION['userlogin']) == 0) {
                 <div class="page-header">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3 class="page-title">Welcome <?php echo htmlentities(ucfirst($_SESSION['userlogin'])); ?>!
+                            <h3 class="page-title">Welcome
+                                <span><?php echo htmlentities(ucfirst($_SESSION['FirstName'] . " " . $_SESSION['LastName'])); ?></span>
+
                             </h3>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item active">Dashboard</li>
@@ -157,78 +159,158 @@ if (strlen($_SESSION['userlogin']) == 0) {
 
 
 
-                <div class="row">
-                    <div class="col-md-12 d-flex">
-                        <div class="card card-table flex-fill">
-                            <div class="card-header">
-                                <h3 class="card-title mb-0">Recent Projects</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table custom-table mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th>Project Name </th>
-                                                <th>Progress</th>
-                                                <th class="text-center">Deadline</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            // Fetch the last three projects
-                                            $sql = "SELECT * FROM projects ORDER BY id DESC LIMIT 3";
-                                            $query = $dbh->prepare($sql);
-                                            $query->execute();
-                                            $projects = $query->fetchAll(PDO::FETCH_ASSOC);
 
-                                            // Check if there are any projects
-                                            if ($projects) {
-                                                // Loop through each project
-                                                foreach ($projects as $project) {
-                                            ?>
-                                                    <tr>
-                                                        <td>
-                                                            <h2><a href="project-view.php?id=<?php echo $project['id']; ?>"><?php echo $project['ProjectName']; ?></a>
-                                                            </h2>
-                                                        </td>
-                                                        <td>
 
-                                                            <p class="m-b-5">Progress <span class="text-info float-right"><?php echo $project['CompletionPercentage']; ?>%</span>
 
-                                                            <div class="progress progress-xs progress-striped">
+                <?php
 
-                                                                <div class="progress-bar" role="progressbar" data-toggle="tooltip" title="<?php echo $project['CompletionPercentage']; ?>%" style="width: <?php echo $project['CompletionPercentage']; ?>%">
+                if ($_SESSION['userlogin'] == 1) {
+
+                ?>
+                    <div class="row">
+                        <div class="col-md-12 d-flex">
+                            <div class="card card-table flex-fill">
+                                <div class="card-header">
+                                    <h3 class="card-title mb-0">Recent Projects</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table custom-table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Project Name </th>
+                                                    <th>Progress</th>
+                                                    <th class="text-center">Deadline</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                // Fetch the last three projects
+                                                $sql = "SELECT * FROM projects ORDER BY id DESC LIMIT 3";
+                                                $query = $dbh->prepare($sql);
+                                                $query->execute();
+                                                $projects = $query->fetchAll(PDO::FETCH_ASSOC);
+
+                                                // Check if there are any projects
+                                                if ($projects) {
+                                                    // Loop through each project
+                                                    foreach ($projects as $project) {
+                                                ?>
+                                                        <tr>
+                                                            <td>
+                                                                <h2><a href="project-view.php?id=<?php echo $project['id']; ?>"><?php echo $project['ProjectName']; ?></a>
+                                                                </h2>
+                                                            </td>
+                                                            <td>
+
+                                                                <p class="m-b-5">Progress <span class="text-info float-right"><?php echo $project['CompletionPercentage']; ?>%</span>
+
+                                                                <div class="progress progress-xs progress-striped">
+
+                                                                    <div class="progress-bar" role="progressbar" data-toggle="tooltip" title="<?php echo $project['CompletionPercentage']; ?>%" style="width: <?php echo $project['CompletionPercentage']; ?>%">
+                                                                    </div>
+
                                                                 </div>
 
-                                                            </div>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <div class="dropdown dropdown-action">
+                                                                    <h2><a href="project-view.php?id=<?php echo $project['id']; ?>"><?php echo $project['EndDate']; ?></a>
+                                                                    </h2>
+                                                                </div>
 
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <div class="dropdown dropdown-action">
-                                                                <h2><a href="project-view.php?id=<?php echo $project['id']; ?>"><?php echo $project['EndDate']; ?></a>
-                                                                </h2>
-                                                            </div>
-
-                                                        </td>
-                                                    </tr>
-                                            <?php
+                                                            </td>
+                                                        </tr>
+                                                <?php
+                                                    }
+                                                } else {
+                                                    // Display message when there are no projects
+                                                    echo '<tr><td colspan="3">We don\'t have any projects yet.</td></tr>';
                                                 }
-                                            } else {
-                                                // Display message when there are no projects
-                                                echo '<tr><td colspan="3">We don\'t have any projects yet.</td></tr>';
-                                            }
-                                            ?>
-                                        </tbody>
+                                                ?>
+                                            </tbody>
 
-                                    </table>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-footer">
-                                <a href="projects.php">View all projects</a>
+                                <div class="card-footer">
+                                    <a href="projects.php">View all projects</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+
+
+
+                <?php
+                } else {
+
+                ?>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped custom-table mb-0 datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>Goal Type</th>
+                                            <th>Subject</th>
+                                            <th>Target Achievement</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Description </th>
+                                            <th>Progress </th>
+                                        </tr>
+                                    </thead>
+                                    <?php
+                                    $sql = "SELECT g.*, gt.Type AS goal_type FROM goals g
+            INNER JOIN goal_type gt ON g.goal_typeId = gt.id";
+                                    $query = $dbh->prepare($sql);
+                                    $query->execute();
+                                    $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                    $cnt = 1;
+                                    if ($query->rowCount() > 0) {
+                                        foreach ($results as $row) {
+                                    ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td><?php echo htmlentities($row->goal_type); ?></td>
+                                                    <td><?php echo htmlentities($row->Subject); ?></td>
+                                                    <td><?php echo htmlentities($row->Target); ?></td>
+                                                    <td><?php echo htmlentities($row->StartDate); ?></td>
+                                                    <td><?php echo htmlentities($row->EndDate); ?></td>
+                                                    <td><?php echo htmlentities($row->Description); ?></td>
+
+                                                    <td>
+
+
+
+
+                                                        <p style="height:20px" class="m-b-5"><span style="display:inline-block;" class="text-success float-right"><?php echo $row->Progress; ?>%</span>
+                                                        </p>
+                                                        <div class="progress" style="height:7px">
+                                                            <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="<?php echo $row->Progress; ?>%" style="width: <?php echo $row->Progress; ?>%"></div>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                    <?php $cnt += 1;
+                                        }
+                                    }
+                                    ?>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                <?php
+
+
+                } ?>
+
 
             </div>
             <!-- /Page Content -->

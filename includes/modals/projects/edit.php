@@ -13,7 +13,8 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Project Name</label>
-                                <input placeholder="<?php echo htmlentities($project["ProjectName"]); ?>" value="" required class="form-control" type="text" name="projectName">
+                                <input placeholder="<?php echo htmlentities($project["ProjectName"]); ?>" value=""
+                                    required class="form-control" type="text" name="projectName">
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -28,9 +29,9 @@
                                     $result2 = $query2->fetchAll(PDO::FETCH_OBJ);
                                     foreach ($result2 as $row) {
                                     ?>
-                                        <option value="<?php echo htmlentities($row->id); ?>">
-                                            <?php echo htmlentities($row->FirstName) . " " . htmlentities($row->LastName); ?>
-                                        </option>
+                                    <option value="<?php echo htmlentities($row->id); ?>">
+                                        <?php echo htmlentities($row->FirstName) . " " . htmlentities($row->LastName); ?>
+                                    </option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -55,9 +56,9 @@
                                     foreach ($departments as $departmentes) {
 
                                     ?>
-                                        <option value="<?php echo htmlentities($departmentes->id); ?>">
-                                            <?php echo htmlentities($departmentes->Department); ?>
-                                        </option>
+                                    <option value="<?php echo htmlentities($departmentes->id); ?>">
+                                        <?php echo htmlentities($departmentes->Department); ?>
+                                    </option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -77,9 +78,9 @@
                                     $designations = $query->fetchAll(PDO::FETCH_ASSOC);
                                     foreach ($designations as $designation) {
                                     ?>
-                                        <option value="<?php echo htmlentities($designation['id']); ?>">
-                                            <?php echo htmlentities($designation['Designation']); ?>
-                                        </option>
+                                    <option value="<?php echo htmlentities($designation['id']); ?>">
+                                        <?php echo htmlentities($designation['Designation']); ?>
+                                    </option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -94,15 +95,15 @@
                                 <select required name="projectled" class="select">
                                     <option>Select Project Leader</option>
                                     <?php
-                                    $sql = "SELECT * FROM employees";
+                                    $sql = "SELECT * FROM employees WHERE role != 1";
                                     $query = $dbh->prepare($sql);
                                     $query->execute();
                                     $result = $query->fetchAll(PDO::FETCH_OBJ);
                                     foreach ($result as $row) {
                                     ?>
-                                        <option value="<?php echo htmlentities($row->id); ?>">
-                                            <?php echo htmlentities($row->FirstName) . " " . htmlentities($row->LastName); ?>
-                                        </option>
+                                    <option value="<?php echo htmlentities($row->id); ?>">
+                                        <?php echo htmlentities($row->FirstName) . " " . htmlentities($row->LastName); ?>
+                                    </option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -114,15 +115,15 @@
                                 <select required name="teamMem[]" class="select" multiple>
 
                                     <?php
-                                    $sql2 = "SELECT * FROM employees";
+                                    $sql2 = "SELECT * FROM employees WHERE role != 1";
                                     $query2 = $dbh->prepare($sql2);
                                     $query2->execute();
                                     $result2 = $query2->fetchAll(PDO::FETCH_OBJ);
                                     foreach ($result2 as $row2) {
                                     ?>
-                                        <option value="<?php echo htmlentities($row2->id); ?>">
-                                            <?php echo htmlentities($row2->FirstName) . " " . htmlentities($row2->LastName); ?>
-                                        </option>
+                                    <option value="<?php echo htmlentities($row2->id); ?>">
+                                        <?php echo htmlentities($row2->FirstName) . " " . htmlentities($row2->LastName); ?>
+                                    </option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -135,7 +136,8 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Price</label>
-                                <input value="<?php echo htmlentities($project['Price']); ?>" required name="price" placeholder="$50" class="form-control" type="text">
+                                <input value="<?php echo htmlentities($project['Price']); ?>" required name="price"
+                                    placeholder="$50" class="form-control" type="text">
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -170,7 +172,10 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Completion Percentage</label>
-                                <input value="<?php echo isset($project["CompletionPercentage"]) ? htmlentities($project["CompletionPercentage"]) : ''; ?>" required class="form-control" type="number" name="percentage" min="0" max="100" step="1">
+                                <input
+                                    value="<?php echo isset($project["CompletionPercentage"]) ? htmlentities($project["CompletionPercentage"]) : ''; ?>"
+                                    required class="form-control" type="number" name="percentage" min="0" max="100"
+                                    step="1">
                             </div>
                         </div>
 
@@ -179,20 +184,25 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Start Date</label>
-                                <input placeholder="<?php echo ($project["StartDate"]) ? htmlentities($project["StartDate"]) : ''; ?>" required name="start_date" class="form-control" type="date">
+                                <input
+                                    placeholder="<?php echo ($project["StartDate"]) ? htmlentities($project["StartDate"]) : ''; ?>"
+                                    required name="start_date" class="form-control" type="date">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>End Date</label>
-                                <input placeholder="<?php echo ($project["EndDate"]) ? htmlentities($project["EndDate"]) : ''; ?>" required name="end_date" class="form-control" type="date">
+                                <input
+                                    placeholder="<?php echo ($project["EndDate"]) ? htmlentities($project["EndDate"]) : ''; ?>"
+                                    required name="end_date" class="form-control" type="date">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
 
                         <label for="filess">Choose a file:</label>
-                        <small id="fileNameDisplay" class="form-text text-muted"><?php echo isset($project['Filees']) ? htmlentities($project['Filees']) : ''; ?></small>
+                        <small id="fileNameDisplay"
+                            class="form-text text-muted"><?php echo isset($project['Filees']) ? htmlentities($project['Filees']) : ''; ?></small>
 
                         <input class="form-control-file" type="file" id="filess" name="filess">
 

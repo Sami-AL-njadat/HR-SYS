@@ -23,6 +23,7 @@ include('includes/config.php');
     <div class="header-left">
         <a href="index.php" class="logo">
             <img src="assets/img/logo.png" width="40" height="40" alt="">
+
         </a>
     </div>
     <!-- /Logo -->
@@ -60,7 +61,7 @@ include('includes/config.php');
         <!-- /Message Notifications -->
 
         <?php
-        $sql = "SELECT * from users";
+        $sql = "SELECT * from employees";
         $query = $dbh->prepare($sql);
         $query->execute();
         $result = $query->fetch(PDO::FETCH_OBJ);
@@ -69,13 +70,15 @@ include('includes/config.php');
 
         <li class="nav-item dropdown has-arrow main-drop">
             <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                <span class="user-img"><img src="./profiles/<?php echo htmlentities($result->Picture); ?>" alt="User Picture">
+                <span class="user-img"><img src="employees/<?php echo $_SESSION['Picture']; ?>" alt="User Picture">
+
+
+
                     <span class="status online"></span></span>
                 <span><?php echo htmlentities(ucfirst($_SESSION['FirstName'] . " " . $_SESSION['LastName'])); ?></span>
             </a>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="profile.php">My Profile</a>
-                <a class="dropdown-item" href="settings.php">Settings</a>
                 <?php
 
                 if ($_SESSION['userlogin'] == 2) {
@@ -141,7 +144,8 @@ include('includes/config.php');
                             <textarea rows="6" columns="6" name="description" id="form-control reason"></textarea>
                         </div>
                         <div class="submit-section">
-                            <button class="btn btn-primary submit-btn" type="submit" name="logoutandsave">Log out</button>
+                            <button class="btn btn-primary submit-btn" type="submit" name="logoutandsave">Log
+                                out</button>
                         </div>
                     </form>
                 </div>
@@ -153,7 +157,6 @@ include('includes/config.php');
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
         <div class="dropdown-menu dropdown-menu-right">
             <a class="dropdown-item" href="profile.php">My Profile</a>
-            <a class="dropdown-item" href="settings.php">Settings</a>
             <a class="dropdown-item" href="login.php">Logout</a>
         </div>
     </div>
