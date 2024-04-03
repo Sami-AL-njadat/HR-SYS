@@ -135,6 +135,29 @@
                                     } ?>
                                 </select>
                             </div>
+
+
+                        </div>
+
+
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Role <span class="text-danger">*</span></label>
+                                <select required name="role" class="select">
+                                    <option>Select Department</option>
+                                    <?php
+                                    $sql3 = "SELECT * from user_role";
+                                    $query3 = $dbh->prepare($sql3);
+                                    $query3->execute();
+                                    $result2 = $query3->fetchAll(PDO::FETCH_OBJ);
+                                    foreach ($result2 as $row) {
+                                    ?>
+                                        <option value="<?php echo htmlentities($row->id); ?>">
+                                            <?php echo htmlentities($row->role); ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
                         </div>
                     </div>
 

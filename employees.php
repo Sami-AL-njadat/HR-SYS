@@ -87,7 +87,6 @@
 								<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
 								<div class="view-icons">
 									<a href="employees.php" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-									<a href="employees-list.php" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
 								</div>
 							</div>
 						</div>
@@ -95,18 +94,7 @@
 					<!-- /Page Header -->
 					<!-- Search Filter -->
 					<div class="row filter-row">
-						<div class="col-sm-6 col-md-3">
-							<div class="form-group form-focus">
-								<input type="text" class="form-control floating">
-								<label class="focus-label">Employee ID</label>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-3">
-							<div class="form-group form-focus">
-								<input type="text" class="form-control floating">
-								<label class="focus-label">Employee Name</label>
-							</div>
-						</div>
+
 						<div class="col-sm-6 col-md-3">
 							<div class="form-group form-focus select-focus">
 								<select class="select floating select_designation select	">
@@ -129,9 +117,7 @@
 								<label class="focus-label">Designation</label>
 							</div>
 						</div>
-						<div class="col-sm-6 col-md-3">
-							<a href="#" class="btn btn-success btn-block"> Search </a>
-						</div>
+
 					</div>
 					<!-- Search Filter -->
 					<!-- user profiles list starts her -->
@@ -156,7 +142,7 @@
 											<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
 											<div class="dropdown-menu dropdown-menu-right">
 												<a class="dropdown-item edit-employee" href="#" data-toggle="modal" data-target="#edit_employee" data-employeeid="<?php echo $row->Employee_Id; ?>" data-firstname="<?php echo htmlentities($row->FirstName); ?>" data-lastname="<?php echo htmlentities($row->LastName); ?>" data-designation="<?php echo htmlentities($row->Designation); ?>
-												" data-picture="<?php echo htmlentities($row->Picture); ?>" data-email="<?php echo htmlentities($row->Email); ?>" data-phone="<?php echo htmlentities($row->Phone); ?>" data-department="<?php echo htmlentities($row->Department); ?>" data-designation="<?php echo htmlentities($row->Designation); ?>" data-Picture="<?php echo htmlentities($row->Picture); ?>" data-DateTime="<?php echo htmlentities($row->DateTime); ?>" data-username="<?php echo htmlentities($row->UserName); ?>" data-joiningdate="<?php echo ($row->Joining_Date) ?>" data-id="<?php echo ($row->id); ?>"><i class="fa fa-pencil m-r-5"></i> Edit
+												" data-picture="<?php echo htmlentities($row->Picture); ?>" data-email="<?php echo htmlentities($row->Email); ?>" data-phone="<?php echo htmlentities($row->Phone); ?>" data-department="<?php echo htmlentities($row->Department); ?>" data-designation="<?php echo htmlentities($row->Designation); ?>" data-Picture="<?php echo htmlentities($row->Picture); ?>" data-DateTime="<?php echo htmlentities($row->DateTime); ?>" data-username="<?php echo htmlentities($row->UserName); ?>" data-role="<?php echo htmlentities($row->role); ?>" data-joiningdate="<?php echo ($row->Joining_Date) ?>" data-id="<?php echo ($row->id); ?>"><i class="fa fa-pencil m-r-5"></i> Edit
 
 												</a>
 
@@ -234,10 +220,11 @@
 					var UserName = $(this).data('username');
 
 					var Phone = $(this).data('phone');
+					var role = $(this).data('role');
 					var picture = $(this).data('picture');
 					var Department = $(this).data('department');
 					var Joining_Date = $(this).data('joiningdate');
-					console.log('Joining_Date', Joining_Date);
+					console.log('Joining_Date', role);
 
 
 					$('#edit_employee #employee_id').val(Employee_Id);
@@ -249,6 +236,7 @@
 					$('#edit_employee select[name="Department_e"] ').val(Department);
 					// $('#edit_employee #Joining_Date').val(Joining_Date);
 					$('#edit_employee #username').val(UserName);
+					$('#edit_employee select[name="role"] ').val(role);
 
 					$('.form-group select[name="Department_e"]').val(Department);
 					$(' input[name="joining_date"]').val(Joining_Date);

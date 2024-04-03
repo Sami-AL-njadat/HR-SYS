@@ -217,6 +217,7 @@ elseif (isset($_POST['edit_employee'])) {
 	$Phone_e = htmlspecialchars($_POST['phone_e']);
 	$Department_e = htmlspecialchars($_POST['Department_e']);
 	$designation = htmlspecialchars($_POST['designation']);
+	$roles = htmlspecialchars($_POST['role']);
 
 	$rid = ($_POST['emp_id']);
 	$_SESSION['id'] = $rid;
@@ -227,8 +228,10 @@ elseif (isset($_POST['edit_employee'])) {
 		$sql .= "FirstName  = :first_name, ";
 		$params[':first_name'] = $first_name;
 	}
-
-
+	if (!empty($roles)) {
+		$sql .= "role = :roles, ";
+		$params[':roles'] = $roles;
+	}
 	if (!empty($last_name)) {
 		$sql .= "LastName = :last_name, ";
 		$params[':last_name'] = $last_name;
@@ -603,6 +606,7 @@ elseif (isset($_POST['add_employee'])) {
 	$phone = htmlspecialchars($_POST['phone']);
 	$department = htmlspecialchars($_POST['department']);
 	$designation = htmlspecialchars($_POST['designation']);
+	$roles = htmlspecialchars($_POST['role']);
 	//grabbing the picture
 	$file = $_FILES['picture']['name'];
 	$file_loc = $_FILES['picture']['tmp_name'];
@@ -614,8 +618,9 @@ elseif (isset($_POST['add_employee'])) {
 		$image = $final_file;
 		$password = password_hash($password, PASSWORD_DEFAULT);
 	}
-	$sql = "INSERT INTO `employees` (`id`, `FirstName`, `LastName`, `UserName`, `Email`, `Password`, `Employee_Id`, `Phone`, `Department`, `Designation`, `Picture`, `DateTime`) 
-		VALUES (NULL, :firstname, :lastname, :username, :email,:password, :id, :phone, :department, :designation,  :pic, current_timestamp())";
+	$sql = "INSERT INTO `employees` (`id`, `FirstName`, `LastName`, `UserName`, `Email`, `Password`, `Employee_Id`, `Phone`, `Department`, `Designation`, `Picture`, `DateTime`, `role`) 
+VALUES (NULL, :firstname, :lastname, :username, :email, :password, :id, :phone, :department, :designation, :pic, current_timestamp(), :roles)
+";
 	$query = $dbh->prepare($sql);
 	$query->bindParam(':firstname', $firstname, PDO::PARAM_STR);
 	$query->bindParam(':lastname', $lastname, PDO::PARAM_STR);
@@ -626,6 +631,7 @@ elseif (isset($_POST['add_employee'])) {
 	$query->bindParam(':phone', $phone, PDO::PARAM_STR);
 	$query->bindParam(':department', $department, PDO::PARAM_STR);
 	$query->bindParam(':designation', $designation, PDO::PARAM_STR);
+	$query->bindParam(':roles', $roles, PDO::PARAM_STR);
 	$query->bindParam(':pic', $image, PDO::PARAM_STR);
 	$query->execute();
 	$lastInsert = $dbh->lastInsertId();

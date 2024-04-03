@@ -22,7 +22,8 @@ if (strlen($_SESSION['userlogin']) == 0) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="Smarthr - Bootstrap Admin Template">
-    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="keywords"
+        content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
     <title>Clients - HRMS admin template</title>
@@ -45,7 +46,9 @@ if (strlen($_SESSION['userlogin']) == 0) {
     <!-- Main CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
@@ -81,10 +84,10 @@ if (strlen($_SESSION['userlogin']) == 0) {
                             echo $wrongpassword;
                         } ?>
                         <div class="col-auto float-right ml-auto">
-                            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_client"><i class="fa fa-plus"></i> Add Client</a>
+                            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_client"><i
+                                    class="fa fa-plus"></i> Add Client</a>
                             <div class="view-icons">
                                 <a href="clients.php" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                                <a href="clients-list.php" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                             </div>
                         </div>
                     </div>
@@ -105,35 +108,44 @@ if (strlen($_SESSION['userlogin']) == 0) {
                             // Construct the path to the profile image
                             $profile_image_path = "clients/" . $row->Picture;
                     ?>
-                            <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-                                <div class="profile-widget">
-                                    <div class="profile-img">
-                                        <!-- Display the profile image -->
-                                        <a href="client-profile.php?id=<?php echo $row->id; ?>" class="avatar"><img style="width: 80px;height: 80px;" src="<?php echo $profile_image_path; ?>" alt="Profile Picture"></a>
-                                    </div>
-                                    <div class="dropdown profile-action">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item edit-client-btn" href="#" data-toggle="modal" data-target="#edit_client" data-id="<?php echo $row->id; ?>"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                    <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
+                        <div class="profile-widget">
+                            <div class="profile-img">
+                                <!-- Display the profile image -->
+                                <a href="client-profile.php?id=<?php echo $row->id; ?>" class="avatar"><img
+                                        style="width: 80px;height: 80px;" src="<?php echo $profile_image_path; ?>"
+                                        alt="Profile Picture"></a>
+                            </div>
+                            <div class="dropdown profile-action">
+                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
+                                    aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item edit-client-btn" href="#" data-toggle="modal"
+                                        data-target="#edit_client" data-id="<?php echo $row->id; ?>"><i
+                                            class="fa fa-pencil m-r-5"></i> Edit</a>
 
 
 
-                                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_client" onclick="setClientsToDelete
+                                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_client"
+                                        onclick="setClientsToDelete
                                             (<?php echo $row->id; ?>)"><i class="fa fa-trash-o m-r-5"></i>Delete</a>
 
-                                        </div>
-
-
-                                    </div>
-                                    <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.php?id=<?php echo $row->id; ?>"><?php echo htmlentities($row->Company); ?></a>
-                                    </h4>
-                                    <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.php?id=<?php echo $row->id; ?>"><?php echo htmlentities(($row->FirstName) . ' ' . ($row->LastName)); ?></a>
-                                    </h5>
-                                    <div class="small text-muted"><?php echo htmlentities($row->Phone); ?></div>
-                                    <a href="client-profile.php?id=<?php echo $row->id; ?>" class="btn btn-white btn-sm m-t-10">View Profile</a>
-
                                 </div>
+
+
                             </div>
+                            <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a
+                                    href="client-profile.php?id=<?php echo $row->id; ?>"><?php echo htmlentities($row->Company); ?></a>
+                            </h4>
+                            <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a
+                                    href="client-profile.php?id=<?php echo $row->id; ?>"><?php echo htmlentities(($row->FirstName) . ' ' . ($row->LastName)); ?></a>
+                            </h5>
+                            <div class="small text-muted"><?php echo htmlentities($row->Phone); ?></div>
+                            <a href="client-profile.php?id=<?php echo $row->id; ?>"
+                                class="btn btn-white btn-sm m-t-10">View Profile</a>
+
+                        </div>
+                    </div>
                     <?php
                         }
                     } ?>
@@ -178,33 +190,33 @@ if (strlen($_SESSION['userlogin']) == 0) {
 
 
     <script>
-        $(document).ready(function() {
-            $('.edit-client-btn').click(function() {
-                var clientId = $(this).data('id');
-                $.ajax({
-                    url: 'http://localhost/HR-SYS/includes/modals/clients/get_client_data.php',
-                    type: 'POST',
-                    data: {
-                        id: clientId
-                    },
-                    success: function(response) {
-                        var data = JSON.parse(response);
+    $(document).ready(function() {
+        $('.edit-client-btn').click(function() {
+            var clientId = $(this).data('id');
+            $.ajax({
+                url: 'http://localhost/HR-SYS/includes/modals/clients/get_client_data.php',
+                type: 'POST',
+                data: {
+                    id: clientId
+                },
+                success: function(response) {
+                    var data = JSON.parse(response);
 
-                        $('#edit_client input[name="firstname"]').val(data.FirstName);
-                        $('#edit_client input[name="lastname"]').val(data.LastName);
-                        $('#edit_client input[name="username"]').val(data.UserName);
-                        $('#edit_client input[name="email"]').val(data.Email);
-                        $('#edit_client input[name="phone"]').val(data.Phone);
-                        $('#edit_client input[name="company"]').val(data.Company);
-                        $('#edit_client img#showImage').attr('src', 'clients/' + data.Picture);
-                        $('#edit_client input[name="id"]').val(clientId);
+                    $('#edit_client input[name="firstname"]').val(data.FirstName);
+                    $('#edit_client input[name="lastname"]').val(data.LastName);
+                    $('#edit_client input[name="username"]').val(data.UserName);
+                    $('#edit_client input[name="email"]').val(data.Email);
+                    $('#edit_client input[name="phone"]').val(data.Phone);
+                    $('#edit_client input[name="company"]').val(data.Company);
+                    $('#edit_client img#showImage').attr('src', 'clients/' + data.Picture);
+                    $('#edit_client input[name="id"]').val(clientId);
 
-                        console.log(data, "all data ");
+                    console.log(data, "all data ");
 
-                    }
-                });
+                }
             });
         });
+    });
     </script>
 
 </body>

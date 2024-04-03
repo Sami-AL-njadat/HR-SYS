@@ -6,7 +6,7 @@ session_start();
 // include_once('includes/config.php');
 // include_once('includes/functions.php');
 if (strlen($_SESSION['userlogin']) == 0) {
-	header('location:login.php');
+    header('location:login.php');
 }
 ?>
 <!DOCTYPE html>
@@ -62,17 +62,17 @@ if (strlen($_SESSION['userlogin']) == 0) {
         <!-- /Header -->
         <?php
 
-		if (isset($_GET['delid'])) {
-			$rid = intval($_GET['delid']);
-			$sql = "DELETE from overtime where id=:rid";
-			$query = $dbh->prepare($sql);
-			$query->bindParam(':rid', $rid, PDO::PARAM_STR);
-			$query->execute();
-			echo "<script>alert('Overtime Has Been Deleted');</script>";
-			echo "<script>window.location.href ='overtime.php'</script>";
-		}
+        if (isset($_GET['delid'])) {
+            $rid = intval($_GET['delid']);
+            $sql = "DELETE from overtime where id=:rid";
+            $query = $dbh->prepare($sql);
+            $query->bindParam(':rid', $rid, PDO::PARAM_STR);
+            $query->execute();
+            echo "<script>alert('Overtime Has Been Deleted');</script>";
+            echo "<script>window.location.href ='overtime.php'</script>";
+        }
 
-		?>
+        ?>
         <!-- Sidebar -->
         <?php include_once("includes/sidebar.php"); ?>
         <!-- /Sidebar -->
@@ -108,18 +108,18 @@ if (strlen($_SESSION['userlogin']) == 0) {
                             <h6>Overtime Employee</h6>
                             <h4><?php
 
-								$current_year = date('Y');
-								$current_month = date('m');
-								$sql = "SELECT COUNT(DISTINCT Employee) AS totalemployee 
+                                $current_year = date('Y');
+                                $current_month = date('m');
+                                $sql = "SELECT COUNT(DISTINCT Employee) AS totalemployee 
 								FROM overtime 
 								WHERE YEAR(OverTime_Date) = $current_year 
 								AND MONTH(OverTime_Date) = $current_month";
 
-								$query = $dbh->prepare($sql);
-								$query->execute();
-								$result = $query->fetch(PDO::FETCH_ASSOC);
-								echo $result['totalemployee'] ? $result['totalemployee'] : 0;
-								?> <span>this month</span></h4>
+                                $query = $dbh->prepare($sql);
+                                $query->execute();
+                                $result = $query->fetch(PDO::FETCH_ASSOC);
+                                echo $result['totalemployee'] ? $result['totalemployee'] : 0;
+                                ?> <span>this month</span></h4>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-6">
@@ -127,18 +127,18 @@ if (strlen($_SESSION['userlogin']) == 0) {
                             <h6>Overtime Hours</h6>
                             <h4><?php
 
-								$current_year = date('Y');
-								$current_month = date('m');
-								$sql = "SELECT SUM( Hours) AS totalehoure 
+                                $current_year = date('Y');
+                                $current_month = date('m');
+                                $sql = "SELECT SUM( Hours) AS totalehoure 
 FROM overtime 
 WHERE YEAR(OverTime_Date) = $current_year 
 AND MONTH(OverTime_Date) = $current_month";
 
-								$query = $dbh->prepare($sql);
-								$query->execute();
-								$result = $query->fetch(PDO::FETCH_ASSOC);
-								echo $result['totalehoure'] ? $result['totalehoure'] : 0;
-								?> <span>this month</span></h4>
+                                $query = $dbh->prepare($sql);
+                                $query->execute();
+                                $result = $query->fetch(PDO::FETCH_ASSOC);
+                                echo $result['totalehoure'] ? $result['totalehoure'] : 0;
+                                ?> <span>this month</span></h4>
                         </div>
                     </div>
                     <!-- <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
@@ -170,39 +170,39 @@ AND MONTH(OverTime_Date) = $current_month";
                                         <th>Description</th>
                                         <?php
 
-										if (($_SESSION['userlogin']) == 1) {
+                                        if (($_SESSION['userlogin']) == 1) {
 
-										?>
+                                        ?>
                                         <th class="text-right">Actions</th>
 
                                         <?php
-										} ?>
+                                        } ?>
                                     </tr>
                                 </thead>
                                 <?php
-								if ($_SESSION['userlogin'] == 1) {
-									$sql = "SELECT * FROM overtime";
-									$query = $dbh->prepare($sql);
-								} else {
-									$employeeName = $_SESSION['FirstName'] . " " . $_SESSION['LastName'];
-									$sql = "SELECT * FROM overtime WHERE Employee =:employeeName";
-									$query = $dbh->prepare($sql);
-									$query->bindParam(':employeeName', $employeeName, PDO::PARAM_STR);
-								}
+                                if ($_SESSION['userlogin'] == 1) {
+                                    $sql = "SELECT * FROM overtime";
+                                    $query = $dbh->prepare($sql);
+                                } else {
+                                    $employeeName = $_SESSION['FirstName'] . " " . $_SESSION['LastName'];
+                                    $sql = "SELECT * FROM overtime WHERE Employee =:employeeName";
+                                    $query = $dbh->prepare($sql);
+                                    $query->bindParam(':employeeName', $employeeName, PDO::PARAM_STR);
+                                }
 
-								$query->execute();
-								$results = $query->fetchAll(PDO::FETCH_OBJ);
-								$cnt = 1;
-								if ($query->rowCount() > 0) {
-									foreach ($results as $row) {
-								?>
+                                $query->execute();
+                                $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                $cnt = 1;
+                                if ($query->rowCount() > 0) {
+                                    foreach ($results as $row) {
+                                ?>
                                 <tbody>
                                     <tr>
                                         <td><?php echo htmlentities($row->id); ?></td>
                                         <td>
                                             <h2 class="table-avatar blue-link">
                                                 <!-- <a href="profile.php" class="avatar"><img alt="" src="employees/<?php //echo htmlentities($row->Picture); 
-																																?>"></a> -->
+                                                                                                                                ?>"></a> -->
                                                 <a href="profile.php"><?php echo htmlentities($row->Employee); ?></a>
                                             </h2>
                                         </td>
@@ -230,8 +230,8 @@ AND MONTH(OverTime_Date) = $current_month";
                                     </tr>
                                 </tbody>
                                 <?php $cnt += 1;
-									}
-								} ?>
+                                    }
+                                } ?>
                             </table>
                         </div>
                     </div>
@@ -270,7 +270,7 @@ AND MONTH(OverTime_Date) = $current_month";
 
                 $.ajax({
 
-                    url: "/HR-SYS/overtime.php",
+                    url: "http://localhost/HR-SYS/overtime.php",
 
                     type: "POST",
                     data: {
@@ -292,7 +292,7 @@ AND MONTH(OverTime_Date) = $current_month";
 
 
                 $.ajax({
-                    url: "/HR-SYS/includes/modals/overtime/overtimefunction.php",
+                    url: "http://localhost/HR-SYS/includes/modals/overtime/overtimefunction.php",
 
                     type: 'POST',
                     data: {
@@ -302,6 +302,8 @@ AND MONTH(OverTime_Date) = $current_month";
                     success: function(response) {
                         $('#edit_overtime').find('input[name="ov_date"]').val(
                             response.OverTime_Date);
+                        $('#edit_overtime').find('input[name="ov_type"]').val(
+                            response.Type);
                         $('#edit_overtime').find('input[name="ov_hours"]').val(
                             response.Hours);
                         $('#edit_overtime').find('input[name="overtimeid"]').val(
@@ -310,6 +312,7 @@ AND MONTH(OverTime_Date) = $current_month";
                             .val(response.Description);
                         $('#edit_overtime').find('select[name="employee"]').val(
                             response.Employee);
+                        console.log("ssss", response);
                     },
                     error: function(xhr, status, error) {
                         console.error('Request failed with status ' + xhr.status);

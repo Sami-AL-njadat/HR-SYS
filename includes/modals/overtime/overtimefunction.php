@@ -28,13 +28,14 @@ if (isset($_POST['add_overtime'])) {
     $rid = htmlspecialchars($_POST['overtimeid']);
     $ovtime_date = htmlspecialchars($_POST['ov_date']);
     $overtime_hours = htmlspecialchars($_POST['ov_hours']);
-    // $overtime_type = htmlspecialchars($_POST['ov_type']);
+    $overtime_type = htmlspecialchars($_POST['ov_type']);
     $description = htmlspecialchars($_POST['description']);
     $sql = "UPDATE overtime  
     SET Employee=:employee, 
         OverTime_Date=:ovtime_date, 
         Hours=:overtime_hours, 
-        Description=:description 
+        Description=:description,
+        Type=:overtime_type
     WHERE id=:rid";
 
     $query = $dbh->prepare($sql);
@@ -42,6 +43,7 @@ if (isset($_POST['add_overtime'])) {
     $query->bindParam(':employee', $employee, PDO::PARAM_STR);
     $query->bindParam(':ovtime_date', $ovtime_date, PDO::PARAM_STR);
     $query->bindParam(':overtime_hours', $overtime_hours, PDO::PARAM_STR);
+    $query->bindParam(':overtime_type', $overtime_type, PDO::PARAM_STR);
     $query->bindParam(':description', $description, PDO::PARAM_STR);
     $query->execute();
 

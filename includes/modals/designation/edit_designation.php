@@ -11,22 +11,21 @@
                 <form method="POST">
                     <div class="form-group">
                         <label>Designation Name <span class="text-danger">*</span></label>
-                        <input name="designation" class="form-control" type="text" value="">
+                        <input required name="designation" class="form-control" type="text" value="">
                     </div>
                     <div class="form-group">
                         <label>Department <span class="text-danger">*</span></label>
                         <select required name="department_id" class="select">
                             <option value="">Select Department</option>
                             <?php
-							$sql2 = "SELECT * FROM departments";
-							$query2 = $dbh->prepare($sql2);
-							$query2->execute();
-							$result2 = $query2->fetchAll(PDO::FETCH_OBJ);
-							foreach ($result2 as $row)
-							 { ?>
-                            <option value="<?php echo htmlentities($row->id); ?>">
-                                <?php echo htmlentities($row->Department); ?>
-                            </option>
+                            $sql2 = "SELECT * FROM departments";
+                            $query2 = $dbh->prepare($sql2);
+                            $query2->execute();
+                            $result2 = $query2->fetchAll(PDO::FETCH_OBJ);
+                            foreach ($result2 as $row) { ?>
+                                <option value="<?php echo htmlentities($row->id); ?>">
+                                    <?php echo htmlentities($row->Department); ?>
+                                </option>
                             <?php } ?>
                         </select>
                     </div>

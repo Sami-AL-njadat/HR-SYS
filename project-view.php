@@ -468,30 +468,13 @@ if (strlen($_SESSION['userlogin']) == 0) {
     <script src="assets/js/moment.min.js"></script>
     <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
 
-    <!-- Task JS -->
-    <script src="assets/js/task.js"></script>
+    <!-- Datatable JS -->
+    <script src="assets/js/jquery.dataTables.min.js"></script>
+    <script src="assets/js/dataTables.bootstrap4.min.js"></script>
 
     <!-- Custom JS -->
     <script src="assets/js/app.js"></script>
 
 </body>
-
-</html>
-
-</html>ript src="assets/js/select2.min.js"></script>
-
-<!-- Datetimepicker JS -->
-<script src="assets/js/moment.min.js"></script>
-<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
-
-<!-- Task JS -->
-<script src="assets/js/task.js"></script>
-
-<!-- Custom JS -->
-<script src="assets/js/app.js"></script>
-
-</body>
-
-</html>
 
 </html>

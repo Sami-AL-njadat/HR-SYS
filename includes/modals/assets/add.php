@@ -15,7 +15,7 @@ $id = substr(str_shuffle($set), 0, 6); ?>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Asset Name</label>
-                                <input name="asset_name" class="form-control" type="text">
+                                <input required name="asset_name" class="form-control" type="text">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -30,13 +30,13 @@ $id = substr(str_shuffle($set), 0, 6); ?>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Purchase Date</label>
-                                <input type="date" name="purchase_date" class="form-control">
+                                <input required type="date" name="purchase_date" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Purchase From</label>
-                                <input name="purchase_from" class="form-control" type="text">
+                                <input required name="purchase_from" class="form-control" type="text">
                             </div>
                         </div>
                     </div>
@@ -44,13 +44,13 @@ $id = substr(str_shuffle($set), 0, 6); ?>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Manufacturer</label>
-                                <input name="manufacturer" class="form-control" type="text">
+                                <input required name="manufacturer" class="form-control" type="text">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Model</label>
-                                <input name="model" class="form-control" type="text">
+                                <input required name="model" class="form-control" type="text">
                             </div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@ $id = substr(str_shuffle($set), 0, 6); ?>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Status</label>
-                                <select name="status" class="select">
+                                <select required name="status" class="select">
                                     <option value="0">New</option>
                                     <option value="1">Used</option>
                                     <option value="2">Maintenance</option>
@@ -70,19 +70,20 @@ $id = substr(str_shuffle($set), 0, 6); ?>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Supplier</label>
-                                <input name="supplier" class="form-control" type="text">
+                                <input required name="supplier" class="form-control" type="text">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Condition</label>
-                                <input name="condition" class="form-control" type="text">
+                                <input required name="condition" class="form-control" type="text">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Warranty</label>
-                                <input name="warranty" class="form-control" type="text" placeholder="In Months">
+                                <input required name="warranty" class="form-control" type="text"
+                                    placeholder="In Months">
                             </div>
                         </div>
                     </div>
@@ -90,7 +91,7 @@ $id = substr(str_shuffle($set), 0, 6); ?>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Value/Price</label>
-                                <input placeholder="1800" name="value" class="form-control" type="text">
+                                <input placeholder="1800" required name="value" class="form-control" type="number">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -115,7 +116,7 @@ $id = substr(str_shuffle($set), 0, 6); ?>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Description</label>
-                                <textarea name="descriptiones" class="form-control"></textarea>
+                                <textarea required name="descriptiones" class="form-control"></textarea>
                             </div>
                         </div>
 

@@ -116,7 +116,7 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                         <div class="dropdown-menu dropdown-menu-right">
 
-                                                            <a class="dropdown-item edit-department-btn" href="#" data-toggle="modal" data-target="#edit_department" data-id="<?php echo htmlentities($row->id); ?>"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                            <a class="dropdown-item edit-department-btn" href="#" data-toggle="modal" data-target="#edit_department" data-id="<?php echo $row->id; ?>"><i class="fa fa-pencil m-r-5"></i> Edit</a>
 
 
                                                             <a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_department" onclick="setDepToDelete
@@ -174,18 +174,18 @@ if (strlen($_SESSION['userlogin']) == 0) {
     <script>
         $(document).ready(function() {
             $('.edit-department-btn').click(function() {
-                var departmentId = $(this).data('id');
+                var department_id = $(this).data('id');
                 $.ajax({
                     url: 'http://localhost/HR-SYS/includes/modals/department/get_department_data.php',
                     type: 'POST',
                     data: {
-                        id: departmentId
+                        id: department_id
                     },
                     success: function(response) {
                         var data = JSON.parse(response);
 
                         $('#edit_department input[name="department"]').val(data.Department);
-                        $('#edit_department input[name="id"]').val(departmentId);
+                        $('#edit_department input[name="id"]').val(department_id);
 
                         console.log(data, "department data ");
                     }
