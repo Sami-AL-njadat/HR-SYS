@@ -7,74 +7,58 @@ include_once("includes/config.php");
 if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
     header('location:index.php');
 } elseif (isset($_POST['username'])) {
-    $username = htmlspecialchars($_POST['username']);
-    $password = htmlspecialchars($_POST['password']);
-    $sql = "SELECT * from employees where UserName=:username";
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $sql = "SELECT * FROM employees WHERE UserName = :username";
     $query = $dbh->prepare($sql);
     $query->bindParam(':username', $username, PDO::PARAM_STR);
     $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_OBJ);
-    $admin = 1;
-    if ($query->rowCount() == 0) {
+    $user = $query->fetch(PDO::FETCH_ASSOC);
 
-        $sql = "SELECT * from employees where UserName=:username";
-        $query = $dbh->prepare($sql);
-        $query->bindParam(':username', $username, PDO::PARAM_STR);
-        $query->execute();
-        $results = $query->fetchAll(PDO::FETCH_OBJ);
-    }
-    if ($query->rowCount() > 0) {
-        foreach ($results as $row) {
-            $hashpass = $row->Password;
-            $userid = $row->id;
+    if ($user) {
+        $hashpass = $user['Password'];
+        $userid = $user['id'];
+        $admin = $user['role'] == 1 ? 1 : 0;
 
-            $_SESSION['userlogin'] = $row->role;
-            if ($_SESSION['userlogin'] == 1) {
-                $admin = 1;
-            } else {
-                $admin = 0;
-            }
-            $_SESSION['employeeid'] = $row->id;
-            $_SESSION['admin'] = $admin;
-            $_SESSION['FirstName'] = $row->FirstName;
-            $_SESSION['LastName'] = $row->LastName;
-            $_SESSION['Picture'] = $row->Picture;
-        }
-        $userid  = $_SESSION['employeeid'];
         if (password_verify($password, $hashpass)) {
+            session_start();
+            $_SESSION['userlogin'] = $user['role'];
+            $_SESSION['employeeid'] = $userid;
+            $_SESSION['admin'] = $admin;
+            $_SESSION['FirstName'] = $user['FirstName'];
+            $_SESSION['LastName'] = $user['LastName'];
+            $_SESSION['Picture'] = $user['Picture'];
 
             if ($admin == 0) {
-
-
                 $current_datetime1 = date('Y-m-d H:i:s');
                 $current_datetime = date('Y-m-d H:i:s', strtotime($current_datetime1 . ' +2 hours'));
-                $sql = "INSERT INTO timesheet (employeeId, start,login_date) VALUES (:userid, :current_datetime,:current_datetime)";
+                $sql = "INSERT INTO timesheet (employeeId, start, login_date) VALUES (:userid, :current_datetime, :current_datetime)";
                 $query = $dbh->prepare($sql);
                 $query->bindParam(':userid', $userid, PDO::PARAM_STR);
                 $query->bindParam(':current_datetime', $current_datetime, PDO::PARAM_STR);
                 $query->execute();
             }
             header('location:index.php');
+            exit;
         } else {
-
-            $wrongpassword = '
-				<div class="alert alert-danger alert-dismissible fade show" role="alert">
-				<strong>Oh Snapp!😕</strong> Alert <b class="alert-link">Password: </b>You entered wrong password.
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				</div>';
+            $wrongpassword = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Oh Snap! 😕</strong> Wrong password.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>';
         }
     } else {
-        $wrongusername = '
-			<div class="alert alert-danger alert-dismissible fade show" role="alert">
-				<strong>Oh Snapp!🙃</strong> Alert <b class="alert-link">UserName: </b> You entered a wrong UserName.
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>';
+        $wrongusername = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Oh Snap! 🙃</strong> User not found.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>';
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

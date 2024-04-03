@@ -206,13 +206,11 @@ elseif (isset($_POST['edit_asset'])) {
 
 elseif (isset($_POST['edit_employee'])) {
 	// Retrieve form data
-
 	$first_name = htmlspecialchars($_POST['first_name']);
 	$last_name = htmlspecialchars($_POST['last_name']);
 	$username = htmlspecialchars($_POST['username']);
 	$email_em = htmlspecialchars($_POST['email_em']);
-	$password = htmlspecialchars($_POST['password']);
-	$confirmPassword = htmlspecialchars($_POST['confirmpassword']);
+	$password = isset($_POST['password']) ? $_POST['password'] : null; // Get password from form
 	$joining_date = htmlspecialchars($_POST['joining_date']);
 	$Phone_e = htmlspecialchars($_POST['phone_e']);
 	$Department_e = htmlspecialchars($_POST['Department_e']);
@@ -244,14 +242,12 @@ elseif (isset($_POST['edit_employee'])) {
 		$sql .= "Email = :email_em, ";
 		$params[':email_em'] = $email_em;
 	}
-	if (!empty($password)) {
+	if (!empty($password)) { // Only hash password if it's set
+		// Hash the password
+		$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 		$sql .= "Password = :password, ";
-		$params[':password'] = $password;
+		$params[':password'] = $hashed_password;
 	}
-	// if ($status > -1) {
-	// 	$sql .= "Status = :status, ";
-	// 	$params[':status'] = $status;
-	// }
 	if (!empty($Phone_e)) {
 		$sql .= "Phone = :Phone_e, ";
 		$params[':Phone_e'] = $Phone_e;
@@ -266,18 +262,10 @@ elseif (isset($_POST['edit_employee'])) {
 		$params[':designation'] = $designation;
 	}
 
-
-	if (!empty($value)) {
-		$sql .= "Price = :value, ";
-		$params[':value'] = $value;
-	}
-
 	if (!empty($joining_date)) {
 		$sql .= "Joining_Date  = :joining_date, ";
 		$params[':joining_date'] = $joining_date;
 	}
-
-
 
 	// Remove the trailing comma and space
 	$sql = rtrim($sql, ", ");
@@ -302,8 +290,10 @@ elseif (isset($_POST['edit_employee'])) {
 		echo "<script>alert('Failed to update Employee');</script>";
 	}
 
-	echo "<script>window.location.href ='/	HR-SYS/employees.php'</script>";
+	echo "<script>window.location.href = '/HR-SYS/employees.php'</script>";
 }
+
+
 
 
 //editing assets code ends here.
