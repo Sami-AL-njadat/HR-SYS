@@ -1,8 +1,7 @@
 <?php
-// Fetch employees from the database
+// Fetch all employees from the database
 $sql = "SELECT id, FirstName, LastName 
-        FROM employees 
-        WHERE id NOT IN (SELECT DISTINCT employee_id FROM salary)";
+        FROM employees";
 $query = $dbh->query($sql);
 $employees = $query->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -21,11 +20,9 @@ $employees = $query->fetchAll(PDO::FETCH_ASSOC);
                         <label>Employee <span class="text-danger">*</span></label>
                         <select name="employee[]" class="select form-control" multiple>
                             <?php
-
                             foreach ($employees as $employee) {
                                 echo '<option value="' . $employee['id'] . '">' . $employee['FirstName'] . ' ' . $employee['LastName'] . '</option>';
                             }
-
                             ?>
                         </select>
                     </div>
@@ -55,12 +52,12 @@ $employees = $query->fetchAll(PDO::FETCH_ASSOC);
                         <button type="submit" name="add_salary" class="btn btn-primary submit-btn">Submit</button>
                     </div>
                     <script>
-                    document.getElementById('select_all').addEventListener('change', function() {
-                        var checkboxes = document.getElementsByName('employee[]');
-                        for (var i = 0; i < checkboxes.length; i++) {
-                            checkboxes[i].checked = this.checked;
-                        }
-                    });
+                        document.getElementById('select_all').addEventListener('change', function() {
+                            var checkboxes = document.getElementsByName('employee[]');
+                            for (var i = 0; i < checkboxes.length; i++) {
+                                checkboxes[i].checked = this.checked;
+                            }
+                        });
                     </script>
                 </form>
             </div>

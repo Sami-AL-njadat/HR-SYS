@@ -142,7 +142,8 @@ include('includes/config.php');
                         </script>
                         <div class="form-group">
                             <label>Description <span class="text-danger">*</span></label>
-                            <textarea rows="6" columns="6" name="description" id="form-control reason"></textarea>
+                            <textarea class="form-control" rows="2" columns="2" name="description"
+                                id="form-control reason"></textarea>
                         </div>
                         <div class="submit-section">
                             <button class="btn btn-primary submit-btn" type="submit" name="logoutandsave">Log

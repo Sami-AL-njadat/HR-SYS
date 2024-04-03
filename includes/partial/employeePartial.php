@@ -98,7 +98,7 @@ $(document).ready(function() {
         $('#edit_employee #Department_e').val(Department);
         // $('#edit_employee #Joining_Date').val(Joining_Date);
         $('#edit_employee #username').val(UserName);
-        $('#edit_employee #role').val(role);
+        $('#edit_employee select[name="role"] ').val(role);
 
         $('.form-group select[name="Department_e"]').val(Department);
         $(' input[name="joining_date"]').val(Joining_Date);

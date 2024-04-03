@@ -120,6 +120,20 @@
 
                 ?>
                 <li>
+                    <a href="userRole.php"><i class="la la-key"></i> <span>User Role</span></a>
+                </li>
+
+                <?php
+                }
+
+                ?>
+
+                <?php
+
+                if ($_SESSION['userlogin'] == 1) {
+
+                ?>
+                <li>
                     <a href="clients.php"><i class="la la-users"></i> <span>Clients</span></a>
                 </li>
 

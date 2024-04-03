@@ -14,17 +14,19 @@
                         <select name="employees[]" class="select form-control" multiple>
                             <option value="">Select Employee</option>
                             <?php
-							$sql = "SELECT DISTINCT s.id, e.FirstName, e.LastName 
-                                    FROM salary s
-                                    INNER JOIN employees e ON s.employee_id = e.id";
-							$query = $dbh->query($sql);
-							$employees = $query->fetchAll(PDO::FETCH_ASSOC);
+                            $sql = "SELECT DISTINCT s.id, CONCAT(e.FirstName, ' ', e.LastName, ' - ', DATE_FORMAT(s.month_year, '%Y-%m')) AS EmployeeName
+            FROM salary s
+            INNER JOIN employees e ON s.employee_id = e.id";
+                            $query = $dbh->query($sql);
+                            $employees = $query->fetchAll(PDO::FETCH_ASSOC);
 
-							foreach ($employees as $employee) {
-								echo '<option value="' . $employee['id'] . '">' . $employee['FirstName'] . ' ' . $employee['LastName'] . '</option>';
-							}
-							?>
+                            foreach ($employees as $employee) {
+                                echo '<option value="' . $employee['id'] . '">' . $employee['EmployeeName'] . '</option>';
+                            }
+                            ?>
                         </select>
+
+
                     </div>
                     <div class="form-group">
                         <label>Deduction Name <span class="text-danger">*</span></label>

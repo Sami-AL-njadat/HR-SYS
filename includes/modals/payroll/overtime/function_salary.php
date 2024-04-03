@@ -16,8 +16,8 @@ if (isset($_POST['add_salary'])) {
         $employee_ids = isset($_POST['employee']) ? $_POST['employee'] : [];
     }
 
-    $additions = []; // Example additional amounts
-    $deductions = []; // Example deduction amounts
+    $additions = [];
+    $deductions = [];
 
     $total_additions = array_sum($additions);
     $total_deductions = array_sum($deductions);
@@ -53,12 +53,7 @@ if (isset($_POST['add_salary'])) {
 
 
     echo "<script>window.location.href='payroll-items.php';</script>";
-}
-
-
-// Check if the form is submitted
-// Check if the form is submitted
-elseif (isset($_POST['add_addition'])) {
+} elseif (isset($_POST['add_addition'])) {
     $employee_ids = $_POST['employees']; // Get selected employee IDs
     $addition_name = $_POST['addition_name'];
     $addition_value = $_POST['addition_value'];
@@ -125,11 +120,11 @@ elseif (isset($_POST['add_addition'])) {
             $stmt->bindParam(':net_salary', $net_salary);
             $stmt->bindParam(':salary_id', $employee_id);
             $stmt->execute();
-            echo "<script>alert('Successfully dec salaries.');</script>";
+            echo "<script>alert('Successfully additional salaries.');</script>";
 
             echo "<script>window.location.href='payroll-items.php';</script>";
         } else {
-            echo "<script>alert('error dec salaries.');</script>";
+            echo "<script>alert('error additional salaries.');</script>";
 
             echo "<script>window.location.href='payroll-items.php';</script>";
         }
@@ -200,26 +195,18 @@ elseif (isset($_POST['add_addition'])) {
 
             $stmt->execute();
 
-            echo "<script>alert('Successfully dec salaries.');</script>";
+            echo "<script>alert('Successfully deduction salaries.');</script>";
 
             echo "<script>window.location.href='payroll-items.php';</script>";
         } else {
-            echo "<script>alert('error dec salaries.');</script>";
+            echo "<script>alert('error deduction salaries.');</script>";
 
             echo "<script>window.location.href='payroll-items.php';</script>";
         }
     }
     echo "<script>window.location.href='payroll-items.php';</script>";
 }
-/////////// here for edit 
-/////////// here for edit 
-/////////// here for edit 
-/////////// here for edit 
-/////////// here for edit 
-/////////// here for edit 
-/////////// here for edit 
-/////////// here for edit 
-/////////// here for edit 
+
 /////////// here for edit 
 /////////// here for edit 
 /////////// here for edit 
@@ -227,6 +214,9 @@ elseif (isset($_POST['add_addition'])) {
 /////////// here for edit 
 /////////// here for edit 
 ////////// its is  edit  edit_overtime  = salary  
+
+
+
 elseif (isset($_POST['edit_overtime'])) {
     $salary_id = $_POST['id']; // Assuming the ID is passed via the form
 
@@ -282,6 +272,8 @@ elseif (isset($_POST['edit_overtime'])) {
 //edit_addition
 //edit_addition
 //edit_addition
+
+
 elseif (isset($_POST['edit_addition'])) {
 
     $addition_id = $_POST['id'];

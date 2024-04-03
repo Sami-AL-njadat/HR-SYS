@@ -79,6 +79,8 @@ if (strlen($_SESSION['userlogin']) == 0) {
         <!-- Page Wrapper -->
         <div class="page-wrapper">
 
+
+
             <div class="content container-fluid">
 
                 <!-- Page Header -->
@@ -121,7 +123,7 @@ if (strlen($_SESSION['userlogin']) == 0) {
 
                                 <?php
                                 $employeeid = $_SESSION['employeeid'];
-                                $sql = "SELECT timesheet.*, employees.FirstName, employees.LastName, projects.ProjectName
+                                $sql = "SELECT timesheet.*, employees.FirstName, employees.LastName, employees.Picture,projects.ProjectName
                             FROM timesheet 
                             INNER JOIN employees ON timesheet.employeeId = employees.id
                             INNER JOIN projects ON timesheet.projectId = projects.id";
@@ -147,7 +149,7 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                         <td>
                                             <h2 class="table-avatar">
                                                 <a href="profile.php" class="avatar"><img alt=""
-                                                        src="assets/img/profiles/avatar-02.jpg"></a>
+                                                        src="employees/<?php echo $row->Picture ?>"></a>
                                                 <a
                                                     href="profile.php"><?php echo $row->FirstName . " " . $row->LastName ?><span></span></a>
                                             </h2>
@@ -311,6 +313,20 @@ if (strlen($_SESSION['userlogin']) == 0) {
         });
     });
     </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- Bootstrap Core JS -->
     <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
