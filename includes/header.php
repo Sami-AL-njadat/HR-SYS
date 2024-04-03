@@ -5,19 +5,19 @@ include('includes/config.php');
 
 ?>
 <style>
-    .avatar>img {
-        height: 100% !important;
-    }
+.avatar>img {
+    height: 100% !important;
+}
 
-    #require {
-        color: red;
-    }
+#require {
+    color: red;
+}
 </style>
 <div class="header">
     <style>
-        .modal-backdrop {
-            z-index: 2 !important;
-        }
+    .modal-backdrop {
+        z-index: 2 !important;
+    }
     </style>
     <!-- Logo -->
     <div class="header-left">
@@ -84,7 +84,8 @@ include('includes/config.php');
                 if ($_SESSION['userlogin'] == 2) {
 
                 ?>
-                    <a class="dropdown-item  desprojectbutton" href="#" data-id="" data-toggle="modal" data-target="#logoutt"> Log out</a>
+                <a class="dropdown-item  desprojectbutton" href="#" data-id="" data-toggle="modal"
+                    data-target="#logoutt"> Log out</a>
                 <?php
                 } else {
 
@@ -118,7 +119,7 @@ include('includes/config.php');
                                 if ($query->rowCount() > 0) {
                                     foreach ($results as $row) {
                                 ?>
-                                        <option class="" value="<?php echo $row->id ?>"><?php echo $row->ProjectName ?></option>
+                                <option class="" value="<?php echo $row->id ?>"><?php echo $row->ProjectName ?></option>
                                 <?php
                                     }
                                 }
@@ -129,15 +130,15 @@ include('includes/config.php');
 
                         </div>
                         <script>
-                            document.getElementById("logoutform").addEventListener("submit", function(event) {
-                                var projectSelect = document.getElementById("project");
-                                if (projectSelect.value === "") {
-                                    var require = document.getElementById("require");
-                                    require.innerHTML = `Project Work on is require `;
-                                    event.preventDefault();
+                        document.getElementById("logoutform").addEventListener("submit", function(event) {
+                            var projectSelect = document.getElementById("project");
+                            if (projectSelect.value === "") {
+                                var require = document.getElementById("require");
+                                require.innerHTML = `Project Work on is require `;
+                                event.preventDefault();
 
-                                }
-                            });
+                            }
+                        });
                         </script>
                         <div class="form-group">
                             <label>Description <span class="text-danger">*</span></label>
@@ -154,7 +155,8 @@ include('includes/config.php');
     </div>
     <!-- Mobile Menu -->
     <div class="dropdown mobile-user-menu">
-        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i
+                class="fa fa-ellipsis-v"></i></a>
         <div class="dropdown-menu dropdown-menu-right">
             <a class="dropdown-item" href="profile.php">My Profile</a>
             <a class="dropdown-item" href="login.php">Logout</a>
@@ -164,10 +166,10 @@ include('includes/config.php');
 
 </div>
 <script>
-    var modal = document.querySelector('.modal-backdrop');
-    var desprojectbutton = document.querySelector('.desprojectbutton');
-    desprojectbutton.addEventListener('click', function() {
+var modal = document.querySelector('.modal-backdrop');
+var desprojectbutton = document.querySelector('.desprojectbutton');
+desprojectbutton.addEventListener('click', function() {
 
-        modal.classList.remove(...modal.classList);
-    })
+    modal.classList.remove(...modal.classList);
+})
 </script>
