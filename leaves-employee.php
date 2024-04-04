@@ -1,10 +1,9 @@
 ﻿<?php
+session_start();
 
 $current_datetime = date('Y-m-d H:i:s');
 
-print_r($updated_datetime = date('Y-m-d H:i:s', strtotime($current_datetime . ' +2 hours')));
-session_start();
-error_reporting(0);
+print_r($updated_datetime = date('Y-m-d H:i:s', strtotime($current_datetime . ' +3 hours')));
 error_reporting(0);
 include_once('includes/config.php');
 include_once("includes/functions.php");
@@ -256,11 +255,13 @@ if (strlen($_SESSION['userlogin']) == 0) {
                     success: function(response) {
                         console.log(response);
                         // Populate the modal fields with the fetched data
-                        $('#edit_leave').find('input[name="starting_at"]').val(response.Starting_At);
+                        $('#edit_leave').find('input[name="starting_at"]').val(response
+                            .Starting_At);
                         $('#edit_leave').find('input[name="ends_on"]').val(response.Ending_On);
                         $('#edit_leave').find('textarea[name="reason"]').val(response.Reason);
 
-                        $('#edit_leave').find('input[name="days_count"]').val(response.dayscount);
+                        $('#edit_leave').find('input[name="days_count"]').val(response
+                            .dayscount);
                         $('#edit_leave').find('input[name="id"]').val(response.id);
                     },
                     error: function(xhr, status, error) {
@@ -290,7 +291,8 @@ if (strlen($_SESSION['userlogin']) == 0) {
                             id: LeaveId
                         },
                         success: function(response) {
-                            $("#aprovedelete").attr('href', 'leaves-employee.php?delid=' + LeaveId);
+                            $("#aprovedelete").attr('href',
+                                'leaves-employee.php?delid=' + LeaveId);
 
                         }
                     })

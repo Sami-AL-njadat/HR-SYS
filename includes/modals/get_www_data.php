@@ -1,5 +1,4 @@
 <?php
-// Assuming you have already established a database connection
 session_start();
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
