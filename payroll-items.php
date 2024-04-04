@@ -285,7 +285,7 @@ include_once('includes/modals/payroll/overtime/function_salary.php');
                                         } else {
                                             // No data found
                                             echo '<tr>
-                <td colspan="5">No data found</td>
+                <td colspan="5">No addition found</td>
             </tr>';
                                         }
                                         ?>
@@ -336,16 +336,18 @@ include_once('includes/modals/payroll/overtime/function_salary.php');
                                         $salaries = $query->fetchAll(PDO::FETCH_ASSOC);
 
                                         // Loop through the fetched data and populate the table rows
-                                        foreach ($salaries as $salary) {
-                                            echo "<tr>";
-                                            echo "<td>" . $salary['FirstName'] . " " . $salary['LastName'] . "</td>";
-                                            echo "<td>" . $salary['basic_salary'] . "</td>";
-                                            echo "<td>" . $salary['tax'] . "</td>";
-                                            echo "<td>" . $salary['current_salary'] . "</td>";
-                                            echo "<td>" . $salary['month_year'] . "</td>";
+                                        if ($salaries) {
 
-                                            echo "<td>" . $salary['net_salary'] . "</td>";
-                                            echo "<td class='text-right'>
+                                            foreach ($salaries as $salary) {
+                                                echo "<tr>";
+                                                echo "<td>" . $salary['FirstName'] . " " . $salary['LastName'] . "</td>";
+                                                echo "<td>" . $salary['basic_salary'] . "</td>";
+                                                echo "<td>" . $salary['tax'] . "</td>";
+                                                echo "<td>" . $salary['current_salary'] . "</td>";
+                                                echo "<td>" . $salary['month_year'] . "</td>";
+
+                                                echo "<td>" . $salary['net_salary'] . "</td>";
+                                                echo "<td class='text-right'>
                 <div class='dropdown dropdown-action'>
                     <a href='#' class='action-icon dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>
                         <i class='material-icons'>more_vert</i>
@@ -360,7 +362,12 @@ include_once('includes/modals/payroll/overtime/function_salary.php');
                     </div>
                 </div>
             </td>";
-                                            echo "</tr>";
+                                                echo "</tr>";
+                                            }
+                                        } else {
+                                            echo '<tr>
+                <td colspan="5">No salary found</td>
+            </tr>';
                                         }
                                         ?>
                                     </tbody>

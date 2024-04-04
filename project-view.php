@@ -20,8 +20,7 @@ if (strlen($_SESSION['userlogin']) == 0) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="Smarthr - Bootstrap Admin Template">
-    <meta name="keywords"
-        content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
     <title>Project View - HRMS admin template</title>
@@ -88,9 +87,9 @@ if (strlen($_SESSION['userlogin']) == 0) {
 
                             if ($project) {
                             ?>
-                            <div class="project-title">
-                                <h3 class="page-title"><?php echo $project['ProjectName']; ?></h3>
-                            </div>
+                                <div class="project-title">
+                                    <h3 class="page-title"><?php echo $project['ProjectName']; ?></h3>
+                                </div>
                             <?php
                             } else {
                                 echo "Project not found.";
@@ -144,35 +143,35 @@ if (strlen($_SESSION['userlogin']) == 0) {
 
 
 
-                                <div class="project-title m-b-10">
-                                    <h6 class="card-text">Client Name:
-                                        <?php echo $project2['FirstName'] . " " . $project2['LastName']; ?>
-                                    </h6>
+                                    <div class="project-title m-b-10">
+                                        <h6 class="card-text">Client Name:
+                                            <?php echo $project2['FirstName'] . " " . $project2['LastName']; ?>
+                                        </h6>
 
-                                </div>
+                                    </div>
 
-                                <div class="project-title  m-b-10">
-                                    <h6 class="card-card-text">Company: <?php echo $project2['Company']; ?>
-                                    </h6>
+                                    <div class="project-title  m-b-10">
+                                        <h6 class="card-card-text">Company: <?php echo $project2['Company']; ?>
+                                        </h6>
 
-                                </div>
+                                    </div>
 
-                                <div class="project-title  m-b-10">
-                                    <h6 class="card-card-text">Phone: <?php echo $project2['Phone']; ?>
-                                    </h6>
+                                    <div class="project-title  m-b-10">
+                                        <h6 class="card-card-text">Phone: <?php echo $project2['Phone']; ?>
+                                        </h6>
 
-                                </div>
-                                <div class="project-title m-b-10">
-                                    <h6 class="card-text ">Email: <?php echo $project2['Email']; ?></h6>
+                                    </div>
+                                    <div class="project-title m-b-10">
+                                        <h6 class="card-text ">Email: <?php echo $project2['Email']; ?></h6>
 
 
-                                </div>
+                                    </div>
 
-                                <h6 class="card-title m-b-20"> Project Description </h6>
-                                <div class="project-title m-b-10">
+                                    <h6 class="card-title m-b-20"> Project Description </h6>
+                                    <div class="project-title m-b-10">
 
-                                    <?php echo $project['Description']; ?>
-                                </div>
+                                        <?php echo $project['Description']; ?>
+                                    </div>
                                 <?php
                                 } else {
                                     echo "Project not found.";
@@ -205,12 +204,11 @@ if (strlen($_SESSION['userlogin']) == 0) {
 
                                             // Display file information
                                     ?>
-                                    <div class="files-cont">
-                                        <small
-                                            class="form-text text-muted"><?php echo isset($project['Filees']) ? htmlentities($project['Filees']) : ''; ?></small>
+                                            <div class="files-cont">
+                                                <small class="form-text text-muted"><?php echo isset($project['Filees']) ? htmlentities($project['Filees']) : ''; ?></small>
 
-                                        <div class="file-type">
-                                            <?php
+                                                <div class="file-type">
+                                                    <?php
                                                     // Display file icon based on file type
                                                     $file_extension = pathinfo($file_path, PATHINFO_EXTENSION);
                                                     switch ($file_extension) {
@@ -236,13 +234,12 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                                             break;
                                                     }
                                                     ?>
-                                        </div>
-                                        <div class="files-info">
-                                            <span class="file-name text-ellipsis"><a href="<?php echo $file_path; ?>"
-                                                    target="_blank">Download
-                                                    File</a></span>
-                                        </div>
-                                    </div>
+                                                </div>
+                                                <div class="files-info">
+                                                    <span class="file-name text-ellipsis"><a href="<?php echo $file_path; ?>" target="_blank">Download
+                                                            File</a></span>
+                                                </div>
+                                            </div>
                                     <?php
                                         } else {
                                             // Handle case where file information is not found
@@ -275,20 +272,18 @@ if (strlen($_SESSION['userlogin']) == 0) {
 
                                     if ($leader) {
                                     ?>
-                                    <li>
-                                        <div class="list-item">
-                                            <div class="list-left">
-                                                <span class="avatar"><img style="width: 38px;height:38px;" alt=""
-                                                        src="employees/<?php echo $leader['Picture']; ?>"></span>
+                                        <li>
+                                            <div class="list-item">
+                                                <div class="list-left">
+                                                    <span class="avatar"><img style="width: 38px;height:38px;" alt="" src="employees/<?php echo $leader['Picture']; ?>"></span>
+                                                </div>
+                                                <div class="list-body">
+                                                    <span class="message-author"><?php echo $leader['FirstName'] . ' ' . $leader['LastName']; ?></span>
+                                                    <div class="clearfix"></div>
+                                                    <span class="message-content">Team Leader</span>
+                                                </div>
                                             </div>
-                                            <div class="list-body">
-                                                <span
-                                                    class="message-author"><?php echo $leader['FirstName'] . ' ' . $leader['LastName']; ?></span>
-                                                <div class="clearfix"></div>
-                                                <span class="message-content">Team Leader</span>
-                                            </div>
-                                        </div>
-                                    </li>
+                                        </li>
                                     <?php
                                     } else {
                                         echo "Assigned leader not found.";
@@ -317,22 +312,20 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                     if ($users) {
                                         foreach ($users as $user) {
                                     ?>
-                                    <li>
+                                            <li>
 
-                                        <div class="list-item">
-                                            <div class="list-left">
-                                                <span class="avatar"><img alt="" style="width: 38px;height:38px;"
-                                                        src="employees/<?php echo $user['Picture']; ?>"></span>
-                                            </div>
-                                            <div class="list-body">
-                                                <span
-                                                    class="message-author"><?php echo $user['FirstName'] . ' ' . $user['LastName']; ?></span>
-                                                <div class="clearfix"></div>
+                                                <div class="list-item">
+                                                    <div class="list-left">
+                                                        <span class="avatar"><img alt="" style="width: 38px;height:38px;" src="employees/<?php echo $user['Picture']; ?>"></span>
+                                                    </div>
+                                                    <div class="list-body">
+                                                        <span class="message-author"><?php echo $user['FirstName'] . ' ' . $user['LastName']; ?></span>
+                                                        <div class="clearfix"></div>
 
-                                            </div>
-                                        </div>
+                                                    </div>
+                                                </div>
 
-                                    </li>
+                                            </li>
                                     <?php
                                         }
                                     } else {
@@ -361,27 +354,27 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                         if ($project) {
                                             // Display project details
                                         ?>
-                                        <tr>
-                                            <td>Project Name:</td>
-                                            <td class="text-right"><?php echo $project['ProjectName']; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Price:</td>
-                                            <td class="text-right">$<?php echo $project['Price']; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Start Date:</td>
-                                            <td class="text-right"><a><?php echo $project['StartDate']; ?></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Deadline:</td>
-                                            <td class="text-right"><?php echo $project['EndDate']; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Priority:</td>
-                                            <td class="text-right">
-                                                <div class="btn-group">
-                                                    <?php
+                                            <tr>
+                                                <td>Project Name:</td>
+                                                <td class="text-right"><?php echo $project['ProjectName']; ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Price:</td>
+                                                <td class="text-right">$<?php echo $project['Price']; ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Start Date:</td>
+                                                <td class="text-right"><a><?php echo $project['StartDate']; ?></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Deadline:</td>
+                                                <td class="text-right"><?php echo $project['EndDate']; ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Priority:</td>
+                                                <td class="text-right">
+                                                    <div class="btn-group">
+                                                        <?php
                                                         $priorityClass = ['badge-danger', 'badge-primary', 'badge-success'];
                                                         $priorityLabels = ['High', 'Medium', 'Low'];
                                                         $priorityValues = [0, 1, 2]; // Change these values based on your requirement
@@ -393,21 +386,21 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                                             }
                                                         }
                                                         ?>
-                                                </div>
-                                            </td>
+                                                    </div>
+                                                </td>
 
 
-                                        </tr>
+                                            </tr>
 
-                                        <tr>
-                                            <td>Status:</td>
+                                            <tr>
+                                                <td>Status:</td>
 
-                                            <td class="text-right">
-                                                <div class="btn-group">
-                                                    <?php
+                                                <td class="text-right">
+                                                    <div class="btn-group">
+                                                        <?php
                                                         $priorityClass = ['badge-danger', 'badge-primary', 'badge-success', 'badge-info'];
                                                         $priorityLabels = ['Pending', 'In process', 'Finished', 'Start soon'];
-                                                        $priorityValues = [0, 1, 2]; // Change these values based on your requirement
+                                                        $priorityValues = [0, 1, 2, 3]; // Change these values based on your requirement
                                                         for ($i = 0; $i < count($priorityLabels); $i++) {
                                                             // Use lowercase $i instead of $I in the condition
                                                             if ($project['Status'] == $priorityValues[$i]) {
@@ -416,9 +409,9 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                                             }
                                                         }
                                                         ?>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         <?php
                                         } else {
                                             echo "Project not found.";
@@ -426,13 +419,10 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                         ?>
                                     </tbody>
                                 </table>
-                                <p class="m-b-5">Progress <span
-                                        class="text-success float-right"><?php echo $project['CompletionPercentage']; ?>%</span>
+                                <p class="m-b-5">Progress <span class="text-success float-right"><?php echo $project['CompletionPercentage']; ?>%</span>
                                 </p>
                                 <div class="progress progress-xs mb-0">
-                                    <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip"
-                                        title="<?php echo $project['CompletionPercentage']; ?>%"
-                                        style="width: <?php echo $project['CompletionPercentage']; ?>%"></div>
+                                    <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="<?php echo $project['CompletionPercentage']; ?>%" style="width: <?php echo $project['CompletionPercentage']; ?>%"></div>
                                 </div>
                             </div>
                         </div>
