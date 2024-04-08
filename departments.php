@@ -22,7 +22,8 @@ if (strlen($_SESSION['userlogin']) == 0) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="Smarthr - Bootstrap Admin Template">
-    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="keywords"
+        content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
     <title>Departments - HRMS admin template</title>
@@ -81,7 +82,8 @@ if (strlen($_SESSION['userlogin']) == 0) {
                             </ul>
                         </div>
                         <div class="col-auto float-right ml-auto">
-                            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_department"><i class="fa fa-plus"></i> Add Department</a>
+                            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_department"><i
+                                    class="fa fa-plus"></i> Add Department</a>
                         </div>
                     </div>
                 </div>
@@ -107,25 +109,30 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                 if ($query->rowCount() > 0) {
                                     foreach ($results as $row) {
                                 ?>
-                                        <tbody>
-                                            <tr>
-                                                <td><?php echo $cnt; ?></td>
-                                                <td><?php echo htmlentities($row->Department); ?></td>
-                                                <td class="text-right">
-                                                    <div class="dropdown dropdown-action">
-                                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
+                                <tbody>
+                                    <tr>
+                                        <td><?php echo $cnt; ?></td>
+                                        <td><?php echo htmlentities($row->Department); ?></td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
+                                                    aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
 
-                                                            <a class="dropdown-item edit-department-btn" href="#" data-toggle="modal" data-target="#edit_department" data-id="<?php echo $row->id; ?>"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                    <a class="dropdown-item edit-department-btn" href="#"
+                                                        data-toggle="modal" data-target="#edit_department"
+                                                        data-id="<?php echo $row->id; ?>"><i
+                                                            class="fa fa-pencil m-r-5"></i> Edit</a>
 
 
-                                                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_department" onclick="setDepToDelete
+                                                    <a href="#" class="dropdown-item" data-toggle="modal"
+                                                        data-target="#delete_department" onclick="setDepToDelete
                                             (<?php echo $row->id; ?>)"><i class="fa fa-trash-o m-r-5"></i>Delete</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
                                 <?php $cnt += 1;
                                     }
                                 } ?>
@@ -172,26 +179,26 @@ if (strlen($_SESSION['userlogin']) == 0) {
     <script src="assets/js/app.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $('.edit-department-btn').click(function() {
-                var department_id = $(this).data('id');
-                $.ajax({
-                    url: 'http://localhost/HR-SYS/includes/modals/department/get_department_data.php',
-                    type: 'POST',
-                    data: {
-                        id: department_id
-                    },
-                    success: function(response) {
-                        var data = JSON.parse(response);
+    $(document).ready(function() {
+        $('.edit-department-btn').click(function() {
+            var department_id = $(this).data('id');
+            $.ajax({
+                url: 'http://localhost/HR-SYS/includes/modals/department/get_department_data.php',
+                type: 'POST',
+                data: {
+                    id: department_id
+                },
+                success: function(response) {
+                    var data = JSON.parse(response);
 
-                        $('#edit_department input[name="department"]').val(data.Department);
-                        $('#edit_department input[name="id"]').val(department_id);
+                    $('#edit_department input[name="department"]').val(data.Department);
+                    $('#edit_department input[name="id"]').val(department_id);
 
-                        console.log(data, "department data ");
-                    }
-                });
+                    console.log(data, "department data ");
+                }
             });
         });
+    });
     </script>
 
 

@@ -32,7 +32,7 @@ if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
 
             if ($admin == 0) {
                 $current_datetime1 = date('Y-m-d H:i:s');
-                $current_datetime = date('Y-m-d H:i:s', strtotime($current_datetime1 . ' +2 hours'));
+                $current_datetime = date('Y-m-d H:i:s', strtotime($current_datetime1 . ' +1 hours'));
                 $sql = "INSERT INTO timesheet (employeeId, start, login_date) VALUES (:userid, :current_datetime, :current_datetime)";
                 $query = $dbh->prepare($sql);
                 $query->bindParam(':userid', $userid, PDO::PARAM_STR);

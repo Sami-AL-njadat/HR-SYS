@@ -472,7 +472,7 @@ elseif (isset($_POST['edit_client'])) {
 //adding departments code starts here
 elseif (isset($_POST['add_department'])) {
 	$department = htmlspecialchars($_POST['department']);
-	$sql = "INSERT INTO departments(Department )VALUES(:name)";
+	$sql = "INSERT INTO departments(Department)VALUES(:name)";
 	$query = $dbh->prepare($sql);
 	$query->bindParam(':name', $department, pdo::PARAM_STR);
 	$query->execute();
@@ -536,24 +536,28 @@ elseif (isset($_POST['add_designation'])) {
 		echo "<script>alert('Something Went wrong');</script>";
 	}
 }
+
 //adding designations code ends here
 
 
 //editing designations code starts here
+
 if (isset($_POST['edit_designation'])) {
-	$designation_id = htmlspecialchars($_POST['id']); // Get the designation ID from the hidden input
+	$designation_id = htmlspecialchars($_POST['id']);
 	$name = htmlspecialchars($_POST['designation']);
 	$department_id = htmlspecialchars($_POST['department_id']);
 
 	// Update the designation in the database
+
 	$sql = "UPDATE `designations` SET `Designation` = :designation, `Department` = :department_id WHERE `id` = :designation_id";
 	$query = $dbh->prepare($sql);
 	$query->bindParam(':designation', $name, PDO::PARAM_STR);
-	$query->bindParam(':department_id', $department_id, PDO::PARAM_INT); // Assuming department_id is an integer
-	$query->bindParam(':designation_id', $designation_id, PDO::PARAM_INT); // Assuming designation_id is an integer
+	$query->bindParam(':department_id', $department_id, PDO::PARAM_INT);
+	$query->bindParam(':designation_id', $designation_id, PDO::PARAM_INT);
 	$query->execute();
 
 	// Check if the update was successful
+
 	$updated_rows = $query->rowCount();
 	if ($updated_rows > 0) {
 		echo "<script>alert('Designation has been updated successfully');</script>";
@@ -597,20 +601,38 @@ elseif (isset($_POST['add_employee'])) {
 	$department = htmlspecialchars($_POST['department']);
 	$designation = htmlspecialchars($_POST['designation']);
 	$roles = htmlspecialchars($_POST['role']);
-	//grabbing the picture
 	$file = $_FILES['picture']['name'];
 	$file_loc = $_FILES['picture']['tmp_name'];
 	$folder = "../employees/";
 	$new_file_name = strtolower($file);
 	$final_file = str_replace(' ', '-', $new_file_name);
 
-	if (move_uploaded_file($file_loc, $folder . $final_file) && ($password == $confirm_password)) {
-		$image = $final_file;
-		$password = password_hash($password, PASSWORD_DEFAULT);
+	// Check if the file was successfully uploaded
+	if (
+		!empty($file) && is_uploaded_file($file_loc) && ($password == $confirm_password)
+	) {
+		if (move_uploaded_file($file_loc, $folder . $final_file)) {
+			$image = $final_file;
+			$password = password_hash($password, PASSWORD_DEFAULT);
+		} else {
+			// Handle file upload failure
+			echo "<script>alert('Failed to upload picture.');</script>";
+			echo "<script>window.location.href='/HR-SYS/employees.php';</script>";
+
+			exit; // Exit script to prevent further execution
+		}
+	} else {
+		// Handle missing file or password mismatch
+		echo "<script>alert('Please provide a picture and ensure passwords match.');</script>";
+		echo "<script>window.location.href='/HR-SYS/employees.php';</script>";
+
+		exit; // Exit script to prevent further execution
 	}
+
+	// Prepare and execute SQL query
 	$sql = "INSERT INTO `employees` (`id`, `FirstName`, `LastName`, `UserName`, `Email`, `Password`, `Employee_Id`, `Phone`, `Department`, `Designation`, `Picture`, `DateTime`, `role`) 
-VALUES (NULL, :firstname, :lastname, :username, :email, :password, :id, :phone, :department, :designation, :pic, current_timestamp(), :roles)
-";
+    VALUES (NULL, :firstname, :lastname, :username, :email, :password, :id, :phone, :department, :designation, :pic, current_timestamp(), :roles)";
+
 	$query = $dbh->prepare($sql);
 	$query->bindParam(':firstname', $firstname, PDO::PARAM_STR);
 	$query->bindParam(':lastname', $lastname, PDO::PARAM_STR);
@@ -623,15 +645,22 @@ VALUES (NULL, :firstname, :lastname, :username, :email, :password, :id, :phone, 
 	$query->bindParam(':designation', $designation, PDO::PARAM_STR);
 	$query->bindParam(':roles', $roles, PDO::PARAM_STR);
 	$query->bindParam(':pic', $image, PDO::PARAM_STR);
-	$query->execute();
-	$lastInsert = $dbh->lastInsertId();
-	if ($lastInsert > 0) {
-		echo "<script>alert('Employee Has Been Added.');</script>";
-		echo "<script>window.location.href='/HR-SYS/employees.php';</script>";
+
+	// Execute query
+	if ($query->execute()) {
+		$lastInsert = $dbh->lastInsertId();
+		if ($lastInsert > 0) {
+			echo "<script>alert('Employee Has Been Added.');</script>";
+			echo "<script>window.location.href='/HR-SYS/employees.php';</script>";
+		} else {
+			echo "<script>alert('Something Went Wrong');</script>";
+			echo "<script>window.location.href='/HR-SYS/employees.php';</script>";
+		}
 	} else {
-		echo "<script>alert('Something Went Wrong');</script>";
+		echo "<script>alert('Failed to add employee.');</script>";
+		echo "<script>window.location.href='/HR-SYS/employees.php';</script>";
 	}
-} //ading employees code eds here
+}
 
 //employee overtime code begins here
 

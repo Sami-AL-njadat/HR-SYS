@@ -97,17 +97,7 @@
                                 </select>
                             </div>
                         </div>
-                        <!-- <div class="col-md-6">
-							<div class="form-group">
-								<label>Department <span class="text-danger">*</span></label>
-								<select class="select">
-									<option>Select Department</option>
-									<option>Web Development</option>
-									<option>IT Management</option>
-									<option>Marketing</option>
-								</select>
-							</div>
-						</div> -->
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Designation <span class="text-danger">*</span></label>

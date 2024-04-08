@@ -9,7 +9,7 @@ if ($_SESSION['userlogin'] == 2) {
 
         $Description = $_POST['description'];
         $current_datetime = date('Y-m-d H:i:s');
-        $end_datetime = date('Y-m-d H:i:s', strtotime($current_datetime . ' +2 hours'));
+        $end_datetime = date('Y-m-d H:i:s', strtotime($current_datetime . ' +1 hours'));
         if ($_SESSION['userid']) {
             $userid = $_SESSION['userid'];
         } else {

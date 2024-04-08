@@ -13,8 +13,7 @@
 
                         </div>
                         <div class="col-6">
-                            <a href="javascript:void(0);" data-dismiss="modal"
-                                class="btn btn-primary cancel-btn">Cancel</a>
+                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                         </div>
                     </div>
                 </div>
@@ -25,13 +24,13 @@
 
 
 <script>
-function setDepToDelete(depr) {
+    function setDepToDelete(depr) {
 
-    console.log(depr, 'Recycle.Bin');
-    $('#dep_id_to_delete').text(depr);
-}
+        console.log(depr, 'sami');
+        $('#dep_id_to_delete').text(depr);
+    }
 
-function confirmDelete() {
-    window.location.href = 'departments.php?delid=' + $('#dep_id_to_delete').text();
-}
+    function confirmDelete() {
+        window.location.href = 'departments.php?delid=' + $('#dep_id_to_delete').text();
+    }
 </script>

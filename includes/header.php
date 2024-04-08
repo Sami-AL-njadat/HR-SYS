@@ -3,6 +3,25 @@ session_start();
 error_reporting(0);
 include('includes/config.php');
 
+
+
+// $sql = "SELECT * FROM employees";
+// $query = $dbh->prepare($sql);
+// $query->execute();
+// $user = $query->fetch(PDO::FETCH_ASSOC);
+
+// if ($user) {
+//     // Check if data has changed
+//     if ($_SESSION['FirstName'] != $user['FirstName'] || $_SESSION['LastName'] != $user['LastName']) {
+//         // Update session variables
+//         $_SESSION['FirstName'] = $user['FirstName'];
+//         $_SESSION['LastName'] = $user['LastName'];
+//     }
+// }
+
+
+
+
 ?>
 <style>
 .avatar>img {

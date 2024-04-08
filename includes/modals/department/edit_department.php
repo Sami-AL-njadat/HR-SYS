@@ -11,9 +11,9 @@
 				<form method="POST">
 					<div class="form-group">
 						<label>Department Name <span class="text-danger">*</span></label>
-						<input class="form-control" name="department" required type="text" value="<?php echo htmlentities($row->Department); ?>">
+						<input class="form-control" name="department" required type="text" value="">
 					</div>
-					<input type="hidden" name="id" value="<?php echo htmlentities($row->id); ?>">
+					<input hidden name="id" value="<?php echo htmlentities($row->id); ?>">
 
 					<div class="submit-section">
 						<button name="edit_department" type="POST" class="btn btn-primary submit-btn">Save</button>

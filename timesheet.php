@@ -14,8 +14,7 @@ if (strlen($_SESSION['userlogin']) == 0) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="Smarthr - Bootstrap Admin Template">
-    <meta name="keywords"
-        content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
     <title>Timesheet - HRMS admin template</title>
@@ -116,7 +115,7 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                         <th class="text-center">Assigned Hours</th>
                                         <th class="d-none d-sm-table-cell">Description</th>
                                         <?php if ($_SESSION['userlogin'] == 1) { ?>
-                                        <th class="text-right">Actions</th>
+                                            <th class="text-right">Actions</th>
                                         <?php } ?>
                                     </tr>
                                 </thead>
@@ -144,50 +143,42 @@ if (strlen($_SESSION['userlogin']) == 0) {
                                 if ($query->rowCount() > 0) {
                                     foreach ($results as $row) {
                                 ?>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <h2 class="table-avatar">
-                                                <a href="profile.php" class="avatar"><img alt=""
-                                                        src="employees/<?php echo $row->Picture ?>"></a>
-                                                <a
-                                                    href="profile.php"><?php echo $row->FirstName . " " . $row->LastName ?><span></span></a>
-                                            </h2>
-                                        </td>
-                                        <td><?php echo date('j M Y', strtotime($row->start)); ?></td>
-                                        <td>
-                                            <h2><?php echo $row->ProjectName ?></h2>
-                                        </td>
-                                        <td class="text-center">
-                                            <?php
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <h2 class="table-avatar">
+                                                        <a href="profile.php" class="avatar"><img alt="" src="employees/<?php echo $row->Picture ?>"></a>
+                                                        <a href="profile.php"><?php echo $row->FirstName . " " . $row->LastName ?><span></span></a>
+                                                    </h2>
+                                                </td>
+                                                <td><?php echo date('j M Y', strtotime($row->start)); ?></td>
+                                                <td>
+                                                    <h2><?php echo $row->ProjectName ?></h2>
+                                                </td>
+                                                <td class="text-center">
+                                                    <?php
                                                     $startDateTime = new DateTime($row->start);
                                                     $endDateTime = new DateTime($row->end);
                                                     $diff = $endDateTime->diff($startDateTime);
                                                     echo $diff->format('%hh %im');
                                                     ?>
-                                        </td>
-                                        <td class="d-none d-sm-table-cell col-md-4"><?php echo $row->description ?></td>
-                                        <?php if ($_SESSION['userlogin'] == 1) { ?>
-                                        <td class="text-right">
-                                            <div class="dropdown dropdown-action">
-                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-                                                    aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item editButton" href="#" data-toggle="modal"
-                                                        data-id="<?php echo htmlentities($row->id); ?>"
-                                                        data-target="#edit_todaywork"><i class="fa fa-pencil m-r-5"></i>
-                                                        Edit</a>
-                                                    <a class="dropdown-item deleteButton" href="#" data-toggle="modal"
-                                                        data-id="<?php echo htmlentities($row->id); ?>"
-                                                        data-target="#delete_workdetail"><i
-                                                            class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <?php } ?>
-                                    </tr>
-                                </tbody>
-                                <?php $cnt += 1;
+                                                </td>
+                                                <td class="d-none d-sm-table-cell col-md-4"><?php echo $row->description ?></td>
+                                                <?php if ($_SESSION['userlogin'] == 1) { ?>
+                                                    <td class="text-right">
+                                                        <div class="dropdown dropdown-action">
+                                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item editButton" href="#" data-toggle="modal" data-id="<?php echo htmlentities($row->id); ?>" data-target="#edit_todaywork"><i class="fa fa-pencil m-r-5"></i>
+                                                                    Edit</a>
+                                                                <a class="dropdown-item deleteButton" href="#" data-toggle="modal" data-id="<?php echo htmlentities($row->id); ?>" data-target="#delete_workdetail"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                <?php } ?>
+                                            </tr>
+                                        </tbody>
+                                    <?php $cnt += 1;
                                     }
                                     ?>
 
@@ -243,75 +234,75 @@ if (strlen($_SESSION['userlogin']) == 0) {
     <!-- jQuery -->
     <script src="assets/js/jquery-3.2.1.min.js"></script>
     <script>
-    $(document).ready(function() {
-        $('.deleteButton').each(function() {
-            $(this).on('click', function(e) {
-                var timesheetId = $(this).data('id');
+        $(document).ready(function() {
+            $('.deleteButton').each(function() {
+                $(this).on('click', function(e) {
+                    var timesheetId = $(this).data('id');
 
 
-                event.preventDefault();
+                    event.preventDefault();
 
-                $.ajax({
+                    $.ajax({
 
-                    url: "/HR-SYS/timesheet.php",
+                        url: "/HR-SYS/timesheet.php",
 
-                    type: "POST",
-                    data: {
-                        deleteid: timesheetId
-                    },
-                    success: function(response) {
-                        $(".deletetimesheet").attr('href', 'timesheet.php?delid=' +
-                            timesheetId);
+                        type: "POST",
+                        data: {
+                            deleteid: timesheetId
+                        },
+                        success: function(response) {
+                            $(".deletetimesheet").attr('href', 'timesheet.php?delid=' +
+                                timesheetId);
 
-                    }
+                        }
+                    })
                 })
             })
-        })
-        $('.editButton').each(function() {
-            $(this).on('click', function(event) {
-                event.preventDefault();
+            $('.editButton').each(function() {
+                $(this).on('click', function(event) {
+                    event.preventDefault();
 
-                var timesheetId = $(this).data('id');
+                    var timesheetId = $(this).data('id');
 
 
-                $.ajax({
-                    url: "/HR-SYS/includes/modals/timesheet/timesheetFunction.php",
+                    $.ajax({
+                        url: "/HR-SYS/includes/modals/timesheet/timesheetFunction.php",
 
-                    type: 'POST',
-                    data: {
-                        editid: timesheetId
-                    },
-                    dataType: 'json',
-                    success: function(response) {
-                        $('#edit_todaywork').find('input[name="Start"]').val(
-                            response.start);
+                        type: 'POST',
+                        data: {
+                            editid: timesheetId
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            $('#edit_todaywork').find('input[name="Start"]').val(
+                                response.start);
 
-                        var startTime = new Date(response.start);
-                        var endTime = new Date(response.end);
-                        var timeDifference = endTime - startTime;
-                        var hoursDifference = Math.floor(timeDifference / (1000 *
-                            60 * 60));
-                        var minutesDifference = Math.floor((timeDifference % (1000 *
-                            60 * 60)) / (1000 * 60));
-                        $('#edit_todaywork').find('input[name="Totalhoure"]').val(
-                            hoursDifference + ":" + minutesDifference);
-                        $('#edit_todaywork').find('input[name="End"]').val(response
-                            .end);
-                        $('#edit_todaywork').find('input[name="timesheetid"]').val(
-                            response.id);
-                        $('#edit_todaywork').find('textarea[name="description"]')
-                            .val(response.description);
+                            var startTime = new Date(response.start);
+                            var endTime = new Date(response.end);
+                            var timeDifference = endTime - startTime;
+                            var hoursDifference = Math.floor(timeDifference / (1000 *
+                                60 * 60));
+                            var minutesDifference = Math.floor((timeDifference % (1000 *
+                                60 * 60)) / (1000 * 60));
+                            $('#edit_todaywork').find('input[name="Totalhoure"]').val(
+                                hoursDifference + ":" + minutesDifference);
+                            $('#edit_todaywork').find('input[name="End"]').val(response
+                                .end);
+                            $('#edit_todaywork').find('input[name="timesheetid"]').val(
+                                response.id);
+                            $('#edit_todaywork').find('textarea[name="description"]')
+                                .val(response.description);
 
-                        $('#edit_todaywork').find('select[name="projectid"]').val(
-                            response.projectId);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Request failed with status ' + xhr.status);
-                    }
+                            $('#edit_todaywork').find('select[name="projectid"]').val(
+                                response.projectId);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Request failed with status ' + xhr.status);
+                        }
+                    });
                 });
             });
         });
-    });
     </script>
 
 

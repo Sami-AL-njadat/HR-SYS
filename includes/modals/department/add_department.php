@@ -14,7 +14,7 @@
 						<input name="department" required class="form-control" type="text">
 					</div>
 					<div class="submit-section">
-						<button name="add_department" type="POST" class="btn btn-primary submit-btn">Submit</button>
+						<button name="add_department" type="submit" class="btn btn-primary submit-btn">Submit</button>
 					</div>
 				</form>
 			</div>
