@@ -67,8 +67,10 @@ if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="Smarthr - Bootstrap Admin Template">
-    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
-    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="keywords"
+        content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="keywords"
+        content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
     <title>Login - HRMS admin</title>
@@ -99,8 +101,13 @@ if (isset($_SESSION['userlogin']) &&  $_SESSION['userlogin'] > 0) {
         <div class="account-content">
             <div class="container">
                 <!-- Account Logo -->
-                <div class="account-logo">
-                    <a href="index.php"><img src="assets/img/logo2.png" alt="Company Logo"></a>
+                <div style="
+                background: -moz-linear-gradient(right, #ff9b44 0%, #595353 100%);
+                background: -webkit-linear-gradient(right, #ff9b44 0%, #545353 100%);
+                background: -ms-linear-gradient(right, #ff9b44 0%, #535051 100%);
+                background: linear-gradient(to right, #ff9b44 0%, #454243 100%);
+                " class="account-logo">
+                    <a href="index.php"><img src="assets/img/logooo3.png" alt="Company Logo"></a>
                 </div>
                 <!-- /Account Logo -->
 

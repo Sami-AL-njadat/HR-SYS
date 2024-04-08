@@ -41,7 +41,7 @@ include('includes/config.php');
     <!-- Logo -->
     <div class="header-left">
         <a href="index.php" class="logo">
-            <img src="assets/img/logo.png" width="40" height="40" alt="">
+            <img src="assets/img/logoo2.png" width="40" height="40" alt="">
 
         </a>
     </div>
@@ -57,7 +57,7 @@ include('includes/config.php');
 
     <!-- Header Title -->
     <div class="page-title-box">
-        <h3>Dreamguy's Technologies</h3>
+        <h3>DivHigh Technologies</h3>
     </div>
     <!-- /Header Title -->
 
